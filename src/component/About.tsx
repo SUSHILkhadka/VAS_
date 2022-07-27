@@ -13,7 +13,6 @@ const About = () => {
         <div className="App">
           <div>
             About Page
-            {/* <Link to="/loginpage">CHILD</Link> */}
           </div>
         </div>
     </>

@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,14 +8,18 @@ import {
   useNavigate,
 } from "react-router-dom";
 import HomePage from "./HomePage";
+import { AuthContext } from "../AuthContex";
 
 const FormPage: React.FC = () => {
+  const auth=useContext(AuthContext);
   const navigate = useNavigate();
   const onFinish = (values: any) => {
     if (
       values.username == "vyaguta@vyaguta.com" &&
       values.password == "vyaguta"
     ) {
+      auth?.setDisplayName(values.username);
+      auth?.setLoggedIn("logged in successfully");
       navigate("/homepage", { replace: true });
     }
     console.log("Success:", values);
@@ -25,7 +29,7 @@ const FormPage: React.FC = () => {
     console.log("Failed:", errorInfo);
   };
 
-  return (
+  return auth?.loggedIn=="please log in"?(
     <Form
       name="basic"
       labelCol={{ span: 8 }}
@@ -65,7 +69,7 @@ const FormPage: React.FC = () => {
         </Button>
       </Form.Item>
     </Form>
-  );
+  ):(<HomePage/>);
 };
 
 export default FormPage;

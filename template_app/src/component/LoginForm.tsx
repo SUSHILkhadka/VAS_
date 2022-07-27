@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,8 +8,10 @@ import {
   useNavigate,
 } from "react-router-dom";
 import HomePage from "./HomePage";
+import { AuthContext } from "../AuthContex";
 
 const FormPage: React.FC = () => {
+  const auth=useContext(AuthContext);
   const navigate = useNavigate();
   const onFinish = (values: any) => {
     if (
@@ -17,6 +19,7 @@ const FormPage: React.FC = () => {
       values.password == "vyaguta"
     ) {
       navigate("/homepage", { replace: true });
+      auth?.setLoggedIn(true);
     }
     console.log("Success:", values);
   };

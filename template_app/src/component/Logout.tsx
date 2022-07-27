@@ -5,17 +5,19 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useContext } from "react"
 import { AuthContext } from "../AuthContex";
 
-const About = () => {
+const LogOut = () => {
   const authContext=useContext(AuthContext);
-  console.log(authContext);
   return (
         <>
         <div className="App">
           <div>
-            About Page
+            LogoutPage
           </div>
+          <button onClick={()=>{
+            authContext?.setLoggedIn(false);
+          }}>LogOut</button>
         </div>
     </>
   );
 };
-export default About;
+export default LogOut;

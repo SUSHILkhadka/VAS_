@@ -14,7 +14,7 @@ const LogOut = () => {
             LogoutPage
           </div>
           <button onClick={()=>{
-            authContext?.setLoggedIn(false);
+            authContext?.setLoggedIn("please log in");
           }}>LogOut</button>
         </div>
     </>

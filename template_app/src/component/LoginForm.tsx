@@ -18,8 +18,9 @@ const FormPage: React.FC = () => {
       values.username == "vyaguta@vyaguta.com" &&
       values.password == "vyaguta"
     ) {
+      auth?.setDisplayName(values.username);
+      auth?.setLoggedIn("logged in successfully");
       navigate("/homepage", { replace: true });
-      auth?.setLoggedIn(true);
     }
     console.log("Success:", values);
   };
@@ -28,7 +29,7 @@ const FormPage: React.FC = () => {
     console.log("Failed:", errorInfo);
   };
 
-  return (
+  return auth?.loggedIn=="please log in"?(
     <Form
       name="basic"
       labelCol={{ span: 8 }}
@@ -68,7 +69,7 @@ const FormPage: React.FC = () => {
         </Button>
       </Form.Item>
     </Form>
-  );
+  ):(<HomePage/>);
 };
 
 export default FormPage;

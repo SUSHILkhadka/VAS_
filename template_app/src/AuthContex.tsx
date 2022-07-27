@@ -1,9 +1,10 @@
 import { createContext,Dispatch,useState, SetStateAction, ReactNode } from "react"
 
 interface Auth{
-    loggedIn: boolean;
-    setLoggedIn: Dispatch<SetStateAction<boolean>>;
-
+    displayName: string;
+    loggedIn: string;
+    setDisplayName:Dispatch<SetStateAction<string>>;
+    setLoggedIn: Dispatch<SetStateAction<string>>;
 }
 export const AuthContext=createContext<Auth | undefined>(undefined)
 
@@ -12,6 +13,7 @@ type Props={
 }
 
 export const AuthProvider: React.FC<Props> =({children})=>{
-    const [loggedIn, setLoggedIn]=useState(false)
-    return(<AuthContext.Provider value={{loggedIn, setLoggedIn}}>{children}</AuthContext.Provider>)
+    const [loggedIn, setLoggedIn]=useState("please log in")
+    const [displayName, setDisplayName]=useState("default")
+    return(<AuthContext.Provider value={{loggedIn,setLoggedIn,displayName,setDisplayName}}>{children}</AuthContext.Provider>)
 }

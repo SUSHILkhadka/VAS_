@@ -10,30 +10,46 @@ import {
 import HomePage from "./HomePage";
 import { AuthContext } from "../AuthContex";
 import { getLogStatus, getName, setLogStatus, setName } from "../services/getLocalData";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { makeLoggedIn_function_as_action,makeLoggedOut_function_as_action,changename_function_as_action } from "../default_redux/action";
+
 
 const FormPage: React.FC = () => {
-  const auth=useContext(AuthContext);
+  // const auth=useContext(AuthContext);
+  const auth = useSelector((state: any) => state.secondreducer);
+  const dispatch=useDispatch();
+console.log(auth);
+
+
   const navigate = useNavigate();
 
   const loginStatus=getLogStatus();
-  // const fetchedName=getName();
-  if(loginStatus!="please log in"){
-    auth?.setLoggedIn(loginStatus);
-    auth?.setDisplayName(getName());
-    navigate("/homepage", { replace: true });
-  }
+  useEffect(()=>{
+  if(loginStatus=="true"){
+    // auth?.setLoggedIn("true");
+    // auth?.setDisplayName(getName());
+
+    console.log('local storage name is ',getName())
+    dispatch(makeLoggedIn_function_as_action(getName()))
+    // dispatch(changename_function_as_action(getName()))
+
+    navigate("/homepage", { replace: true });}
+  },[navigate])
 
   const onFinish = (values: any) => {
     if (
       values.username == "vyaguta@vyaguta.com" &&
       values.password == "vyaguta"
     ) {
-      auth?.setDisplayName(values.username);
-      auth?.setLoggedIn("logged in successfully");
+      // auth?.setDisplayName(values.username);
+      // auth?.setLoggedIn("true");
 
-      setLogStatus("logged in successfully");
-      console.log("inside on finish",getLogStatus())
-      setName(auth?.displayName);
+      dispatch(makeLoggedIn_function_as_action(values.username))
+    // dispatch(changename_function_as_action(values.username))   
+
+      setLogStatus("true");
+      setName(values.username);
       navigate("/homepage", { replace: true });
       
     }
@@ -43,7 +59,7 @@ const FormPage: React.FC = () => {
     console.log("Failed:", errorInfo);
   };
 
-  return auth?.loggedIn=="please log in"?(
+  return auth?.login=="false"?(
     <Form
       name="basic"
       labelCol={{ span: 8 }}

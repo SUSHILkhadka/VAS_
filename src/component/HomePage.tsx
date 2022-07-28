@@ -1,14 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../AuthContex";
-import "./HomePage.css"
+import "./HomePage.css";
 
-const  HomePage=()=>{
-    const value=useContext(AuthContext);
-    return(
-        <div className="about">
-            Logged In Successfully
-            <div>display name is {value?.displayName}</div>
-        </div>
-    )
-}
+import { useSelector } from "react-redux";
+import { getLogStatus } from "../services/getLocalData";
+import { useNavigate } from "react-router-dom";
+
+const HomePage = () => {
+//   const value = useContext(AuthContext);
+  const navigate=useNavigate();
+  const auth = useSelector((state: any) => state.secondreducer);
+
+console.log(auth);
+  useEffect(()=>{
+  const loginStatus=getLogStatus();
+  if(loginStatus=="false"){
+    navigate("/loginpage")
+    console.log(navigate)
+        }
+  },[])
+
+  return (
+    <div className="about">
+      Logged In Successfully
+      <div>name from redux {auth.username}</div>
+    </div>
+  );
+};
 export default HomePage;

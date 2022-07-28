@@ -13,7 +13,7 @@ type Props={
 }
 
 export const AuthProvider: React.FC<Props> =({children})=>{
-    const [loggedIn, setLoggedIn]=useState("please log in")
+    const [loggedIn, setLoggedIn]=useState("false")
     const [displayName, setDisplayName]=useState("default")
     return(<AuthContext.Provider value={{loggedIn,setLoggedIn,displayName,setDisplayName}}>{children}</AuthContext.Provider>)
 }

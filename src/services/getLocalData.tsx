@@ -1,5 +1,5 @@
 export function getLogStatus(): any {
-    const val=localStorage.getItem("LogStatus")?localStorage.getItem("LogStatus"):"plealog in";
+    const val=localStorage.getItem("LogStatus")?localStorage.getItem("LogStatus"):"false";
     return val;
 }
 

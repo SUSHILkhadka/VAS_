@@ -28,14 +28,23 @@ const App = () => {
             <Link className="navbar" to="/about">
               About
             </Link>
-            <Link className="navbar" to="/logout">
-              Logout
-            </Link>
-            <Link className="navbar" to="/setting">
-              Setting
-            </Link>
+
+            {getLogStatus() == "false" ? (
+              ""
+            ) : (
+              <Link className="navbar" to="/logout">
+                Logout
+              </Link>
+            )}
+            {getLogStatus() == "false" ? (
+              ""
+            ) : (
+              <Link className="navbar" to="/setting">
+                Setting
+              </Link>
+            )}
             <Routes>
-            <Route path="/" element={<FormPage />}></Route>
+              <Route path="/" element={<FormPage />}></Route>
 
               <Route path="/loginpage" element={<FormPage />}></Route>
               <Route path="/about" element={<About />}></Route>

@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,10 +9,20 @@ import {
 } from "react-router-dom";
 import HomePage from "./HomePage";
 import { AuthContext } from "../AuthContex";
+import { getLogStatus, getName, setLogStatus, setName } from "../services/getLocalData";
 
 const FormPage: React.FC = () => {
   const auth=useContext(AuthContext);
   const navigate = useNavigate();
+
+  const loginStatus=getLogStatus();
+  // const fetchedName=getName();
+  if(loginStatus!="please log in"){
+    auth?.setLoggedIn(loginStatus);
+    auth?.setDisplayName(getName());
+    navigate("/homepage", { replace: true });
+  }
+
   const onFinish = (values: any) => {
     if (
       values.username == "vyaguta@vyaguta.com" &&
@@ -20,9 +30,13 @@ const FormPage: React.FC = () => {
     ) {
       auth?.setDisplayName(values.username);
       auth?.setLoggedIn("logged in successfully");
+
+      setLogStatus("logged in successfully");
+      console.log("inside on finish",getLogStatus())
+      setName(auth?.displayName);
       navigate("/homepage", { replace: true });
+      
     }
-    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {

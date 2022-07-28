@@ -17,8 +17,14 @@ import {
   setName,
 } from "../services/getLocalData";
 
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { makeLoggedOut_function_as_action } from "../default_redux/action";
+ 
 const LogOut = () => {
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
+  const dispatch=useDispatch();
+
   const navigate = useNavigate();
   return (
     <>
@@ -26,8 +32,11 @@ const LogOut = () => {
         <div>LogoutPage</div>
         <button
           onClick={() => {
-            authContext?.setLoggedIn("please log in");
-            setLogStatus("please log in");
+            // authContext?.setLoggedIn("false");
+            dispatch(makeLoggedOut_function_as_action())
+
+            setLogStatus("false");
+            console.log(getLogStatus())
             navigate("/loginpage");
           }}
         >

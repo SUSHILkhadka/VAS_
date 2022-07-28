@@ -4,8 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider } from './AuthContex';
+import {legacy_createStore as createStore} from 'redux';
+import { counterReducer,allReducers } from './default_redux/reducer';
+import { Provider } from 'react-redux';
+import { composeWithDevTools } from '@redux-devtools/extension';
+
+
+const store=createStore(allReducers, composeWithDevTools())
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +19,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
   <AuthProvider>
+    <Provider store={store}>
     <App />
+    </Provider>
   </AuthProvider>
   </React.StrictMode>
 );

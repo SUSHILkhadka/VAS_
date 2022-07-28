@@ -16,17 +16,19 @@ const About = () => {
   const counter=useSelector((state:any)=>state.firstreducer)
   const auth=useSelector((state:any)=>state.secondreducer)
 
-  console.log(counter)
+  const registerInfo = useSelector((state: any) => state.thirdreducer);
+
+
+  console.log("register info is",registerInfo)
 
   const dispatch=useDispatch();
-
-  console.log(auth)
 
   return (
     <>
       <div className="App">
         <div>About Page</div>
         <>Counter= {counter}</>
+        <div>email from registration is= {registerInfo.email}</div>
         <button onClick={()=>{dispatch(add_funtion_as_action(3))}}>Add</button>
         <button onClick={()=>{dispatch(sub_funtion_as_action(3))}}>Sub</button>
 

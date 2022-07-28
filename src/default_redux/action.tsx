@@ -29,3 +29,18 @@ export const changename_function_as_action=(value:string)=>{
         payload:value
     }
 }
+
+
+//for register
+export const updateName=(value:string)=>{
+    return{
+        type:"SaveName",
+        payload:value,
+    }
+}
+export const updateEmail=(value:string)=>{
+    return{
+        type:"SaveEmail",
+        payload:value,
+    }
+}

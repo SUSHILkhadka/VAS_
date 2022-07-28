@@ -43,7 +43,34 @@ export const authReducer = (state: Auth = defaultValue, action: any) => {
   }
 };
 
+interface RegisterInfo {
+  username: string;
+  email: string;
+}
+
+const defaultRegisterInfo: RegisterInfo={
+  username: "",
+  email: ""
+}
+
+export const registerReducer = (state: RegisterInfo = defaultRegisterInfo, action: any) => {
+  switch (action.type) {
+    case "SaveName":
+      return{
+        username: action.payload,
+        email: state.email,
+      }
+      case "SaveEmail":
+        return{
+          username: state.username,
+          email: action.payload
+        }
+    default:
+      return state;
+  }
+};
 export const allReducers = combineReducers({
   firstreducer: counterReducer,
   secondreducer: authReducer,
+  thirdreducer: registerReducer
 });

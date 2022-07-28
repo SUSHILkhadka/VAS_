@@ -5,12 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { AuthProvider } from './AuthContex';
-import {createStore} from 'redux';
+import {legacy_createStore as createStore} from 'redux';
 import { counterReducer,allReducers } from './default_redux/reducer';
 import { Provider } from 'react-redux';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
-const store=createStore(allReducers)
 
+const store=createStore(allReducers, composeWithDevTools())
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,5 +1,4 @@
 import React from "react";
-import Child from "./child";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../AuthContex";

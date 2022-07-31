@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import {
     changeName,
-  } from "../redux_toolkit/counterSlice";
+  } from "../redux_toolkit/authentication/authSlice";
 
 
   import {

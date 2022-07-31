@@ -13,7 +13,9 @@ import SettingPage from "./component/SettingPage";
 import { useContext } from "react";
 import { AuthContext } from "./AuthContex";
 import { getLogStatus } from "./services/getLocalData";
-import ClientPatientRegisterPage from "./component/ClientPatientRegisterPage";
+import ClientPatientRegisterPage from "./component/clientPatientRegistration/ClientPatientRegisterPage";
+import ClientPatientRegisterConfirmation from "./component/clientPatientRegistration/ConfirmationPage";
+import ListAllFormsPage from "./component/clientPatientRegistration/ListAllForm";
 
 const App = () => {
   return (
@@ -24,6 +26,9 @@ const App = () => {
             <div>Vaccination Appointment Scheduling</div>
             <Link className="navbar" to="/clientPatientRegister">
               Client Patient Register Page
+            </Link>
+            <Link className="navbar" to="/clientPatientListAll">
+              Client Patient List All Page
             </Link>
             <Link className="navbar" to="/loginpage">
               LoginPage
@@ -55,6 +60,9 @@ const App = () => {
               <Route path="/logout" element={<LogOut />}></Route>
               <Route path="/setting" element={<SettingPage />}></Route>
               <Route path="/clientPatientRegister" element={<ClientPatientRegisterPage   />}></Route>
+              <Route path="/clientPatientRegisterConfirmation" element={<ClientPatientRegisterConfirmation   />}></Route>
+              <Route path="/clientPatientListAll" element={<ListAllFormsPage   />}></Route>
+
 
             </Routes>
           </div>

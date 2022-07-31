@@ -8,7 +8,7 @@ import {
 } from "../services/getLocalData";
 
 import { useDispatch } from "react-redux";
-import  {makeLoggedOut,changeName} from "../redux_toolkit/counterSlice"
+import  {makeLoggedOut,changeName} from "../redux_toolkit/authentication/authSlice"
 
 const LogOut = () => {
   const dispatch=useDispatch();

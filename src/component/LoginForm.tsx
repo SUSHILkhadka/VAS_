@@ -21,7 +21,7 @@ import {
   makeLoggedIn,
   makeLoggedOut,
   changeName,
-} from "../redux_toolkit/counterSlice";
+} from "../redux_toolkit/authentication/authSlice";
 
 const FormPage: React.FC = () => {
   // const auth=useContext(AuthContext);

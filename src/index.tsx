@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 
 //redux toolkit
 import { store as store2} from "./redux_toolkit/store"
+import ListAllFormsPage from './component/clientPatientRegistration/ListAllForm';
 
 
 const root = ReactDOM.createRoot(
@@ -20,6 +21,7 @@ root.render(
     <Provider store={store2}>
 
     <App />
+    {/* <ListAllFormsPage/> */}
     </Provider>
   </React.StrictMode>
 );

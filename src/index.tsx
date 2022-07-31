@@ -4,25 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//context
 import { AuthProvider } from './AuthContex';
-import {legacy_createStore as createStore} from 'redux';
-import { counterReducer,allReducers } from './default_redux/reducer';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from '@redux-devtools/extension';
 
+//redux toolkit
+import { store as store2} from "./redux_toolkit/store"
 
-const store=createStore(allReducers, composeWithDevTools())
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-  <AuthProvider>
-    <Provider store={store}>
+    <Provider store={store2}>
+
     <App />
     </Provider>
-  </AuthProvider>
   </React.StrictMode>
 );
 

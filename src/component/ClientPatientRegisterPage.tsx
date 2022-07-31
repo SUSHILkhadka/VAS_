@@ -2,7 +2,6 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-import { updateName,updateEmail } from "../default_redux/action";
 
 
 import {
@@ -19,6 +18,7 @@ import {
   DatePicker,
 } from "antd";
 import React, { useState } from "react";
+import { saveEmail, saveName } from "../redux_toolkit/counterSlice";
 
 const { Option } = Select;
 
@@ -48,7 +48,7 @@ const tailFormItemLayout = {
 
 const ClientPatientRegisterPage: React.FC = () => {
 
-  const registerInfo = useSelector((state: any) => state.thirdreducer);
+  const registerInfo = useSelector((state: any) => state.register);
   const dispatch=useDispatch();
 console.log(registerInfo);
 
@@ -58,8 +58,10 @@ console.log(registerInfo);
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
 
-    dispatch(updateName(values.firstName+" "+values.lastName))
-    dispatch(updateEmail(values.email))
+    dispatch(saveName(values.firstName+" "+values.lastName))
+    dispatch(saveEmail(values.email))
+
+
   };
 
   const prefixSelector = (

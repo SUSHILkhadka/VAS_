@@ -1,22 +1,32 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../AuthContex";
-import "./HomePage.css";
+import React from "react";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { add_funtion_as_action,sub_funtion_as_action,changename_function_as_action } from "../default_redux/action";
 
+import {
+    changeName,
+  } from "../redux_toolkit/counterSlice";
+
+
+  import {
+    setName,
+  } from "../services/getLocalData";
 const  SettingPage=()=>{
     // const value=useContext(AuthContext);
 
-  const auth=useSelector((state:any)=>state.secondreducer)
+  const auth=useSelector((state:any)=>state.auth)
   const dispatch=useDispatch();
   console.log(auth);
 
+  
+
     const saveName=(event:any)=>{
         event.preventDefault();
-        // value?.setDisplayName(event.target.nameArea.value);
-        dispatch(changename_function_as_action(event.target.nameArea.value))
+        //redux toolkit
+      dispatch(changeName(event.target.nameArea.value));
+      setName(event.target.nameArea.value);
+
+
     }
     return(
         <div className="about">

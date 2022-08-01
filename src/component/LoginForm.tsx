@@ -15,8 +15,7 @@ import {
   setLogStatus,
   setName,
 } from "../services/getLocalData";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   makeLoggedIn,
   makeLoggedOut,
@@ -32,7 +31,7 @@ const FormPage: React.FC = () => {
 
   const loginStatus = getLogStatus();
   useEffect(() => {
-    if (loginStatus == "true") {
+    if (loginStatus == true) {
       // auth?.setLoggedIn("true");
       // auth?.setDisplayName(getName());
 
@@ -62,17 +61,17 @@ const FormPage: React.FC = () => {
       dispatch(makeLoggedIn());
       dispatch(changeName(values.username));
 
-      setLogStatus("true");
+      setLogStatus(true);
       setName(values.username);
       navigate("/homepage", { replace: true });
     }
   };
 
   const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
-  return auth?.login == "false" ? (
+  return auth?.login == false ? (
     <Form
       name="basic"
       labelCol={{ span: 8 }}
@@ -105,7 +104,7 @@ const FormPage: React.FC = () => {
       >
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
-
+      
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Submit

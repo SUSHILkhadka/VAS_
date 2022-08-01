@@ -23,7 +23,7 @@ const LogOut = () => {
             dispatch(makeLoggedOut())
             dispatch(changeName("name after logout out"))
 
-            setLogStatus("false");
+            setLogStatus(false);
             navigate("/loginpage");
           }}
         >

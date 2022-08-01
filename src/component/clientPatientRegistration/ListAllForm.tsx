@@ -5,7 +5,7 @@ type obj={
 const Items = (props :obj) => {
    const handleFormSelection=()=>{
 
-    
+
 
    }
     return (
@@ -21,7 +21,7 @@ const ListAllFormsPage = () => {
 
     //read from database, for now localstorage and get id as array of string
 
-    const ids=['1','11','3']
+    const ids=['1','11','3','fff']
 
     //get length of list
     const length=ids.length;
@@ -30,7 +30,7 @@ const ListAllFormsPage = () => {
   return (
         <div className="App">
             
-                    {ids.map((value)=><Items id={value}/>)}
+                    {/* {ids.map((value)=><Items id={value}/>)} */}
             
         </div>
   );

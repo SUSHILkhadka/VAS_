@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import  counterReducer from './counterSlice'
 import { authReducer } from './authentication/authSlice'
 import { registerReducer } from './registration/registerSlice'
+import { appointmentReducer } from './appointment/appointmentSlice'
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     auth: authReducer,
     register: registerReducer,
+    appointment: appointmentReducer,
 
   },
 })

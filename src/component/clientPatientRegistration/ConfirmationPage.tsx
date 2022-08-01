@@ -13,7 +13,7 @@ const ClientPatientRegisterConfirmation = () => {
 
 
   const handleConfirmation = () =>{
-    // add data to DB here 
+    // add data to DB here
     //get unique documentid and display it.
     message.success(`Registration successful`);
     dispatch(reset())
@@ -26,12 +26,12 @@ const ClientPatientRegisterConfirmation = () => {
     < Divider />
     <Row>
         <Col>
-            <Title level={5}>First name: <Text type="secondary" italic>{patientData.firstname+" "+patientData.secondname}</Text></Title>
+            <Title level={5}>First name: <Text type="secondary" italic>{patientData.firstName+" "+patientData.secondName}</Text></Title>
             <Title level={5}>Email: <Text type="secondary" italic>{patientData.email}</Text></Title>
             <Title level={5}>DOB: <Text type="secondary" italic>{patientData.birthDate}</Text></Title>
             <Title level={5}>Ethnicity: <Text type="secondary" italic>{patientData.ethnicity}</Text></Title>
             <Title level={5}>Gender: <Text type="secondary" italic>{patientData.gender}</Text></Title>
-            <Title level={5}>Address: <Text type="secondary" italic>{patientData.address.province}, {patientData.address.city}, {patientData.address.street}</Text></Title>
+            <Title level={5}>Address: <Text type="secondary" italic>{patientData.address.state}, {patientData.address.city}, {patientData.address.street}</Text></Title>
             <Title level={5}>Payment: <Text type="secondary" italic>{patientData.paymentMethod}, {patientData.insuranceProvider}</Text></Title>
         </Col>
         <Col>

@@ -2,29 +2,24 @@ import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../AuthContex";
 
 import { useSelector } from "react-redux";
-import { getLogStatus ,setLogStatus} from "../services/getLocalData";
+import { getLogStatus, setLogStatus } from "../services/getLocalData";
 import { useNavigate } from "react-router-dom";
+import { NavBar } from "./NavBar";
 
 const HomePage = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const auth = useSelector((state: any) => state.auth);
-
-
-console.log(auth);
-  useEffect(()=>{
-  const loginStatus=getLogStatus();
-  if(loginStatus=="false"){
-    navigate("/loginpage")
-    console.log(navigate)
-        }
-  },[navigate])
+  useEffect(() => {
+    const loginStatus = getLogStatus();
+    if (loginStatus == false) {
+      navigate("/loginpage");
+    }
+  }, [navigate]);
 
   return (
-    <div className="about">
+    <div>
       Logged In Successfully
-      <div>      Login Status
-= {auth.login}</div>
-
+      <div> Login Status = {`${auth.login}`}</div>
       <div>User name= {auth.username}</div>
     </div>
   );

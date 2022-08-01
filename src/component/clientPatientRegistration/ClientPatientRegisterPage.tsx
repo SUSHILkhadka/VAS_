@@ -1,8 +1,8 @@
-
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import {
   AutoComplete,
@@ -16,12 +16,18 @@ import {
   Row,
   Select,
   DatePicker,
+  Upload,
 } from "antd";
 import React, { useState } from "react";
-import { Address,RegisterInfo ,register} from "../../redux_toolkit/registration/registerSlice";
+import {
+  Address,
+  RegisterInfo,
+  register,
+} from "../../redux_toolkit/registration/registerSlice";
+import { dateToString, stringToDate } from "../../utils/common";
 
 const { Option } = Select;
-
+const dateFormat = "YYYY-MM-DD";
 
 const formItemLayout = {
   labelCol: {
@@ -47,46 +53,32 @@ const tailFormItemLayout = {
 };
 
 const ClientPatientRegisterPage: React.FC = () => {
-
   const registerInfo = useSelector((state: any) => state.register);
-  const dispatch=useDispatch();
-console.log(registerInfo);
-
+  const dispatch = useDispatch();
 
   const [form] = Form.useForm();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    const address:Address={
+    const address: Address = {
       state: `${values.address.state}`,
       city: `${values.address.city}`,
-      street: `${values.address.street}`
-
-    }
-    const info:RegisterInfo={
+      street: `${values.address.street}`,
+    };
+    const info: RegisterInfo = {
       firstName: `${values.firstName}`,
       secondName: `${values.lastName}`,
-      birthDate: `${values.birthDate}`,
-
+      birthDate: dateToString(values.birthDate),
       ethnicity: `${values.ethnicity}`,
       gender: `${values.gender}`,
       email: `${values.email}`,
-      address:address,
-  
+      address: address,
       paymentMethod: `${values.paymentMethod}`,
       insuranceProvider: `${values.insuranceProvider}`,
-    }
-
-    console.log("infor interface=",info)
-
-    console.log('values from from',values.birthDate)
-    
-    dispatch(register(info))
-
+    };
+    dispatch(register(info));
     navigate("/clientPatientRegisterConfirmation");
-
   };
-
 
   const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
 
@@ -105,23 +97,24 @@ console.log(registerInfo);
     value: website,
   }));
 
-
-  const initialvalue=registerInfo.firstName=="defaultfromslice"?{}:{
-    firstName: `${registerInfo.firstName}`,
-    secondName: `${registerInfo.lastName}`,
-    // birthDate: `${registerInfo.birthDate}`,
-
-    ethnicity: `${registerInfo.ethnicity}`,
-    gender: `${registerInfo.gender}`,
-    email: `${registerInfo.email}`,
-    address:`${registerInfo.address.state}`,
-    city :`${registerInfo.address.city}`,
-     street:`${registerInfo.address.street}`,
-
-
-    paymentMethod: `${registerInfo.paymentMethod}`,
-    insuranceProvider: `${registerInfo.insuranceProvider}`,
-  }
+  const initialvalue =
+    registerInfo.firstName == "defaultfromslice"
+      ? {}
+      : {
+          firstName: registerInfo.firstName,
+          lastName: registerInfo.secondName,
+          birthDate: stringToDate(registerInfo.birthDate),
+          ethnicity: registerInfo.ethnicity,
+          gender: registerInfo.gender,
+          email: registerInfo.email,
+          address: {
+            state: registerInfo.address.state,
+            city: registerInfo.address.city,
+            street: registerInfo.address.street,
+          },
+          paymentMethod: registerInfo.paymentMethod,
+          insuranceProvider: registerInfo.insuranceProvider,
+        };
 
   return (
     <Form
@@ -170,7 +163,6 @@ console.log(registerInfo);
       >
         <DatePicker />
       </Form.Item>
-
 
       <Form.Item
         name="ethnicity"
@@ -249,17 +241,16 @@ console.log(registerInfo);
         </Input.Group>
       </Form.Item>
 
-
       <Form.Item
-            name="paymentMethod"
-            label="Payment Method"
-            rules={[{ required: false, message: "Province is required" }]}
-          >
-            <Select placeholder="Select Payment Method">
-              <Option value="province1">province 1</Option>
-              <Option value="province2">province 2</Option>
-            </Select>
-          </Form.Item>
+        name="paymentMethod"
+        label="Payment Method"
+        rules={[{ required: false, message: "Province is required" }]}
+      >
+        <Select placeholder="Select Payment Method">
+          <Option value="province1">Insurance Id</Option>
+          <Option value="province2">Member Id</Option>
+        </Select>
+      </Form.Item>
 
       <Form.Item
         name="insuranceProvider"
@@ -274,7 +265,15 @@ console.log(registerInfo);
         <Input />
       </Form.Item>
 
-      <Form.Item
+      <Form.Item label="Upload" valuePropName="fileList">
+        <Upload action="/upload.do" listType="picture-card">
+          <div>
+            <div style={{ marginTop: 8 }}>Upload</div>
+          </div>
+        </Upload>
+      </Form.Item>
+
+      {/* <Form.Item
         name="agreement"
         valuePropName="checked"
         rules={[
@@ -290,7 +289,8 @@ console.log(registerInfo);
         <Checkbox>
           I have read the <a href="">agreement</a>
         </Checkbox>
-      </Form.Item>
+      </Form.Item> */}
+
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
           Register

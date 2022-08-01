@@ -22,8 +22,6 @@ const About = () => {
         <div>About Page</div>
         <div>email from registration is= {registerInfo.email}</div>
 
-
-
       </div>
     </>
   );

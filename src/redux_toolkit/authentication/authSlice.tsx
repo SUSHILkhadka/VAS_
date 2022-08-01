@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 export interface Auth {
-    login: string;
+    login: boolean;
     username: string;
   }
   
 
   const defaultValufe: Auth = {
-    login: "false",
+    login: false,
     username: "default",
   };
   
@@ -16,10 +16,10 @@ export const authSlice = createSlice({
     initialState: defaultValufe,
     reducers: {
       makeLoggedIn: (state) => {
-        state.login ="true";
+        state.login =true;
       },
       makeLoggedOut: (state) => {
-        state.login ="false";
+        state.login =false;
         state.username=state.username;
       },
       changeName: (state,action) => {

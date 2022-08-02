@@ -10,10 +10,13 @@ import HomePage from "./component/HomePage";
 import LogOut from "./component/Logout";
 import SettingPage from "./component/SettingPage";
 
-import { useContext } from "react";
-import { AuthContext } from "./AuthContex";
 import { getLogStatus } from "./services/getLocalData";
-import ClientPatientRegisterPage from "./component/ClientPatientRegisterPage";
+import ClientPatientRegisterPage from "./component/clientPatientRegistration/ClientPatientRegisterPage";
+import ClientPatientRegisterConfirmation from "./component/clientPatientRegistration/ConfirmationPage";
+import ListAllFormsPage from "./component/clientPatientRegistration/ListAllForm";
+import { NavBar, NavBarForLandingPage } from "./component/NavBar";
+import AppointmentConfirmationPage from "./component/appointmentSchedule/AppointmentConfirmationPage";
+import AppointmentSchedulePage from "./component/appointmentSchedule/UserAppointmentForm";
 
 const App = () => {
   return (
@@ -22,40 +25,19 @@ const App = () => {
         <div className="App">
           <div>
             <div>Vaccination Appointment Scheduling</div>
-            <Link className="navbar" to="/clientPatientRegister">
-              Client Patient Register Page
-            </Link>
-            <Link className="navbar" to="/loginpage">
-              LoginPage
-            </Link>
-            <Link className="navbar" to="/about">
-              About
-            </Link>
-
-            {getLogStatus() == "false" ? (
-              ""
-            ) : (
-              <Link className="navbar" to="/logout">
-                Logout
-              </Link>
-            )}
-            {getLogStatus() == "false" ? (
-              ""
-            ) : (
-              <Link className="navbar" to="/setting">
-                Setting
-              </Link>
-            )}
+            {getLogStatus()==false?<NavBarForLandingPage/>:<NavBar/>}
             <Routes>
               <Route path="/" element={<FormPage />}></Route>
-
               <Route path="/loginpage" element={<FormPage />}></Route>
               <Route path="/about" element={<About />}></Route>
               <Route path="/homepage" element={<HomePage />}></Route>
               <Route path="/logout" element={<LogOut />}></Route>
               <Route path="/setting" element={<SettingPage />}></Route>
               <Route path="/clientPatientRegister" element={<ClientPatientRegisterPage   />}></Route>
-
+              <Route path="/clientPatientRegisterConfirmation" element={<ClientPatientRegisterConfirmation   />}></Route>
+              <Route path="/clientPatientListAll" element={<ListAllFormsPage   />}></Route>
+              <Route path="/appointmentSchedule" element={<AppointmentSchedulePage   />}></Route>
+              <Route path="/appointmentConfirmation" element={<AppointmentConfirmationPage   />}></Route>
             </Routes>
           </div>
         </div>

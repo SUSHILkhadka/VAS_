@@ -1,28 +1,16 @@
 import React from "react";
-import "./About.css";
-import Child from "./child";
 import {
   BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
   useNavigate,
 } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../AuthContex";
 import {
-  getLogStatus,
-  getName,
   setLogStatus,
-  setName,
 } from "../services/getLocalData";
 
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { makeLoggedOut_function_as_action } from "../default_redux/action";
- 
+import  {makeLoggedOut,changeName} from "../redux_toolkit/authentication/authSlice"
+
 const LogOut = () => {
-  // const authContext = useContext(AuthContext);
   const dispatch=useDispatch();
 
   const navigate = useNavigate();
@@ -32,11 +20,10 @@ const LogOut = () => {
         <div>LogoutPage</div>
         <button
           onClick={() => {
-            // authContext?.setLoggedIn("false");
-            dispatch(makeLoggedOut_function_as_action())
+            dispatch(makeLoggedOut())
+            dispatch(changeName("name after logout out"))
 
-            setLogStatus("false");
-            console.log(getLogStatus())
+            setLogStatus(false);
             navigate("/loginpage");
           }}
         >

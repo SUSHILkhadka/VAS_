@@ -9,33 +9,41 @@ import {
 } from "react-router-dom";
 import HomePage from "./HomePage";
 import { AuthContext } from "../AuthContex";
-import { getLogStatus, getName, setLogStatus, setName } from "../services/getLocalData";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { makeLoggedIn_function_as_action,makeLoggedOut_function_as_action,changename_function_as_action } from "../default_redux/action";
-
+import {
+  getLogStatus,
+  getName,
+  setLogStatus,
+  setName,
+} from "../services/getLocalData";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  makeLoggedIn,
+  makeLoggedOut,
+  changeName,
+} from "../redux_toolkit/authentication/authSlice";
 
 const FormPage: React.FC = () => {
   // const auth=useContext(AuthContext);
-  const auth = useSelector((state: any) => state.secondreducer);
-  const dispatch=useDispatch();
-console.log(auth);
-
+  const auth = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const loginStatus=getLogStatus();
-  useEffect(()=>{
-  if(loginStatus=="true"){
-    // auth?.setLoggedIn("true");
-    // auth?.setDisplayName(getName());
+  const loginStatus = getLogStatus();
+  useEffect(() => {
+    if (loginStatus == true) {
+      // auth?.setLoggedIn("true");
+      // auth?.setDisplayName(getName());
 
-    console.log('local storage name is ',getName())
-    dispatch(makeLoggedIn_function_as_action(getName()))
-    // dispatch(changename_function_as_action(getName()))
+      //default redux
+      // dispatch(makeLoggedIn_function_as_action(getName()))
 
-    navigate("/homepage", { replace: true });}
-  },[navigate])
+      //redux toolkit
+      dispatch(makeLoggedIn());
+      dispatch(changeName(getName()));
+      navigate("/homepage", { replace: true });
+    }
+  }, [navigate]);
 
   const onFinish = (values: any) => {
     if (
@@ -45,13 +53,17 @@ console.log(auth);
       // auth?.setDisplayName(values.username);
       // auth?.setLoggedIn("true");
 
-      dispatch(makeLoggedIn_function_as_action(values.username))
-    // dispatch(changename_function_as_action(values.username))   
+      //redux default
+      // dispatch(makeLoggedIn_function_as_action(values.username))
+      // dispatch(changename_function_as_action(values.username))
 
-      setLogStatus("true");
+      //redux toolkit
+      dispatch(makeLoggedIn());
+      dispatch(changeName(values.username));
+
+      setLogStatus(true);
       setName(values.username);
       navigate("/homepage", { replace: true });
-      
     }
   };
 
@@ -59,7 +71,7 @@ console.log(auth);
     console.log("Failed:", errorInfo);
   };
 
-  return auth?.login=="false"?(
+  return auth?.login == false ? (
     <Form
       name="basic"
       labelCol={{ span: 8 }}
@@ -92,14 +104,16 @@ console.log(auth);
       >
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
-
+      
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>
     </Form>
-  ):(<HomePage/>);
+  ) : (
+    <HomePage />
+  );
 };
 
 export default FormPage;

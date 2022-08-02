@@ -1,9 +1,8 @@
-
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-import { updateName,updateEmail } from "../default_redux/action";
-
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import {
   AutoComplete,
@@ -17,11 +16,18 @@ import {
   Row,
   Select,
   DatePicker,
+  Upload,
 } from "antd";
 import React, { useState } from "react";
+import {
+  Address,
+  RegisterInfo,
+  register,
+} from "../../redux_toolkit/registration/registerSlice";
+import { dateToString, stringToDate } from "../../utils/common";
 
 const { Option } = Select;
-
+const dateFormat = "YYYY-MM-DD";
 
 const formItemLayout = {
   labelCol: {
@@ -47,38 +53,32 @@ const tailFormItemLayout = {
 };
 
 const ClientPatientRegisterPage: React.FC = () => {
-
-  const registerInfo = useSelector((state: any) => state.thirdreducer);
-  const dispatch=useDispatch();
-console.log(registerInfo);
-
+  const registerInfo = useSelector((state: any) => state.register);
+  const dispatch = useDispatch();
 
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-
-    dispatch(updateName(values.firstName+" "+values.lastName))
-    dispatch(updateEmail(values.email))
+    const address: Address = {
+      state: `${values.address.state}`,
+      city: `${values.address.city}`,
+      street: `${values.address.street}`,
+    };
+    const info: RegisterInfo = {
+      firstName: `${values.firstName}`,
+      secondName: `${values.lastName}`,
+      birthDate: dateToString(values.birthDate),
+      ethnicity: `${values.ethnicity}`,
+      gender: `${values.gender}`,
+      email: `${values.email}`,
+      address: address,
+      paymentMethod: `${values.paymentMethod}`,
+      insuranceProvider: `${values.insuranceProvider}`,
+    };
+    dispatch(register(info));
+    navigate("/clientPatientRegisterConfirmation");
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
 
   const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
 
@@ -97,24 +97,40 @@ console.log(registerInfo);
     value: website,
   }));
 
+  const initialvalue =
+    registerInfo.firstName == "defaultfromslice"
+      ? {}
+      : {
+          firstName: registerInfo.firstName,
+          lastName: registerInfo.secondName,
+          birthDate: stringToDate(registerInfo.birthDate),
+          ethnicity: registerInfo.ethnicity,
+          gender: registerInfo.gender,
+          email: registerInfo.email,
+          address: {
+            state: registerInfo.address.state,
+            city: registerInfo.address.city,
+            street: registerInfo.address.street,
+          },
+          paymentMethod: registerInfo.paymentMethod,
+          insuranceProvider: registerInfo.insuranceProvider,
+        };
+
   return (
     <Form
       {...formItemLayout}
       form={form}
       name="register"
       onFinish={onFinish}
-      initialValues={{
-        residence: ["zhejiang", "hangzhou", "xihu"],
-        prefix: "86",
-      }}
+      initialValues={initialvalue}
       scrollToFirstError
     >
       <Form.Item
         name="firstName"
-        label="First Name"
+        label="First Namewww"
         rules={[
           {
-            required: true,
+            required: false,
             message: "Please input your First Name",
           },
         ]}
@@ -127,7 +143,7 @@ console.log(registerInfo);
         label="Last Name"
         rules={[
           {
-            required: true,
+            required: false,
             message: "Please input your Last Name",
           },
         ]}
@@ -140,7 +156,7 @@ console.log(registerInfo);
         label="Birth Date"
         rules={[
           {
-            required: true,
+            required: false,
             message: "Please input your Last Name",
           },
         ]}
@@ -148,13 +164,12 @@ console.log(registerInfo);
         <DatePicker />
       </Form.Item>
 
-
       <Form.Item
         name="ethnicity"
         label="Ethnicity"
         rules={[
           {
-            required: true,
+            required: false,
             message: "Please input your Ethnicity",
           },
         ]}
@@ -165,7 +180,7 @@ console.log(registerInfo);
       <Form.Item
         name="gender"
         label="Gender"
-        rules={[{ required: true, message: "Please select gender!" }]}
+        rules={[{ required: false, message: "Please select gender!" }]}
       >
         <Select placeholder="select your gender">
           <Option value="male">Male</Option>
@@ -183,7 +198,7 @@ console.log(registerInfo);
             message: "The input is not valid E-mail!",
           },
           {
-            required: true,
+            required: false,
             message: "Please input your E-mail!",
           },
         ]}
@@ -196,7 +211,7 @@ console.log(registerInfo);
           <Form.Item
             name={["address", "state"]}
             noStyle
-            rules={[{ required: true, message: "Province is required" }]}
+            rules={[{ required: false, message: "Province is required" }]}
           >
             <Select placeholder="Select State">
               <Option value="province1">province 1</Option>
@@ -212,38 +227,37 @@ console.log(registerInfo);
           <Form.Item
             name={["address", "city"]}
             noStyle
-            rules={[{ required: true, message: "Province is required" }]}
+            rules={[{ required: false, message: "Province is required" }]}
           >
             <Input style={{ width: "25%" }} placeholder="Input City" />
           </Form.Item>
           <Form.Item
             name={["address", "street"]}
             noStyle
-            rules={[{ required: true, message: "Street is required" }]}
+            rules={[{ required: false, message: "Street is required" }]}
           >
             <Input style={{ width: "25%" }} placeholder="Input street" />
           </Form.Item>
         </Input.Group>
       </Form.Item>
 
+      <Form.Item
+        name="paymentMethod"
+        label="Payment Method"
+        rules={[{ required: false, message: "Province is required" }]}
+      >
+        <Select placeholder="Select Payment Method">
+          <Option value="province1">Insurance Id</Option>
+          <Option value="province2">Member Id</Option>
+        </Select>
+      </Form.Item>
 
       <Form.Item
-            name="paymentMethod"
-            label="Payment Method"
-            rules={[{ required: true, message: "Province is required" }]}
-          >
-            <Select placeholder="Select Payment Method">
-              <Option value="province1">province 1</Option>
-              <Option value="province2">province 2</Option>
-            </Select>
-          </Form.Item>
-
-      <Form.Item
-        name="insuraneProvider"
+        name="insuranceProvider"
         label="Insurance Provider"
         rules={[
           {
-            required: true,
+            required: false,
             message: "Please input your Insurance Provider",
           },
         ]}
@@ -251,7 +265,15 @@ console.log(registerInfo);
         <Input />
       </Form.Item>
 
-      <Form.Item
+      <Form.Item label="Upload" valuePropName="fileList">
+        <Upload action="/upload.do" listType="picture-card">
+          <div>
+            <div style={{ marginTop: 8 }}>Upload</div>
+          </div>
+        </Upload>
+      </Form.Item>
+
+      {/* <Form.Item
         name="agreement"
         valuePropName="checked"
         rules={[
@@ -267,7 +289,8 @@ console.log(registerInfo);
         <Checkbox>
           I have read the <a href="">agreement</a>
         </Checkbox>
-      </Form.Item>
+      </Form.Item> */}
+
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
           Register

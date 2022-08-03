@@ -1,9 +1,9 @@
-import PatientRegisterForm from "../../component/register/PatientRegisterForm";
+import PatientRegisterForm from '../../component/register/PatientRegisterForm';
 const RegisterPage = () => {
   return (
     <div>
-      <PatientRegisterForm/>
-    </div>    
+      <PatientRegisterForm />
+    </div>
   );
 };
 export default RegisterPage;

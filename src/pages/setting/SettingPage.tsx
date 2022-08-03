@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { changeName } from "../../redux_toolkit/slices/authSlice";
+import { changeName } from '../../redux_toolkit/slices/authSlice';
 
-import { setName } from "../../services/getLocalData";
+import { setName } from '../../services/getLocalData';
 const SettingPage = () => {
   // const value=useContext(AuthContext);
 

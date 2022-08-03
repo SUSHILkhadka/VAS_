@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import { AuthContext } from "../../AuthContex";
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../../AuthContex';
 
-import { useSelector } from "react-redux";
-import { getLogStatus, setLogStatus } from "../../services/getLocalData";
-import { useNavigate } from "react-router-dom";
-import { NavBar } from "../../component/NavBar";
+import { useSelector } from 'react-redux';
+import { getLogStatus, setLogStatus } from '../../services/getLocalData';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ const HomePage = () => {
   useEffect(() => {
     const loginStatus = getLogStatus();
     if (loginStatus == false) {
-      navigate("/loginpage");
+      navigate('/loginpage');
     }
   }, [navigate]);
 

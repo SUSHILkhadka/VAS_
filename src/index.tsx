@@ -1,27 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-//context
-import { AuthProvider } from './AuthContex';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./AppRouter";
+import reportWebVitals from "./reportWebVitals";
 
 //redux toolkit
-import { store as store2} from "./redux_toolkit/store"
-import ListAllFormsPage from './component/clientPatientRegistration/ListAllForm';
-
+import { store as store2 } from "./redux_toolkit/stores/store";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <Provider store={store2}>
-
-    <App />
-    {/* <ListAllFormsPage/> */}
+      <App />
+      {/* <ListAllFormsPage/> */}
     </Provider>
   </React.StrictMode>
 );

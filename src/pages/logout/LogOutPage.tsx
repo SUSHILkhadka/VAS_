@@ -5,14 +5,13 @@ import {
 } from "react-router-dom";
 import {
   setLogStatus,
-} from "../services/getLocalData";
+} from "../../services/getLocalData";
 
 import { useDispatch } from "react-redux";
-import  {makeLoggedOut,changeName} from "../redux_toolkit/authentication/authSlice"
+import  {makeLoggedOut,changeName} from "../../redux_toolkit/slices/authSlice"
 
-const LogOut = () => {
+const LogOutPage = () => {
   const dispatch=useDispatch();
-
   const navigate = useNavigate();
   return (
     <>
@@ -22,7 +21,6 @@ const LogOut = () => {
           onClick={() => {
             dispatch(makeLoggedOut())
             dispatch(changeName("name after logout out"))
-
             setLogStatus(false);
             navigate("/loginpage");
           }}
@@ -33,4 +31,4 @@ const LogOut = () => {
     </>
   );
 };
-export default LogOut;
+export default LogOutPage;

@@ -1,61 +1,28 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
   useNavigate,
 } from "react-router-dom";
-import HomePage from "./HomePage";
-import { AuthContext } from "../AuthContex";
+import HomePage from "../../pages/home/HomePage";
 import {
-  getLogStatus,
-  getName,
   setLogStatus,
   setName,
-} from "../services/getLocalData";
+} from "../../services/getLocalData";
 import { useSelector, useDispatch } from "react-redux";
 import {
   makeLoggedIn,
-  makeLoggedOut,
   changeName,
-} from "../redux_toolkit/authentication/authSlice";
+} from "../../redux_toolkit/slices/authSlice";
 
-const FormPage: React.FC = () => {
-  // const auth=useContext(AuthContext);
+const LoginForm: React.FC = () => {
   const auth = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
-  const loginStatus = getLogStatus();
-  useEffect(() => {
-    if (loginStatus == true) {
-      // auth?.setLoggedIn("true");
-      // auth?.setDisplayName(getName());
-
-      //default redux
-      // dispatch(makeLoggedIn_function_as_action(getName()))
-
-      //redux toolkit
-      dispatch(makeLoggedIn());
-      dispatch(changeName(getName()));
-      navigate("/homepage", { replace: true });
-    }
-  }, [navigate]);
-
   const onFinish = (values: any) => {
     if (
       values.username == "vyaguta@vyaguta.com" &&
       values.password == "vyaguta"
     ) {
-      // auth?.setDisplayName(values.username);
-      // auth?.setLoggedIn("true");
-
-      //redux default
-      // dispatch(makeLoggedIn_function_as_action(values.username))
-      // dispatch(changename_function_as_action(values.username))
 
       //redux toolkit
       dispatch(makeLoggedIn());
@@ -116,4 +83,4 @@ const FormPage: React.FC = () => {
   );
 };
 
-export default FormPage;
+export default LoginForm;

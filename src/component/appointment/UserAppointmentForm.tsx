@@ -1,6 +1,5 @@
 import {useNavigate } from "react-router-dom";
 import "./UserAppointmentForm.css";
-
 import {
   Button,
   Cascader,
@@ -19,7 +18,8 @@ import { dateToString, stringToDate, stringToTime, timeToString } from "../../ut
 import type { RangePickerProps } from "antd/es/date-picker";
 import moment from "moment";
 import { useDispatch ,useSelector} from "react-redux";
-import {DoseDate,Appointment,registerAppointment} from "../../redux_toolkit/appointment/appointmentSlice"
+import {DoseDate,Appointment,registerAppointment} from "../../redux_toolkit/slices/appointmentSlice"
+import { RootState } from "../../redux_toolkit/stores/store";
 type SizeType = Parameters<typeof Form>[0]["size"];
 
 export const AppointmentScheduleForm: React.FC = () => {
@@ -31,18 +31,16 @@ export const AppointmentScheduleForm: React.FC = () => {
     setComponentSize(size);
   };
 
-  const authInfo = useSelector((state: any) => state.auth);
-  const appointmentInfo = useSelector((state: any) => state.appointment);
+  const authInfo = useSelector((state: RootState) => state.auth);
+  const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-  const onFinish = (values: any) => {
+  const onFinish = (values:any) => {
     // console.log("time=",values.firstDose_time.format("HH:mm"))
     const firstDose:DoseDate={
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
-
     }
     const secondDose:DoseDate={
       date: dateToString(values.secondDose_date),
@@ -54,7 +52,6 @@ export const AppointmentScheduleForm: React.FC = () => {
       service: values.service,
       firstDose: firstDose,
       secondDose: secondDose,
-
     };
     dispatch(registerAppointment(info));
     console.log("info is=",info)
@@ -102,9 +99,9 @@ export const AppointmentScheduleForm: React.FC = () => {
 
       <Form.Item name="siteLocation" label="Site location">
         <Select>
-          <Select.Option value="first">Kathmandu</Select.Option>
-          <Select.Option value="second">Lalitpur</Select.Option>
-          <Select.Option value="third">Bhaktapur</Select.Option>
+          <Select.Option value="Kathmandu">Kathmandu</Select.Option>
+          <Select.Option value="Lalitpur">Lalitpur</Select.Option>
+          <Select.Option value="Bhaktapur">Bhaktapur</Select.Option>
         </Select>
       </Form.Item>
 
@@ -167,7 +164,6 @@ export const AppointmentScheduleForm: React.FC = () => {
         <TimePicker use12Hours minuteStep={15} secondStep={10} />
       </Form.Item> */}
 
-      
 <Form.Item name="secondDose" label="1st Dose">
         <Input.Group compact>
       <Form.Item name={["secondDose_date"]}>
@@ -204,11 +200,4 @@ export const AppointmentScheduleForm: React.FC = () => {
   );
 };
 
-const AppointmentSchedulePage = () => {
-  return (
-    <div className="giveborder">
-      <AppointmentScheduleForm />
-    </div>
-  );
-};
-export default AppointmentSchedulePage;
+

@@ -2,13 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useSelector ,useDispatch} from "react-redux";
 import { Typography, Divider,Col, Row, Button, message } from 'antd';
-import { reset } from "../../redux_toolkit/registration/registerSlice";
+import { reset } from "../../redux_toolkit/slices/registerSlice";
+import { RootState } from "../../redux_toolkit/stores/store";
 const { Title, Text } = Typography;
 
-const ClientPatientRegisterConfirmation = () => {
+const PatientRegisterConfirmationSection = () => {
     const navigate=useNavigate();
-
-  const patientData = useSelector((state: any) => state.register);
+  const patientData = useSelector((state: RootState) => state.register);
   const dispatch=useDispatch();
 
 
@@ -46,4 +46,4 @@ const ClientPatientRegisterConfirmation = () => {
 </section>
   );
 };
-export default ClientPatientRegisterConfirmation;
+export default PatientRegisterConfirmationSection;

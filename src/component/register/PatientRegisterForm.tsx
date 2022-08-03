@@ -23,8 +23,9 @@ import {
   Address,
   RegisterInfo,
   register,
-} from "../../redux_toolkit/registration/registerSlice";
+} from "../../redux_toolkit/slices/registerSlice";
 import { dateToString, stringToDate } from "../../utils/common";
+import { RootState } from "../../redux_toolkit/stores/store";
 
 const { Option } = Select;
 const dateFormat = "YYYY-MM-DD";
@@ -52,8 +53,8 @@ const tailFormItemLayout = {
   },
 };
 
-const ClientPatientRegisterPage: React.FC = () => {
-  const registerInfo = useSelector((state: any) => state.register);
+const PatientRegisterForm: React.FC = () => {
+  const registerInfo = useSelector((state: RootState) => state.register);
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -127,7 +128,7 @@ const ClientPatientRegisterPage: React.FC = () => {
     >
       <Form.Item
         name="firstName"
-        label="First Namewww"
+        label="First Name"
         rules={[
           {
             required: false,
@@ -300,4 +301,4 @@ const ClientPatientRegisterPage: React.FC = () => {
   );
 };
 
-export default ClientPatientRegisterPage;
+export default PatientRegisterForm;

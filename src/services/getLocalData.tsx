@@ -1,27 +1,19 @@
 export function getLogStatus(): boolean {
-    const val=localStorage.getItem("LogStatus")?localStorage.getItem("LogStatus"):"false";
-    if(val=="true"){
-        return true
-    }
-    else{
-        return false
-    }
+    const logStatus = localStorage.getItem("LogStatus")
+    return logStatus?Boolean(logStatus):false
 }
-
 export function getName(): any {
-    return localStorage.getItem("displayName")?localStorage.getItem("displayName"):"default";
+    const name=localStorage.getItem("displayName")
+    return name?name:"default";
 }
 export function setLogStatus(loggedIn: boolean): void{
-
     if(loggedIn==true){
         localStorage.setItem("LogStatus", "true");
     }
     else{
-        localStorage.setItem("LogStatus", "false");
-
+        localStorage.setItem("LogStatus", "");
     }
 }
-
 export function setName( name: any): void{
     localStorage.setItem("displayName", name);
 }

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { AuthContext } from '../../AuthContex';
 
 import { useSelector } from 'react-redux';
 import { getLogStatus, setLogStatus } from '../../services/getLocalData';

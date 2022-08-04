@@ -15,11 +15,17 @@ export const NavBar = () => {
       <Link className="navbar" to="/appointment">
         Appoint a schedule
       </Link>
+      <Link className="navbar" to="/appointment/list">
+        List all appointments
+      </Link>
       <Link className="navbar" to="/logout">
         Logout
       </Link>
       <Link className="navbar" to="/setting">
         Setting
+      </Link>
+      <Link className="navbar" to="/vaccine">
+        Add Vaccine
       </Link>
     </div>
   );

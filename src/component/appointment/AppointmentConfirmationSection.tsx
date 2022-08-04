@@ -7,16 +7,31 @@ import { Typography, Divider, Col, Row, Button, message } from 'antd';
 import { resetAppointment } from '../../redux_toolkit/slices/appointmentSlice';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../redux_toolkit/stores/store';
+import { URL_TO_BACKEND } from '../../constants/common';
+import { create } from '../../services/backendCall';
 const { Title, Text } = Typography;
 
 const AppointmentConfirmationSection = () => {
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
     // add data to DB here
+    let body = JSON.stringify({
+      email: appointmentInfo.email,
+      siteLocation: appointmentInfo.siteLocation,
+      serviceName: appointmentInfo.service,
+      firstDoseDate: appointmentInfo.firstDose.date,
+      firstDoseTime: appointmentInfo.firstDose.time,
+    });
+
+    const appointment = await create(body);
+    console.log(appointment);
+
+    // }
+
     //get unique documentid and display it.
-    message.success(`Registration successful`);
+    message.success(`Registration successful. Id is ${appointment[0].id}`);
     dispatch(resetAppointment());
     navigate('/homepage');
   };
@@ -29,6 +44,12 @@ const AppointmentConfirmationSection = () => {
         <Divider />
         <Row>
           <Col>
+            <Title level={5}>
+              Email:{' '}
+              <Text type="secondary" italic>
+                {appointmentInfo.email}
+              </Text>
+            </Title>
             <Title level={5}>
               SiteLocation:{' '}
               <Text type="secondary" italic>

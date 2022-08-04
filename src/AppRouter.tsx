@@ -16,6 +16,9 @@ import { RootState } from './redux_toolkit/stores/store';
 import { useDispatch } from 'react-redux';
 import { makeLoggedIn } from './redux_toolkit/slices/authSlice';
 import ListAllFormsPage from './pages/register/ListsPage';
+import AddVaccinePage from './pages/vaccine/AddVaccinePage';
+import ListAppointmentsPage from './pages/appointment/ListAppointmentsPage';
+import ManagerEditPage from './pages/appointment/ManagerEditPage';
 
 const App = () => {
   console.log('nothing');
@@ -44,6 +47,11 @@ const App = () => {
               <Route path="/register/list" element={<ListAllFormsPage />}></Route>
               <Route path="/appointment" element={<AppointmentSchedulePage />}></Route>
               <Route path="/appointment/confirmation" element={<AppointmentConfirmationPage />}></Route>
+              <Route path="/appointment/list" element={<ListAppointmentsPage />}></Route>
+              <Route path="/appointment/edit" element={<ManagerEditPage />}></Route>
+              <Route path="/vaccine" element={<AddVaccinePage />}></Route>
+
+              <Route path="*" element={<h1>Page not found</h1>}></Route>
             </Routes>
           </div>
         </div>

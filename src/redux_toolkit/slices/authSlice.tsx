@@ -6,7 +6,7 @@ export interface Auth {
 
 const defaultValufe: Auth = {
   login: false,
-  username: 'default',
+  username: '',
 };
 
 export const authSlice = createSlice({

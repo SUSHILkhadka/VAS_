@@ -25,20 +25,20 @@ const defaultAddress: Address = {
   street: '',
 };
 const defaultRegisterInfo: RegisterInfo = {
-  firstName: 'defaultfromslice',
-  secondName: 'defaultfromslice',
-  birthDate: 'defaultfromslice',
-  ethnicity: 'defaultfromslice',
-  gender: 'defaultfromslice',
-  email: 'defaultfromslice',
+  firstName: '',
+  secondName: '',
+  birthDate: '',
+  ethnicity: '',
+  gender: '',
+  email: '',
   address: defaultAddress,
 
-  paymentMethod: 'defaultfromslice',
-  insuranceProvider: 'defaultfromslice',
+  paymentMethod: '',
+  insuranceProvider: '',
 };
 
 export const registerSlice = createSlice({
-  name: 'counter',
+  name: 'registerInfo',
   initialState: defaultRegisterInfo,
   reducers: {
     register: (state, action: PayloadAction<RegisterInfo>) => {

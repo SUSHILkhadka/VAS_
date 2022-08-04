@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
 interface Auth {
   login: string;
@@ -7,9 +7,9 @@ interface Auth {
 
 export const counterReducer = (state: number = 0, action: any) => {
   switch (action.type) {
-    case "add":
+    case 'add':
       return state + action.payload;
-    case "sub":
+    case 'sub':
       return state - action.payload;
     default:
       return state;
@@ -17,25 +17,25 @@ export const counterReducer = (state: number = 0, action: any) => {
 };
 
 const defaultValue: Auth = {
-  login: "true",
-  username: "default",
+  login: 'true',
+  username: 'default',
 };
 
 export const authReducer = (state: Auth = defaultValue, action: any) => {
   switch (action.type) {
-    case "MakeLoggedIn":
-      return{
-        login: "true",
-        username: state.username
-      }
-      case "MakeLoggedOut":
-        return{
-          login: "false",
-          username: "name after log out"
-        }
-    case "ChangeName":
+    case 'MakeLoggedIn':
       return {
-        login: "true",
+        login: 'true',
+        username: state.username,
+      };
+    case 'MakeLoggedOut':
+      return {
+        login: 'false',
+        username: 'name after log out',
+      };
+    case 'ChangeName':
+      return {
+        login: 'true',
         username: action.payload,
       };
     default:
@@ -48,23 +48,23 @@ interface RegisterInfo {
   email: string;
 }
 
-const defaultRegisterInfo: RegisterInfo={
-  username: "",
-  email: ""
-}
+const defaultRegisterInfo: RegisterInfo = {
+  username: '',
+  email: '',
+};
 
 export const registerReducer = (state: RegisterInfo = defaultRegisterInfo, action: any) => {
   switch (action.type) {
-    case "SaveName":
-      return{
+    case 'SaveName':
+      return {
         username: action.payload,
         email: state.email,
-      }
-      case "SaveEmail":
-        return{
-          username: state.username,
-          email: action.payload
-        }
+      };
+    case 'SaveEmail':
+      return {
+        username: state.username,
+        email: action.payload,
+      };
     default:
       return state;
   }
@@ -72,5 +72,5 @@ export const registerReducer = (state: RegisterInfo = defaultRegisterInfo, actio
 export const allReducers = combineReducers({
   firstreducer: counterReducer,
   secondreducer: authReducer,
-  thirdreducer: registerReducer
+  thirdreducer: registerReducer,
 });

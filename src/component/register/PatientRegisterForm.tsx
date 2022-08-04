@@ -1,9 +1,6 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
-
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   AutoComplete,
   Button,
@@ -17,18 +14,14 @@ import {
   Select,
   DatePicker,
   Upload,
-} from "antd";
-import React, { useState } from "react";
-import {
-  Address,
-  RegisterInfo,
-  register,
-} from "../../redux_toolkit/slices/registerSlice";
-import { dateToString, stringToDate } from "../../utils/common";
-import { RootState } from "../../redux_toolkit/stores/store";
+} from 'antd';
+import React, { useState } from 'react';
+import { Address, RegisterInfo, register } from '../../redux_toolkit/slices/registerSlice';
+import { dateToString, stringToDate } from '../../utils/common';
+import { RootState } from '../../redux_toolkit/stores/store';
 
 const { Option } = Select;
-const dateFormat = "YYYY-MM-DD";
+const dateFormat = 'YYYY-MM-DD';
 
 const formItemLayout = {
   labelCol: {
@@ -78,7 +71,7 @@ const PatientRegisterForm: React.FC = () => {
       insuranceProvider: `${values.insuranceProvider}`,
     };
     dispatch(register(info));
-    navigate("/clientPatientRegisterConfirmation");
+    navigate('/clientPatientRegisterConfirmation');
   };
 
   const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
@@ -87,9 +80,7 @@ const PatientRegisterForm: React.FC = () => {
     if (!value) {
       setAutoCompleteResult([]);
     } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
+      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
     }
   };
 
@@ -99,7 +90,7 @@ const PatientRegisterForm: React.FC = () => {
   }));
 
   const initialvalue =
-    registerInfo.firstName == "defaultfromslice"
+    registerInfo.firstName == 'defaultfromslice'
       ? {}
       : {
           firstName: registerInfo.firstName,
@@ -132,7 +123,7 @@ const PatientRegisterForm: React.FC = () => {
         rules={[
           {
             required: false,
-            message: "Please input your First Name",
+            message: 'Please input your First Name',
           },
         ]}
       >
@@ -145,7 +136,7 @@ const PatientRegisterForm: React.FC = () => {
         rules={[
           {
             required: false,
-            message: "Please input your Last Name",
+            message: 'Please input your Last Name',
           },
         ]}
       >
@@ -158,7 +149,7 @@ const PatientRegisterForm: React.FC = () => {
         rules={[
           {
             required: false,
-            message: "Please input your Last Name",
+            message: 'Please input your Last Name',
           },
         ]}
       >
@@ -171,18 +162,14 @@ const PatientRegisterForm: React.FC = () => {
         rules={[
           {
             required: false,
-            message: "Please input your Ethnicity",
+            message: 'Please input your Ethnicity',
           },
         ]}
       >
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name="gender"
-        label="Gender"
-        rules={[{ required: false, message: "Please select gender!" }]}
-      >
+      <Form.Item name="gender" label="Gender" rules={[{ required: false, message: 'Please select gender!' }]}>
         <Select placeholder="select your gender">
           <Option value="male">Male</Option>
           <Option value="female">Female</Option>
@@ -195,12 +182,12 @@ const PatientRegisterForm: React.FC = () => {
         label="E-mail"
         rules={[
           {
-            type: "email",
-            message: "The input is not valid E-mail!",
+            type: 'email',
+            message: 'The input is not valid E-mail!',
           },
           {
             required: false,
-            message: "Please input your E-mail!",
+            message: 'Please input your E-mail!',
           },
         ]}
       >
@@ -209,11 +196,7 @@ const PatientRegisterForm: React.FC = () => {
 
       <Form.Item label="Address">
         <Input.Group compact>
-          <Form.Item
-            name={["address", "state"]}
-            noStyle
-            rules={[{ required: false, message: "Province is required" }]}
-          >
+          <Form.Item name={['address', 'state']} noStyle rules={[{ required: false, message: 'Province is required' }]}>
             <Select placeholder="Select State">
               <Option value="province1">province 1</Option>
               <Option value="province2">province 2</Option>
@@ -225,19 +208,11 @@ const PatientRegisterForm: React.FC = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            name={["address", "city"]}
-            noStyle
-            rules={[{ required: false, message: "Province is required" }]}
-          >
-            <Input style={{ width: "25%" }} placeholder="Input City" />
+          <Form.Item name={['address', 'city']} noStyle rules={[{ required: false, message: 'Province is required' }]}>
+            <Input style={{ width: '25%' }} placeholder="Input City" />
           </Form.Item>
-          <Form.Item
-            name={["address", "street"]}
-            noStyle
-            rules={[{ required: false, message: "Street is required" }]}
-          >
-            <Input style={{ width: "25%" }} placeholder="Input street" />
+          <Form.Item name={['address', 'street']} noStyle rules={[{ required: false, message: 'Street is required' }]}>
+            <Input style={{ width: '25%' }} placeholder="Input street" />
           </Form.Item>
         </Input.Group>
       </Form.Item>
@@ -245,7 +220,7 @@ const PatientRegisterForm: React.FC = () => {
       <Form.Item
         name="paymentMethod"
         label="Payment Method"
-        rules={[{ required: false, message: "Province is required" }]}
+        rules={[{ required: false, message: 'Province is required' }]}
       >
         <Select placeholder="Select Payment Method">
           <Option value="province1">Insurance Id</Option>
@@ -259,7 +234,7 @@ const PatientRegisterForm: React.FC = () => {
         rules={[
           {
             required: false,
-            message: "Please input your Insurance Provider",
+            message: 'Please input your Insurance Provider',
           },
         ]}
       >

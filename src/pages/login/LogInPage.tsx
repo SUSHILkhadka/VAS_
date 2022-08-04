@@ -1,12 +1,9 @@
-import PatientRegisterForm from "../../component/register/PatientRegisterForm";
-import LoginForm from "../../component/login/LoginForm";
-import { getLogStatus, getName } from "../../services/getLocalData";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  changeName,
-  makeLoggedIn,
-} from "../../redux_toolkit/slices/authSlice";
+import PatientRegisterForm from '../../component/register/PatientRegisterForm';
+import LoginForm from '../../component/login/LoginForm';
+import { getLogStatus, getName } from '../../services/getLocalData';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { changeName, makeLoggedIn } from '../../redux_toolkit/slices/authSlice';
 
 const LogInPage = () => {
   const dispatch = useDispatch();
@@ -15,12 +12,14 @@ const LogInPage = () => {
   if (getLogStatus() == true) {
     dispatch(makeLoggedIn());
     dispatch(changeName(getName()));
-    navigate("/homepage", { replace: true });
+    navigate('/homepage', { replace: true });
   }
   return (
     <div>
       <LoginForm />
-      <p>New user??<Link to="/clientPatientRegister">Register</Link></p>
+      <p>
+        New user??<Link to="/register">Register</Link>
+      </p>
     </div>
   );
 };

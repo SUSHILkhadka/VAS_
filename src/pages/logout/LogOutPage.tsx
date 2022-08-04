@@ -1,17 +1,12 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  useNavigate,
-} from "react-router-dom";
-import {
-  setLogStatus,
-} from "../../services/getLocalData";
+import React from 'react';
+import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
+import { setLogStatus } from '../../services/getLocalData';
 
-import { useDispatch } from "react-redux";
-import  {makeLoggedOut,changeName} from "../../redux_toolkit/slices/authSlice"
+import { useDispatch } from 'react-redux';
+import { makeLoggedOut, changeName } from '../../redux_toolkit/slices/authSlice';
 
 const LogOutPage = () => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <>
@@ -19,10 +14,10 @@ const LogOutPage = () => {
         <div>LogoutPage</div>
         <button
           onClick={() => {
-            dispatch(makeLoggedOut())
-            dispatch(changeName("name after logout out"))
+            dispatch(makeLoggedOut());
+            dispatch(changeName('name after logout out'));
             setLogStatus(false);
-            navigate("/loginpage");
+            navigate('/loginpage');
           }}
         >
           LogOut

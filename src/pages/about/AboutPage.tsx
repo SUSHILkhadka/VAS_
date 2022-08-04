@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 const AboutPage = () => {
   const registerInfo = useSelector((state: any) => state.register);
 
-  console.log("register info is", registerInfo);
+  console.log('register info is', registerInfo);
 
   return (
     <>

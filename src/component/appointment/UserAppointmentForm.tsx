@@ -1,5 +1,5 @@
-import {useNavigate } from "react-router-dom";
-import "./UserAppointmentForm.css";
+import { useNavigate } from 'react-router-dom';
+import './UserAppointmentForm.css';
 import {
   Button,
   Cascader,
@@ -12,20 +12,18 @@ import {
   Switch,
   TimePicker,
   TreeSelect,
-} from "antd";
-import React, { useState } from "react";
-import { dateToString, stringToDate, stringToTime, timeToString } from "../../utils/common";
-import type { RangePickerProps } from "antd/es/date-picker";
-import moment from "moment";
-import { useDispatch ,useSelector} from "react-redux";
-import {DoseDate,Appointment,registerAppointment} from "../../redux_toolkit/slices/appointmentSlice"
-import { RootState } from "../../redux_toolkit/stores/store";
-type SizeType = Parameters<typeof Form>[0]["size"];
+} from 'antd';
+import React, { useState } from 'react';
+import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
+import type { RangePickerProps } from 'antd/es/date-picker';
+import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { DoseDate, Appointment, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
+import { RootState } from '../../redux_toolkit/stores/store';
+type SizeType = Parameters<typeof Form>[0]['size'];
 
 export const AppointmentScheduleForm: React.FC = () => {
-  const [componentSize, setComponentSize] = useState<SizeType | "default">(
-    "default"
-  );
+  const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
     setComponentSize(size);
@@ -36,43 +34,45 @@ export const AppointmentScheduleForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onFinish = (values:any) => {
+  const onFinish = (values: any) => {
     // console.log("time=",values.firstDose_time.format("HH:mm"))
-    const firstDose:DoseDate={
+    const firstDose: DoseDate = {
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
-    }
-    const secondDose:DoseDate={
+    };
+    const secondDose: DoseDate = {
       date: dateToString(values.secondDose_date),
       time: timeToString(values.secondDose_time),
-    }
+    };
     const info: Appointment = {
-      id: "",
+      id: '',
       siteLocation: values.siteLocation,
       service: values.service,
       firstDose: firstDose,
       secondDose: secondDose,
     };
     dispatch(registerAppointment(info));
-    console.log("info is=",info)
-    navigate("/appointmentConfirmation");
+    console.log('info is=', info);
+    navigate('/appointment/confirmation');
   };
 
-  const initialValue=appointmentInfo.siteLocation==""?{id:authInfo.username}:{
-    id: authInfo.username,
-    siteLocation: appointmentInfo.siteLocation,
-    service: appointmentInfo.service,
-    firstDose_date: stringToDate(appointmentInfo.firstDose.date),
-    firstDose_time: stringToTime(appointmentInfo.firstDose.time),
-    secondDose_date: stringToDate(appointmentInfo.secondDose.date),
-    secondDose_time: stringToTime(appointmentInfo.secondDose.time),
-  }
-
+  const initialValue =
+    appointmentInfo.siteLocation == ''
+      ? { id: authInfo.username }
+      : {
+          id: authInfo.username,
+          siteLocation: appointmentInfo.siteLocation,
+          service: appointmentInfo.service,
+          firstDose_date: stringToDate(appointmentInfo.firstDose.date),
+          firstDose_time: stringToTime(appointmentInfo.firstDose.time),
+          secondDose_date: stringToDate(appointmentInfo.secondDose.date),
+          secondDose_time: stringToTime(appointmentInfo.secondDose.time),
+        };
 
   //returns true by comparing current with day to be disabled.
-  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     // return true;
-    return current && current < moment().endOf("day");
+    return current && current < moment().endOf('day');
   };
 
   return (
@@ -85,7 +85,7 @@ export const AppointmentScheduleForm: React.FC = () => {
       size={componentSize as SizeType}
       initialValues={initialValue}
     >
-      <Form.Item  label="Form Size" name="size">
+      <Form.Item label="Form Size" name="size">
         <Radio.Group>
           <Radio.Button value="small">Small</Radio.Button>
           <Radio.Button value="default">Default</Radio.Button>
@@ -115,30 +115,27 @@ export const AppointmentScheduleForm: React.FC = () => {
 
       <Form.Item name="firstDose" label="1st Dose">
         <Input.Group compact>
-      <Form.Item name={["firstDose_date"]}>
-
-        <DatePicker
-          disabledDate={disabledDate}
-          dateRender={(current) => {
-            const style: React.CSSProperties = {};
-            //if dateToString(current) equal any of allowed date from "list of allowed date", then
-            if (current.date() % 4 == 0) {
-              style.border = "1px solid blue";
-              style.borderRadius = "50%";
-            }
-            return (
-              <div className="ant-picker-cell-inner" style={style}>
-                {current.date()}
-              </div>
-            );
-          }}
-        />
-        </Form.Item>
-      <Form.Item name={["firstDose_time"]}>
-
-        <TimePicker minuteStep={30} secondStep={10} format="HH:mm"/>
-        </Form.Item>
-
+          <Form.Item name={['firstDose_date']}>
+            <DatePicker
+              disabledDate={disabledDate}
+              dateRender={(current) => {
+                const style: React.CSSProperties = {};
+                //if dateToString(current) equal any of allowed date from "list of allowed date", then
+                if (current.date() % 4 == 0) {
+                  style.border = '1px solid blue';
+                  style.borderRadius = '50%';
+                }
+                return (
+                  <div className="ant-picker-cell-inner" style={style}>
+                    {current.date()}
+                  </div>
+                );
+              }}
+            />
+          </Form.Item>
+          <Form.Item name={['firstDose_time']}>
+            <TimePicker minuteStep={30} secondStep={10} format="HH:mm" />
+          </Form.Item>
         </Input.Group>
       </Form.Item>
 
@@ -164,40 +161,37 @@ export const AppointmentScheduleForm: React.FC = () => {
         <TimePicker use12Hours minuteStep={15} secondStep={10} />
       </Form.Item> */}
 
-<Form.Item name="secondDose" label="1st Dose">
+      <Form.Item name="secondDose" label="1st Dose">
         <Input.Group compact>
-      <Form.Item name={["secondDose_date"]}>
-
-        <DatePicker
-          disabledDate={disabledDate}
-          dateRender={(current) => {
-            const style: React.CSSProperties = {};
-            //if dateToString(current) equal any of allowed date from "list of allowed date", then
-            if (current.date() % 4 == 0) {
-              style.border = "1px solid blue";
-              style.borderRadius = "50%";
-            }
-            return (
-              <div className="ant-picker-cell-inner" style={style}>
-                {current.date()}
-              </div>
-            );
-          }}
-        />
-        </Form.Item>
-      <Form.Item name={["secondDose_time"]}>
-
-        <TimePicker minuteStep={30} secondStep={10} format="HH:mm"/>
-        </Form.Item>
-
+          <Form.Item name={['secondDose_date']}>
+            <DatePicker
+              disabledDate={disabledDate}
+              dateRender={(current) => {
+                const style: React.CSSProperties = {};
+                //if dateToString(current) equal any of allowed date from "list of allowed date", then
+                if (current.date() % 4 == 0) {
+                  style.border = '1px solid blue';
+                  style.borderRadius = '50%';
+                }
+                return (
+                  <div className="ant-picker-cell-inner" style={style}>
+                    {current.date()}
+                  </div>
+                );
+              }}
+            />
+          </Form.Item>
+          <Form.Item name={['secondDose_time']}>
+            <TimePicker minuteStep={30} secondStep={10} format="HH:mm" />
+          </Form.Item>
         </Input.Group>
       </Form.Item>
 
-      <Form.Item label="Button" >
-        <Button type="primary" htmlType="submit">Submit</Button>
+      <Form.Item label="Button">
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
       </Form.Item>
     </Form>
   );
 };
-
-

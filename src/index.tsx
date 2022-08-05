@@ -7,7 +7,6 @@ import reportWebVitals from './reportWebVitals';
 //redux toolkit
 import { store as store2 } from './redux_toolkit/stores/store';
 import { Provider } from 'react-redux';
-import { VaccineForm } from './component/vaccine/VaccineForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

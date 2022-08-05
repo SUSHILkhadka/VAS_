@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DoseDate, Appointment, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
 import { RootState } from '../../redux_toolkit/stores/store';
 import { URL_TO_BACKEND } from '../../constants/common';
-import update, { deleteBackend } from '../../services/backendCall';
+import update, { deleteBackend } from '../../services/backendCallAppointment';
 type SizeType = Parameters<typeof Form>[0]['size'];
 
 export const ManagerAppointmentEditForm: React.FC = () => {

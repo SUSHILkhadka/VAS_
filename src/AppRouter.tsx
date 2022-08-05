@@ -18,7 +18,9 @@ import { makeLoggedIn } from './redux_toolkit/slices/authSlice';
 import ListAllFormsPage from './pages/register/ListsPage';
 import AddVaccinePage from './pages/vaccine/AddVaccinePage';
 import ListAppointmentsPage from './pages/appointment/ListAppointmentsPage';
-import ManagerEditPage from './pages/appointment/ManagerEditPage';
+import ManagerEditPage from './pages/appointment/ManagerAppointmentEditPage';
+import ListVaccinesPage from './pages/vaccine/ListVaccinesPage';
+import ManagerVaccineEditPage from './pages/vaccine/ManagerVaccineEditPage';
 
 const App = () => {
   console.log('nothing');
@@ -50,7 +52,8 @@ const App = () => {
               <Route path="/appointment/list" element={<ListAppointmentsPage />}></Route>
               <Route path="/appointment/edit" element={<ManagerEditPage />}></Route>
               <Route path="/vaccine" element={<AddVaccinePage />}></Route>
-
+              <Route path="/vaccine/list" element={<ListVaccinesPage />}></Route>
+              <Route path="/vaccine/edit" element={<ManagerVaccineEditPage />}></Route>
               <Route path="*" element={<h1>Page not found</h1>}></Route>
             </Routes>
           </div>

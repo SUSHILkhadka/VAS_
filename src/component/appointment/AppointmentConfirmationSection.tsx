@@ -8,7 +8,7 @@ import { resetAppointment } from '../../redux_toolkit/slices/appointmentSlice';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../redux_toolkit/stores/store';
 import { URL_TO_BACKEND } from '../../constants/common';
-import { create } from '../../services/backendCall';
+import { create } from '../../services/backendCallAppointment';
 const { Title, Text } = Typography;
 
 const AppointmentConfirmationSection = () => {

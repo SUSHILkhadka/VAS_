@@ -33,8 +33,8 @@ export const vaccineSlice = createSlice({
   initialState: defaultValue,
   reducers: {
     addVaccine: (state, action) => {
-      if(action.payload.id){
-      state.id=action.payload.id;
+      if (action.payload.id) {
+        state.id = action.payload.id;
       }
       state.serviceName = action.payload.serviceName;
       state.siteLocation = action.payload.siteLocation;

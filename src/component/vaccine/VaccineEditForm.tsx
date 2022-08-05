@@ -1,14 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  message,
-} from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Radio, Select, message } from 'antd';
 import React, { useState } from 'react';
 import { dateToString, stringToDate } from '../../utils/common';
 import type { RangePickerProps } from 'antd/es/date-picker';
@@ -99,7 +90,7 @@ export const VaccineEditForm: React.FC = () => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-     <VaccineForm/>
+      <VaccineForm />
 
       <Form.Item label="Button">
         <Button type="primary" htmlType="submit">
@@ -107,8 +98,8 @@ export const VaccineEditForm: React.FC = () => {
         </Button>
       </Form.Item>
       <Button type="primary" onClick={handleDelete}>
-          Delete from Database
-        </Button>
+        Delete from Database
+      </Button>
     </Form>
   );
 };

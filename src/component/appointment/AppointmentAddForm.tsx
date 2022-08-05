@@ -1,25 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import './UserAppointmentForm.css';
-import { Button, Form, message } from 'antd';
+import { Button, Form } from 'antd';
 import React, { useState } from 'react';
 import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
-import type { RangePickerProps } from 'antd/es/date-picker';
-import moment from 'moment';
-import { useSelector } from 'react-redux';
-import { DoseDate } from '../../redux_toolkit/slices/appointmentSlice';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { DoseDate, Appointment, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
 import { RootState } from '../../redux_toolkit/stores/store';
-import update, { deleteBackend } from '../../services/backendCallAppointment';
 import { AppointmentForm } from './AppointmentForm';
 type SizeType = Parameters<typeof Form>[0]['size'];
 
-export const ManagerAppointmentEditForm: React.FC = () => {
-  const [componentSize] = useState<SizeType | 'default'>('default');
+export const AppointmentAddForm: React.FC = () => {
+  const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
   const authInfo = useSelector((state: RootState) => state.auth);
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onFinish = async (values: any) => {
+  const onFinish = (values: any) => {
+    // console.log("time=",values.firstDose_time.format("HH:mm"))
     const firstDose: DoseDate = {
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
@@ -28,31 +28,22 @@ export const ManagerAppointmentEditForm: React.FC = () => {
       date: dateToString(values.secondDose_date),
       time: timeToString(values.secondDose_time),
     };
-
-    let body = JSON.stringify({
+    const info: Appointment = {
       email: values.email,
       siteLocation: values.siteLocation,
-      serviceName: values.service,
-      firstDoseDate: firstDose.date,
-      firstDoseTime: firstDose.time,
-    });
-
-    const appointment = await update(body, appointmentInfo.id);
-    message.success(`Edit successful. Id is ${appointmentInfo.id}`);
-    navigate('/appointment/list');
-  };
-
-  const handleDelete = async () => {
-    const appointment = await deleteBackend(appointmentInfo.id);
-    message.success(`Delete successful. Id is ${appointmentInfo.id}`);
-    navigate('/appointment/list');
+      service: values.service,
+      firstDose: firstDose,
+      secondDose: secondDose,
+    };
+    dispatch(registerAppointment(info));
+    console.log('info is=', info);
+    navigate('/appointment/confirmation');
   };
 
   const initialValue =
     appointmentInfo.siteLocation == ''
-      ? { id: authInfo.username }
+      ? { email: authInfo.username }
       : {
-          id: appointmentInfo.id,
           email: appointmentInfo.email,
           siteLocation: appointmentInfo.siteLocation,
           service: appointmentInfo.service,
@@ -63,10 +54,6 @@ export const ManagerAppointmentEditForm: React.FC = () => {
         };
 
   //returns true by comparing current with day to be disabled.
-  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    // return true;
-    return current && current < moment().endOf('day');
-  };
 
   return (
     <Form
@@ -81,11 +68,8 @@ export const ManagerAppointmentEditForm: React.FC = () => {
 
       <Form.Item label="Button">
         <Button type="primary" htmlType="submit">
-          Save
+          Submit
         </Button>
-      </Form.Item>
-      <Form.Item label="Button">
-        <Button onClick={handleDelete}>Delete</Button>
       </Form.Item>
     </Form>
   );

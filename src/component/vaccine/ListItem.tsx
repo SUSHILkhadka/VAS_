@@ -30,11 +30,11 @@ const ListItem = (props: obj) => {
       id: props.Obj.id,
       siteLocation: props.Obj.siteLocation,
       serviceName: props.Obj.serviceName,
-      date:date,
-      doseType:props.Obj.doseType,
-      gender:props.Obj.gender,
-      age:props.Obj.age,
-      ethinicity:props.Obj.ethinicity,
+      date: date,
+      doseType: props.Obj.doseType,
+      gender: props.Obj.gender,
+      age: props.Obj.age,
+      ethinicity: props.Obj.ethinicity,
     };
     dispatch(addVaccine(dataForVaccineInfo));
     navigate('/vaccine/edit');

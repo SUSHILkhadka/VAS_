@@ -13,7 +13,7 @@ const ListVaccinesPage = () => {
     const getalldata = async () => {
       const vaccines = await read();
       setData(vaccines);
-      console.log("gotten data",vaccines);
+      console.log('gotten data', vaccines);
     };
     try {
       getalldata();

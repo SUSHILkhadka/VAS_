@@ -1,24 +1,13 @@
-import {
-    Form,
-    Input,
-    Select,
-    DatePicker,
-    Typography,
-    InputNumber,
-    Checkbox,
-    Row,
-    Col,
-    Radio,
-  } from "antd";
-  import React from "react";
-  const { Option } = Select;
-  const { RangePicker } = DatePicker;
-  const { Title } = Typography;
+import { Form, Input, Select, DatePicker, Typography, InputNumber, Checkbox, Row, Col, Radio } from 'antd';
+import React from 'react';
+const { Option } = Select;
+const { RangePicker } = DatePicker;
+const { Title } = Typography;
 const VaccineForm: React.FC = () => {
-    return ( 
-        <React.Fragment>
-            <Form.Item></Form.Item>
-        <Form.Item
+  return (
+    <React.Fragment>
+      <Form.Item></Form.Item>
+      <Form.Item
         label="Service Name"
         name="serviceName"
         rules={[{ required: true, message: 'Please input servicename!' }]}
@@ -74,7 +63,9 @@ const VaccineForm: React.FC = () => {
         rules={[{ required: false, message: 'Please input your ethinicity!' }]}
       >
         <Input placeholder="Ethinicity" />
-      </Form.Item></React.Fragment>)
-}
+      </Form.Item>
+    </React.Fragment>
+  );
+};
 
 export default VaccineForm;

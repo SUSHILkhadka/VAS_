@@ -1,14 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  message,
-} from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Radio, Select, message } from 'antd';
 import React, { useState } from 'react';
 import { dateToString, stringToDate } from '../../utils/common';
 import type { RangePickerProps } from 'antd/es/date-picker';
@@ -55,8 +46,8 @@ export const VaccineAddForm: React.FC = () => {
       ethinicity: values.ethinicity,
     });
 
-    const vaccine=await create(body);
-    console.log("response after vaccine addition:",vaccine);
+    const vaccine = await create(body);
+    console.log('response after vaccine addition:', vaccine);
     message.success(`Addition successful with Id is ${vaccine[0].id}`);
     navigate('/vaccine/list');
   };
@@ -91,7 +82,7 @@ export const VaccineAddForm: React.FC = () => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-     <VaccineForm/>
+      <VaccineForm />
       <Form.Item label="Button">
         <Button type="primary" htmlType="submit">
           Add to database

@@ -1,9 +1,9 @@
-import { AppointmentScheduleForm } from '../../component/appointment/UserAppointmentForm';
+import { AppointmentAddForm } from '../../component/appointment/AppointmentAddForm';
 
 const AppointmentSchedulePage = () => {
   return (
     <div className="giveborder">
-      <AppointmentScheduleForm />
+      <AppointmentAddForm />
     </div>
   );
 };

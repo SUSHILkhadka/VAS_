@@ -90,7 +90,7 @@ const PatientRegisterForm: React.FC = () => {
   }));
 
   const initialvalue =
-    registerInfo.firstName == 'defaultfromslice'
+    registerInfo.firstName == ''
       ? {}
       : {
           firstName: registerInfo.firstName,

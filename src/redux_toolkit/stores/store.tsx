@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authReducer } from '../slices/authSlice';
 import { registerReducer } from '../slices/registerSlice';
 import { appointmentReducer } from '../slices/appointmentSlice';
+import { vaccineReducer } from '../slices/vaccineSlice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     register: registerReducer,
     appointment: appointmentReducer,
+    vaccine: vaccineReducer,
   },
 });
 

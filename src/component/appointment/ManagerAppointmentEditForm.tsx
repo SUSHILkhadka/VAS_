@@ -1,18 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import './UserAppointmentForm.css';
-import {
-  Button,
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Switch,
-  TimePicker,
-  TreeSelect,
-} from 'antd';
+import { Button, DatePicker, Form, Input, Select, TimePicker, message } from 'antd';
 import React, { useState } from 'react';
 import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
 import type { RangePickerProps } from 'antd/es/date-picker';
@@ -20,18 +8,18 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { DoseDate, Appointment, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
 import { RootState } from '../../redux_toolkit/stores/store';
+import { URL_TO_BACKEND } from '../../constants/common';
+import update, { deleteBackend } from '../../services/backendCall';
 type SizeType = Parameters<typeof Form>[0]['size'];
 
-export const AppointmentScheduleForm: React.FC = () => {
-  const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
+export const ManagerAppointmentEditForm: React.FC = () => {
+  const [componentSize] = useState<SizeType | 'default'>('default');
 
   const authInfo = useSelector((state: RootState) => state.auth);
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
-    // console.log("time=",values.firstDose_time.format("HH:mm"))
+  const onFinish = async (values: any) => {
     const firstDose: DoseDate = {
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
@@ -40,22 +28,31 @@ export const AppointmentScheduleForm: React.FC = () => {
       date: dateToString(values.secondDose_date),
       time: timeToString(values.secondDose_time),
     };
-    const info: Appointment = {
+
+    let body = JSON.stringify({
       email: values.email,
       siteLocation: values.siteLocation,
-      service: values.service,
-      firstDose: firstDose,
-      secondDose: secondDose,
-    };
-    dispatch(registerAppointment(info));
-    console.log('info is=', info);
-    navigate('/appointment/confirmation');
+      serviceName: values.service,
+      firstDoseDate: firstDose.date,
+      firstDoseTime: firstDose.time,
+    });
+
+    const appointment = await update(body, appointmentInfo.id);
+    message.success(`Edit successful. Id is ${appointmentInfo.id}`);
+    navigate('/appointment/list');
+  };
+
+  const handleDelete = async () => {
+    const appointment = await deleteBackend(appointmentInfo.id);
+    message.success(`Delete successful. Id is ${appointmentInfo.id}`);
+    navigate('/appointment/list');
   };
 
   const initialValue =
     appointmentInfo.siteLocation == ''
-      ? { email: authInfo.username }
+      ? { id: authInfo.username }
       : {
+          id: appointmentInfo.id,
           email: appointmentInfo.email,
           siteLocation: appointmentInfo.siteLocation,
           service: appointmentInfo.service,
@@ -80,6 +77,9 @@ export const AppointmentScheduleForm: React.FC = () => {
       size={componentSize as SizeType}
       initialValues={initialValue}
     >
+      <Form.Item name="id" label="ID">
+        <Input />
+      </Form.Item>
       <Form.Item name="email" label="EMAIL">
         <Input />
       </Form.Item>
@@ -176,8 +176,11 @@ export const AppointmentScheduleForm: React.FC = () => {
 
       <Form.Item label="Button">
         <Button type="primary" htmlType="submit">
-          Submit
+          Save
         </Button>
+      </Form.Item>
+      <Form.Item label="Button">
+        <Button onClick={handleDelete}>Delete</Button>
       </Form.Item>
     </Form>
   );

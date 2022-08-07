@@ -17,7 +17,7 @@ const ListItem = (props: obj) => {
   const navigate = useNavigate();
 
   console.log('in appointment single list ', props);
-  const handleFormSelection = () => {
+  const handleSelection = () => {
     const firstDose: DoseDate = {
       date: props.Obj.firstDoseDate,
       time: props.Obj.firstDoseTime,
@@ -35,10 +35,11 @@ const ListItem = (props: obj) => {
   };
   return (
     <div>
-      <button onClick={handleFormSelection}>
+      <button onClick={handleSelection}>
         {' '}
         <h2>id:{props.Obj.id}</h2>
         <h5>email:{props.Obj.email}</h5>
+        
       </button>
     </div>
   );

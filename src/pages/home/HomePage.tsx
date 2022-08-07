@@ -12,13 +12,15 @@ const HomePage = () => {
     if (loginStatus == false) {
       navigate('/loginpage');
     }
-  }, [navigate]);
+  }, []);
 
   return (
     <div>
       Logged In Successfully
       <div> Login Status = {`${auth.login}`}</div>
       <div>User name= {auth.username}</div>
+      <div>password= {auth.password}</div>
+      <div>accessTOken= {auth.accessToken}</div>
     </div>
   );
 };

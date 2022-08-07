@@ -1,6 +1,9 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { getLogStatus } from './services/getLocalData';
+import { useSelector,useDispatch } from 'react-redux';
+import { RootState } from './redux_toolkit/stores/store';
+import { makeLoggedIn, makeLoggedInWithInfo } from './redux_toolkit/slices/authSlice';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { getAuthObj, getLogStatus } from './services/getLocalData';
 import { NavBar, NavBarForLandingPage } from './component/NavBar';
 import LogInPage from './pages/login/LogInPage';
 import AboutPage from './pages/about/AboutPage';
@@ -11,34 +14,35 @@ import RegisterPage from './pages/register/RegisterPage';
 import { AppointmentConfirmationPage } from './pages/appointment/AppointmentConfirmationPage';
 import RegisterConfirmationPage from './pages/register/RegisterConfirmationPage';
 import AppointmentSchedulePage from './pages/appointment/AppointSchedulePage';
-import { useSelector } from 'react-redux';
-import { RootState } from './redux_toolkit/stores/store';
-import { useDispatch } from 'react-redux';
-import { makeLoggedIn } from './redux_toolkit/slices/authSlice';
 import ListAllFormsPage from './pages/register/ListsPage';
 import AddVaccinePage from './pages/vaccine/AddVaccinePage';
 import ListAppointmentsPage from './pages/appointment/ListAppointmentsPage';
 import ManagerEditPage from './pages/appointment/ManagerAppointmentEditPage';
 import ListVaccinesPage from './pages/vaccine/ListVaccinesPage';
 import ManagerVaccineEditPage from './pages/vaccine/ManagerVaccineEditPage';
+import MainRegisterPage from './pages/login/MainRegisterPage';
 
 const App = () => {
   console.log('nothing');
   const authInfo = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   if (getLogStatus() == true) {
+
+    const body=getAuthObj();
+    console.log('body from local storage=',body)
+    dispatch(makeLoggedInWithInfo(JSON.parse(body)));
     dispatch(makeLoggedIn());
+
   }
 
   return (
-    <div>
       <Router>
         <div className="App">
-          <div>
             <div>Vaccination Appointment Scheduling</div>
             {authInfo.login == false ? <NavBarForLandingPage /> : <NavBar />}
             <Routes>
               <Route path="/" element={<LogInPage />}></Route>
+              <Route path="/mainregister" element={<MainRegisterPage />}></Route>
               <Route path="/loginpage" element={<LogInPage />}></Route>
               <Route path="/about" element={<AboutPage />}></Route>
               <Route path="/homepage" element={<HomePage />}></Route>
@@ -57,9 +61,7 @@ const App = () => {
               <Route path="*" element={<h1>Page not found</h1>}></Route>
             </Routes>
           </div>
-        </div>
       </Router>
-    </div>
   );
 };
 export default App;

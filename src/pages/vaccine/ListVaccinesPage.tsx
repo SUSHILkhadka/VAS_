@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import ListItem from '../../component/vaccine/ListItem';
-import { RootState } from '../../redux_toolkit/stores/store';
-import { read } from '../../services/backendCallVaccine';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import VaccineTable from "../../component/vaccine/VaccineTable";
+import { RootState } from "../../redux_toolkit/stores/store";
+import { read } from "../../services/backendCallVaccine";
 
 const ListVaccinesPage = () => {
   const vaccineInfo = useSelector((state: RootState) => state.vaccine);
@@ -13,12 +13,13 @@ const ListVaccinesPage = () => {
     const getalldata = async () => {
       const vaccines = await read();
       setData(vaccines);
-      console.log('gotten data', vaccines);
+      console.log("gotten data", vaccines);
     };
+    
     try {
       getalldata();
     } catch {
-      console.log('fetching vaccines failed');
+      console.log("fetching vaccines failed");
     }
   }, []);
 
@@ -27,9 +28,7 @@ const ListVaccinesPage = () => {
     <div>Loading</div>
   ) : (
     <div className="App">
-      {data.map((value) => (
-        <ListItem Obj={value} />
-      ))}
+      <VaccineTable Obj={data} />
     </div>
   );
 };

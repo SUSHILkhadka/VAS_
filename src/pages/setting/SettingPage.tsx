@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
-import { changeName } from '../../redux_toolkit/slices/authSlice';
+// import { changeName } from '../../redux_toolkit/slices/authSlice';
 
 import { setName } from '../../services/getLocalData';
 const SettingPage = () => {
@@ -16,7 +16,7 @@ const SettingPage = () => {
   const saveName = (event: any) => {
     event.preventDefault();
     //redux toolkit
-    dispatch(changeName(event.target.nameArea.value));
+    // dispatch(changeName(event.target.nameArea.value));
     setName(event.target.nameArea.value);
   };
   return (

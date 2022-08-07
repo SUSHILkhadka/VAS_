@@ -37,8 +37,8 @@ export const NavBar = () => {
 export const NavBarForLandingPage = () => {
   return (
     <div className="">
-      <Link className="navbar" to="/register">
-        Client Patient Register Page
+      <Link className="navbar" to="/mainregister">
+        Main Register Page
       </Link>
       <Link className="navbar" to="/loginpage">
         LoginPage

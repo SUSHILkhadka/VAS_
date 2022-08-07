@@ -27,6 +27,9 @@ export const NavBar = () => {
       <Link className="navbar" to="/vaccine">
         Add Vaccine
       </Link>
+      <Link className="navbar" to="/vaccine/list">
+        List all vaccines
+      </Link>
     </div>
   );
 };

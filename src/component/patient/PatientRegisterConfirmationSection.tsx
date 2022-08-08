@@ -1,22 +1,42 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Divider, Col, Row, Button, message } from 'antd';
-import { reset } from '../../redux_toolkit/slices/registerSlice';
+import { resetPatient } from '../../redux_toolkit/slices/patientSlice';
 import { RootState } from '../../redux_toolkit/stores/store';
+import { create } from '../../services/backendCallPatient';
 const { Title, Text } = Typography;
 
 const PatientRegisterConfirmationSection = () => {
   const navigate = useNavigate();
-  const patientData = useSelector((state: RootState) => state.register);
+  const patientInfo = useSelector((state: RootState) => state.patient);
   const dispatch = useDispatch();
 
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
     // add data to DB here
     //get unique documentid and display it.
-    message.success(`Registration successful`);
-    dispatch(reset());
-    navigate('/');
+    let body = JSON.stringify({
+      firstName: patientInfo.firstName,
+      secondName: patientInfo.secondName,
+      birthDate: patientInfo.birthDate,
+      ethnicity: patientInfo.ethnicity,
+      gender: patientInfo.gender,
+      email: patientInfo.email,
+      addressState: patientInfo.address.state,
+      addressCity: patientInfo.address.city,
+      addressStreet: patientInfo.address.street,
+      paymentMethod: patientInfo.paymentMethod,
+      insuranceProvider: patientInfo.insuranceProvider,
+    });
+
+    try {
+      const patient = await create(body);
+      console.log(patient);
+      message.success(`Registration successful. Id is ${patient[0].id}`);
+      dispatch(resetPatient());
+      navigate('/patient/list');
+    } catch {
+      message.error(`error adding confirmation`);
+    }
   };
 
   return (
@@ -30,43 +50,43 @@ const PatientRegisterConfirmationSection = () => {
           <Title level={5}>
             First name:{' '}
             <Text type="secondary" italic>
-              {patientData.firstName + ' ' + patientData.secondName}
+              {patientInfo.firstName + ' ' + patientInfo.secondName}
             </Text>
           </Title>
           <Title level={5}>
             Email:{' '}
             <Text type="secondary" italic>
-              {patientData.email}
+              {patientInfo.email}
             </Text>
           </Title>
           <Title level={5}>
             DOB:{' '}
             <Text type="secondary" italic>
-              {patientData.birthDate}
+              {patientInfo.birthDate}
             </Text>
           </Title>
           <Title level={5}>
             Ethnicity:{' '}
             <Text type="secondary" italic>
-              {patientData.ethnicity}
+              {patientInfo.ethnicity}
             </Text>
           </Title>
           <Title level={5}>
             Gender:{' '}
             <Text type="secondary" italic>
-              {patientData.gender}
+              {patientInfo.gender}
             </Text>
           </Title>
           <Title level={5}>
             Address:{' '}
             <Text type="secondary" italic>
-              {patientData.address.state}, {patientData.address.city}, {patientData.address.street}
+              {patientInfo.address.state}, {patientInfo.address.city}, {patientInfo.address.street}
             </Text>
           </Title>
           <Title level={5}>
             Payment:{' '}
             <Text type="secondary" italic>
-              {patientData.paymentMethod}, {patientData.insuranceProvider}
+              {patientInfo.paymentMethod}, {patientInfo.insuranceProvider}
             </Text>
           </Title>
         </Col>

@@ -2,9 +2,9 @@ import { Button, Checkbox, Form, Input, message } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../../pages/home/HomePage';
-import { setAuthObj, setLogStatus, setName } from '../../services/getLocalData';
+import { setAuthObj, setLogStatus } from '../../services/getLocalData';
 import { useSelector, useDispatch } from 'react-redux';
-import {  makeLoggedInWithInfo } from '../../redux_toolkit/slices/authSlice';
+import { makeLoggedInWithInfo } from '../../redux_toolkit/slices/authSlice';
 import { login } from '../../services/backendCallUser';
 
 const LoginForm: React.FC = () => {
@@ -12,37 +12,35 @@ const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onFinish = async (values: any) => {
-    const body=JSON.stringify({
+    const body = JSON.stringify({
       email: values.username,
       password: values.password,
-    })
+    });
 
-    try{
-    const response=await login(body);
-    console.log("login response",response);
+    try {
+      const response = await login(body);
+      console.log('login response', response);
 
-    if(!response.data){
-      message.error(`${response.message}`)
+      if (!response.data) {
+        message.error(`${response.message}`);
+      } else {
+        message.success(`${response.message}`);
+        dispatch(makeLoggedInWithInfo(response));
+
+        setAuthObj(JSON.stringify(response));
+        setLogStatus(true);
+        navigate('/homepage', { replace: true });
+      }
+    } catch {
+      message.success(`error logging in`);
     }
-    else{
-      message.success(`${response.message}`)
-      dispatch(makeLoggedInWithInfo(response));
-
-      setAuthObj(JSON.stringify(response));
-      setLogStatus(true);
-      navigate('/homepage', { replace: true });
-    }
-  }
-  catch{
-    message.success(`error logging in`)
-  }
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
-  return auth?.login == false ? (
+  return !auth?.login ? (
     <Form
       name="basic"
       labelCol={{ span: 8 }}

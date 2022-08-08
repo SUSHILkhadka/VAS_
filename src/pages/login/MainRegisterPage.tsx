@@ -1,4 +1,4 @@
-import MainRegisterForm from "../../component/register/MainRegisterForm";
+import MainRegisterForm from '../../component/patient/MainRegisterForm';
 
 const MainRegisterPage = () => {
   return (

@@ -1,19 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import './UserAppointmentForm.css';
-import {
-  Button,
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Switch,
-  TimePicker,
-  TreeSelect,
-} from 'antd';
+import { DatePicker, Form, Input, Select, TimePicker } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import moment from 'moment';
 export const AppointmentForm: React.FC = () => {
@@ -51,7 +38,7 @@ export const AppointmentForm: React.FC = () => {
               dateRender={(current) => {
                 const style: React.CSSProperties = {};
                 //if dateToString(current) equal any of allowed date from "list of allowed date", then
-                if (current.date() % 4 == 0) {
+                if (current.date() % 2 == 0) {
                   style.border = '1px solid blue';
                   style.borderRadius = '50%';
                 }

@@ -1,13 +1,13 @@
-import LoginForm from "../../component/login/LoginForm";
-import { getLogStatus, getName } from "../../services/getLocalData";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import LoginForm from '../../component/login/LoginForm';
+import { getLogStatus } from '../../services/getLocalData';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const LogInPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (getLogStatus() == true) {
-      navigate("/homepage", { replace: true });
+    if (getLogStatus()) {
+      navigate('/homepage', { replace: true });
     }
   }, []);
   return (

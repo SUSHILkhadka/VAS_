@@ -8,10 +8,8 @@ import { DoseDate } from '../../redux_toolkit/slices/appointmentSlice';
 import { RootState } from '../../redux_toolkit/stores/store';
 import update, { deleteBackend } from '../../services/backendCallAppointment';
 import { AppointmentForm } from './AppointmentForm';
-type SizeType = Parameters<typeof Form>[0]['size'];
 
-export const ManagerAppointmentEditForm: React.FC = () => {
-  const [componentSize] = useState<SizeType | 'default'>('default');
+export const AppointmentEditForm: React.FC = () => {
   const authInfo = useSelector((state: RootState) => state.auth);
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const navigate = useNavigate();
@@ -20,10 +18,11 @@ export const ManagerAppointmentEditForm: React.FC = () => {
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
     };
-    const secondDose: DoseDate = {
-      date: dateToString(values.secondDose_date),
-      time: timeToString(values.secondDose_time),
-    };
+
+    // const secondDose: DoseDate = {
+    //   date: dateToString(values.secondDose_date),
+    //   time: timeToString(values.secondDose_time),
+    // };
 
     let body = JSON.stringify({
       email: values.email,
@@ -33,23 +32,24 @@ export const ManagerAppointmentEditForm: React.FC = () => {
       firstDoseTime: firstDose.time,
     });
 
-    try{
-    const appointment = await update(body, appointmentInfo.id);
-    message.success(`Edit successful. Id is ${appointmentInfo.id}`);
-    navigate('/appointment/list');
-    }catch{
-      message.error('error editing')
+    try {
+      const appointment = await update(body, appointmentInfo.id);
+      console.log(appointment);
+      message.success(`Edit successful. Id is ${appointmentInfo.id}`);
+      navigate('/appointment/list');
+    } catch {
+      message.error('error editing');
     }
   };
 
   const handleDelete = async () => {
-    try{
-    const appointment = await deleteBackend(appointmentInfo.id);
-    message.success(`Delete successful. Id is ${appointmentInfo.id}`);
-    navigate('/appointment/list');
-    }
-    catch{
-      message.error('error')
+    try {
+      const appointment = await deleteBackend(appointmentInfo.id);
+      console.log(appointment);
+      message.success(`Delete successful. Id is ${appointmentInfo.id}`);
+      navigate('/appointment/list');
+    } catch {
+      message.error('error');
     }
   };
 
@@ -72,7 +72,6 @@ export const ManagerAppointmentEditForm: React.FC = () => {
       wrapperCol={{ span: 14 }}
       onFinish={onFinish}
       layout="horizontal"
-      size={componentSize as SizeType}
       initialValues={initialValue}
     >
       <AppointmentForm />

@@ -4,14 +4,21 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { DoseDate, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
+import { Address, Patient, register } from '../../redux_toolkit/slices/patientSlice';
 
 interface DataType {
-  id?: string;
+  id: string;
+  firstName: string;
+  secondName: string;
+  birthDate: string;
+  gender: string;
+  ethnicity: string;
   email: string;
-  siteLocation: string;
-  serviceName: string;
-  firstDoseDate: string;
-  firstDoseTime: string;
+  addressState: string;
+  addressCity: string;
+  addressStreet: string;
+  paymentMethod: string;
+  insuranceProvider: string;
 }
 
 type TablePaginationPosition = 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
@@ -25,30 +32,40 @@ const bottomOptions = [
 
 const columns: ColumnsType<DataType> = [
   {
-    title: 'service',
-    dataIndex: 'serviceName',
-    key: 'serviceName',
+    title: 'Patient ID',
+    dataIndex: 'id',
+    key: 'id',
     render: (text) => <a>{text}</a>,
   },
   {
-    title: 'siteLocation',
-    dataIndex: 'siteLocation',
-    key: 'siteLocation',
+    title: 'firstName',
+    dataIndex: 'firstName',
+    key: 'firstName',
   },
   {
-    title: 'firstDoseDate',
-    dataIndex: 'firstDoseDate',
-    key: 'firstDoseDate',
+    title: 'secondName',
+    dataIndex: 'secondName',
+    key: 'secondName',
   },
   {
-    title: 'firstDoseTime',
-    dataIndex: 'firstDoseTime',
-    key: 'firstDoseTime',
+    title: 'birthDate',
+    dataIndex: 'birthDate',
+    key: 'birthDate',
   },
   {
-    title: 'id',
-    dataIndex: 'id',
-    key: 'id',
+    title: 'gender',
+    dataIndex: 'gender',
+    key: 'gender',
+  },
+  {
+    title: 'email',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'ethnicity',
+    dataIndex: 'ethnicity',
+    key: 'ethnicity',
   },
 ];
 
@@ -56,7 +73,7 @@ type TT = {
   Obj: DataType[];
 };
 
-const AppointmentTable = (props: TT) => {
+const PatientTable = (props: TT) => {
   const [bottom, setBottom] = useState<TablePaginationPosition>('bottomRight');
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -73,20 +90,25 @@ const AppointmentTable = (props: TT) => {
       <Table
         onRow={(Obj, _rowIndex) => {
           const handleFormSelection = (): void => {
-            const firstDose: DoseDate = {
-              date: Obj.firstDoseDate,
-              time: Obj.firstDoseTime,
+            const address: Address = {
+              state: Obj.addressState,
+              city: Obj.addressCity,
+              street: Obj.addressStreet,
             };
-            const dataForAppointmentInfo = {
-              id: Obj.id,
+            const dataForPatientInfo: Patient = {
+              id: +Obj.id,
+              firstName: Obj.firstName,
+              secondName: Obj.secondName,
+              birthDate: Obj.birthDate,
+              ethnicity: Obj.ethnicity,
+              gender: Obj.gender,
               email: Obj.email,
-              siteLocation: Obj.siteLocation,
-              service: Obj.serviceName,
-              firstDose: firstDose,
-              secondDose: firstDose,
+              address: address,
+              paymentMethod: Obj.paymentMethod,
+              insuranceProvider: Obj.insuranceProvider,
             };
-            dispatch(registerAppointment(dataForAppointmentInfo));
-            navigate('/appointment/edit');
+            dispatch(register(dataForPatientInfo));
+            navigate('/patient/edit');
           };
           return {
             onClick: handleFormSelection,
@@ -100,4 +122,4 @@ const AppointmentTable = (props: TT) => {
   );
 };
 
-export default AppointmentTable;
+export default PatientTable;

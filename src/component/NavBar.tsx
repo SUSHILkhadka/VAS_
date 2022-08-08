@@ -6,8 +6,11 @@ export const NavBar = () => {
       <Link className="navbar" to="/homepage">
         Home
       </Link>
-      <Link className="navbar" to="/register/list">
-        Client Patient List All Page
+      <Link className="navbar" to="/patient">
+        Patient Register Page
+      </Link>
+      <Link className="navbar" to="/patient/list">
+        Patient List All Page
       </Link>
       <Link className="navbar" to="/about">
         About

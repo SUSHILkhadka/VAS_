@@ -45,11 +45,15 @@ export const VaccineAddForm: React.FC = () => {
       age: values.age,
       ethinicity: values.ethinicity,
     });
-
+try{
     const vaccine = await create(body);
     console.log('response after vaccine addition:', vaccine);
     message.success(`Addition successful with Id is ${vaccine[0].id}`);
     navigate('/vaccine/list');
+}
+catch{
+  message.error('error adding vaccine to database')
+}
   };
   const onFinishFailed = (values: any) => {
     console.log('fill all values');

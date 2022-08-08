@@ -54,7 +54,15 @@ export const registerSlice = createSlice({
       state.insuranceProvider = action.payload.insuranceProvider;
     },
     reset: (state) => {
-      state = defaultRegisterInfo;
+      state.firstName = '';
+      state.secondName = '';
+      state.birthDate = '';
+      state.ethnicity = '';
+      state.gender = '';
+      state.email = '';
+      state.address = defaultAddress;
+      state.paymentMethod = '';
+      state.insuranceProvider = '';
     },
   },
 });

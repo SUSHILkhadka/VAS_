@@ -1,0 +1,6 @@
+projectKey=vas_frontend
+serverUrl=http://localhost:9000
+serverVersion=9.5.0.56709
+dashboardUrl=http://localhost:9000/dashboard?id=vas_frontend
+ceTaskId=AYJ8H0FI9nyieRe5cFqx
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYJ8H0FI9nyieRe5cFqx

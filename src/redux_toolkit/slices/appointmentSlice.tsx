@@ -42,7 +42,12 @@ export const appointmentSlice = createSlice({
       state.secondDose = action.payload.secondDose;
     },
     resetAppointment: (state: Appointment) => {
-      state = defaultValue;
+      state.id='';
+      state.email = "";
+      state.siteLocation = '';
+      state.service = '';
+      state.firstDose = defaultDoseDate;
+      state.secondDose = defaultDoseDate;
     },
   },
 });

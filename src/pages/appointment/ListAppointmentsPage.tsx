@@ -13,15 +13,16 @@ const ListAppointmentsPage = () => {
 
   useEffect(() => {
     const getalldata = async () => {
+      try{
       const appointments = await read();
       setData(appointments);
-      console.log("appointent is",appointments);
+      console.log("appointent is ",appointments);
+      }
+      catch{
+        
+      }
     };
-    try {
       getalldata();
-    } catch {
-      console.log('fetching failed');
-    }
   }, []);
 
   //get length of list

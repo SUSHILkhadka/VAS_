@@ -25,15 +25,16 @@ const AppointmentConfirmationSection = () => {
       firstDoseTime: appointmentInfo.firstDose.time,
     });
 
+    try{
     const appointment = await create(body);
     console.log(appointment);
-
-    // }
-
-    //get unique documentid and display it.
     message.success(`Registration successful. Id is ${appointment[0].id}`);
     dispatch(resetAppointment());
     navigate('/homepage');
+    }
+    catch{
+    message.success(`error adding confirmation`);
+    }
   };
   return (
     <div className="giveborder">

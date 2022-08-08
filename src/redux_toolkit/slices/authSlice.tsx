@@ -21,10 +21,6 @@ export const authSlice = createSlice({
   reducers: {
     makeLoggedIn: (state) => {
       state.login = true;
-      // state.username=action.payload.username;
-      // state.email=action.payload.email;
-      // state.password=action.payload.password;
-      // state.accessToken=action.payload.accessToken;
     },
     makeLoggedInWithInfo: (state,action) => {
       state.login = true;
@@ -41,7 +37,6 @@ export const authSlice = createSlice({
       state.accessToken='';
     },
     changeName: (state, action) => {
-      state.login = state.login;
       state.username = action.payload;
     },
   },

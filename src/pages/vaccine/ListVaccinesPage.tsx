@@ -11,16 +11,18 @@ const ListVaccinesPage = () => {
 
   useEffect(() => {
     const getalldata = async () => {
+      try{
       const vaccines = await read();
       setData(vaccines);
       console.log("gotten data", vaccines);
+      }
+      catch{
+        console.log("error reading data")
+      }
+      getalldata();
     };
     
-    try {
-      getalldata();
-    } catch {
-      console.log("fetching vaccines failed");
-    }
+
   }, []);
 
   //get length of list

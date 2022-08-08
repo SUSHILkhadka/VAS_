@@ -49,18 +49,29 @@ export const VaccineEditForm: React.FC = () => {
       ethinicity: values.ethinicity,
     });
 
+    try{
     const appointment = await update(body, vaccineInfo.id);
     message.success(`Edit successful. Id is ${vaccineInfo.id}`);
     navigate('/vaccine/list');
+    }
+    catch{
+    message.error(`error editing`);
+
+    }
   };
   const onFinishFailed = (values: any) => {
     console.log('fill all values');
   };
 
   const handleDelete = async () => {
+    try{
     const vaccine = await deleteBackend(vaccineInfo.id);
     message.success(`Delete successful. Id is ${vaccineInfo.id}`);
     navigate('/vaccine/list');
+    }
+    catch{
+    message.error(`error deleting`);
+    }
   };
   console.log('vaccine from redux', vaccineInfo);
   const initialValue =

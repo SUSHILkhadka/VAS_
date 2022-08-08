@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import HomePage from '../../pages/home/HomePage';
 import { setAuthObj, setLogStatus, setName } from '../../services/getLocalData';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeLoggedIn, makeLoggedInWithInfo } from '../../redux_toolkit/slices/authSlice';
-import Password from 'antd/lib/input/Password';
+import {  makeLoggedInWithInfo } from '../../redux_toolkit/slices/authSlice';
 import { login } from '../../services/backendCallUser';
 
 const LoginForm: React.FC = () => {
@@ -13,13 +12,12 @@ const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onFinish = async (values: any) => {
-
-
     const body=JSON.stringify({
       email: values.username,
       password: values.password,
     })
 
+    try{
     const response=await login(body);
     console.log("login response",response);
 
@@ -34,6 +32,10 @@ const LoginForm: React.FC = () => {
       setLogStatus(true);
       navigate('/homepage', { replace: true });
     }
+  }
+  catch{
+    message.success(`error logging in`)
+  }
   };
 
   const onFinishFailed = (errorInfo: any) => {

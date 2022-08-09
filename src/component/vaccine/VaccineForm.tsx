@@ -1,8 +1,7 @@
-import { Form, Input, Select, DatePicker, Typography, InputNumber, Checkbox, Row, Col, Radio } from 'antd';
+import { Form, Input, Select, DatePicker, InputNumber, Radio } from 'antd';
 import React from 'react';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-const { Title } = Typography;
 const VaccineForm: React.FC = () => {
   return (
     <React.Fragment>
@@ -51,7 +50,7 @@ const VaccineForm: React.FC = () => {
         <Radio.Group>
           <Radio value="male">Male</Radio>
           <Radio value="female">Female</Radio>
-          <Radio value="other">Both</Radio>
+          <Radio value="both">Both</Radio>
         </Radio.Group>
       </Form.Item>
       <Form.Item label="Age" name="age" rules={[{ required: false, message: 'Please input your age!' }]}>

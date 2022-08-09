@@ -16,3 +16,10 @@ export function setLogStatus(loggedIn: boolean): void {
 export function setName(name: any): void {
   localStorage.setItem('displayName', name);
 }
+export function setAuthObj(body: string): void {
+  localStorage.setItem('auth', body);
+}
+export function getAuthObj(): any {
+  const obj = localStorage.getItem('auth');
+  return obj ? obj : '';
+}

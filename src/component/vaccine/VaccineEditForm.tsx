@@ -1,23 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, DatePicker, Form, Input, InputNumber, Radio, Select, message } from 'antd';
-import React, { useState } from 'react';
+import { Button, Form, Select, message } from 'antd';
+import React from 'react';
 import { dateToString, stringToDate } from '../../utils/common';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
-import { DoseDate, Appointment, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../redux_toolkit/stores/store';
-import { addVaccine, DateRange, Vaccine } from '../../redux_toolkit/slices/vaccineSlice';
-import update, { create, deleteBackend } from '../../services/backendCallVaccine';
+import { DateRange, Vaccine } from '../../redux_toolkit/slices/vaccineSlice';
+import update, { deleteBackend } from '../../services/backendCallVaccine';
 import VaccineForm from './VaccineForm';
-type SizeType = Parameters<typeof Form>[0]['size'];
-const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 export const VaccineEditForm: React.FC = () => {
   const vaccineInfo = useSelector((state: RootState) => state.vaccine);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const onFinish = async (values: any) => {
     console.log('vaccineinfo', vaccineInfo);
@@ -35,7 +31,6 @@ export const VaccineEditForm: React.FC = () => {
       ethinicity: values.ethinicity,
     };
     console.log('data=', data);
-    // dispatch(addVaccine(data));
 
     //write to database
     const body = JSON.stringify({
@@ -49,18 +44,29 @@ export const VaccineEditForm: React.FC = () => {
       ethinicity: values.ethinicity,
     });
 
-    const appointment = await update(body, vaccineInfo.id);
-    message.success(`Edit successful. Id is ${vaccineInfo.id}`);
-    navigate('/vaccine/list');
+    try {
+      const vaccine = await update(body, vaccineInfo.id);
+      console.log(vaccine);
+      message.success(`Edit successful. Id is ${vaccineInfo.id}`);
+      navigate('/vaccine/list');
+    } catch {
+      message.error(`error editing`);
+    }
   };
-  const onFinishFailed = (values: any) => {
+  const onFinishFailed = (_values: any) => {
     console.log('fill all values');
   };
 
   const handleDelete = async () => {
-    const vaccine = await deleteBackend(vaccineInfo.id);
-    message.success(`Delete successful. Id is ${vaccineInfo.id}`);
-    navigate('/vaccine/list');
+    try {
+      const vaccine = await deleteBackend(vaccineInfo.id);
+      console.log(vaccine);
+
+      message.success(`Delete successful. Id is ${vaccineInfo.id}`);
+      navigate('/vaccine/list');
+    } catch {
+      message.error(`error deleting`);
+    }
   };
   console.log('vaccine from redux', vaccineInfo);
   const initialValue =
@@ -75,11 +81,7 @@ export const VaccineEditForm: React.FC = () => {
           age: vaccineInfo.age,
           ethinicity: vaccineInfo.ethinicity,
         };
-  //returns true by comparing current with day to be disabled.
-  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    // return true;
-    return current && current < moment().endOf('day');
-  };
+
   const [form] = Form.useForm();
   return (
     <Form

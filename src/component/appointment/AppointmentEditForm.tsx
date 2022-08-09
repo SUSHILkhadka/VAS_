@@ -3,31 +3,26 @@ import './UserAppointmentForm.css';
 import { Button, Form, message } from 'antd';
 import React, { useState } from 'react';
 import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
-import type { RangePickerProps } from 'antd/es/date-picker';
-import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { DoseDate } from '../../redux_toolkit/slices/appointmentSlice';
 import { RootState } from '../../redux_toolkit/stores/store';
 import update, { deleteBackend } from '../../services/backendCallAppointment';
 import { AppointmentForm } from './AppointmentForm';
-type SizeType = Parameters<typeof Form>[0]['size'];
 
-export const ManagerAppointmentEditForm: React.FC = () => {
-  const [componentSize] = useState<SizeType | 'default'>('default');
-
+export const AppointmentEditForm: React.FC = () => {
   const authInfo = useSelector((state: RootState) => state.auth);
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const navigate = useNavigate();
-
   const onFinish = async (values: any) => {
     const firstDose: DoseDate = {
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
     };
-    const secondDose: DoseDate = {
-      date: dateToString(values.secondDose_date),
-      time: timeToString(values.secondDose_time),
-    };
+
+    // const secondDose: DoseDate = {
+    //   date: dateToString(values.secondDose_date),
+    //   time: timeToString(values.secondDose_time),
+    // };
 
     let body = JSON.stringify({
       email: values.email,
@@ -37,15 +32,25 @@ export const ManagerAppointmentEditForm: React.FC = () => {
       firstDoseTime: firstDose.time,
     });
 
-    const appointment = await update(body, appointmentInfo.id);
-    message.success(`Edit successful. Id is ${appointmentInfo.id}`);
-    navigate('/appointment/list');
+    try {
+      const appointment = await update(body, appointmentInfo.id);
+      console.log(appointment);
+      message.success(`Edit successful. Id is ${appointmentInfo.id}`);
+      navigate('/appointment/list');
+    } catch {
+      message.error('error editing');
+    }
   };
 
   const handleDelete = async () => {
-    const appointment = await deleteBackend(appointmentInfo.id);
-    message.success(`Delete successful. Id is ${appointmentInfo.id}`);
-    navigate('/appointment/list');
+    try {
+      const appointment = await deleteBackend(appointmentInfo.id);
+      console.log(appointment);
+      message.success(`Delete successful. Id is ${appointmentInfo.id}`);
+      navigate('/appointment/list');
+    } catch {
+      message.error('error');
+    }
   };
 
   const initialValue =
@@ -61,24 +66,15 @@ export const ManagerAppointmentEditForm: React.FC = () => {
           secondDose_date: stringToDate(appointmentInfo.secondDose.date),
           secondDose_time: stringToTime(appointmentInfo.secondDose.time),
         };
-
-  //returns true by comparing current with day to be disabled.
-  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    // return true;
-    return current && current < moment().endOf('day');
-  };
-
   return (
     <Form
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
       onFinish={onFinish}
       layout="horizontal"
-      size={componentSize as SizeType}
       initialValues={initialValue}
     >
       <AppointmentForm />
-
       <Form.Item label="Button">
         <Button type="primary" htmlType="submit">
           Save

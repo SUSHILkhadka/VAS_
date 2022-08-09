@@ -1,122 +1,8 @@
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import {
-  AutoComplete,
-  Button,
-  Cascader,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  DatePicker,
-  Upload,
-} from 'antd';
-import React, { useState } from 'react';
-import { Address, RegisterInfo, register } from '../../redux_toolkit/slices/registerSlice';
-import { dateToString, stringToDate } from '../../utils/common';
-import { RootState } from '../../redux_toolkit/stores/store';
-
+import { Form, Input, Select, DatePicker, Upload } from 'antd';
 const { Option } = Select;
-const dateFormat = 'YYYY-MM-DD';
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
-
-const PatientRegisterForm: React.FC = () => {
-  const registerInfo = useSelector((state: RootState) => state.register);
-  const dispatch = useDispatch();
-
-  const [form] = Form.useForm();
-  const navigate = useNavigate();
-
-  const onFinish = (values: any) => {
-    const address: Address = {
-      state: `${values.address.state}`,
-      city: `${values.address.city}`,
-      street: `${values.address.street}`,
-    };
-    const info: RegisterInfo = {
-      firstName: `${values.firstName}`,
-      secondName: `${values.lastName}`,
-      birthDate: dateToString(values.birthDate),
-      ethnicity: `${values.ethnicity}`,
-      gender: `${values.gender}`,
-      email: `${values.email}`,
-      address: address,
-      paymentMethod: `${values.paymentMethod}`,
-      insuranceProvider: `${values.insuranceProvider}`,
-    };
-    dispatch(register(info));
-    navigate('/clientPatientRegisterConfirmation');
-  };
-
-  const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
-
-  const onWebsiteChange = (value: string) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
-
-  const initialvalue =
-    registerInfo.firstName == ''
-      ? {}
-      : {
-          firstName: registerInfo.firstName,
-          lastName: registerInfo.secondName,
-          birthDate: stringToDate(registerInfo.birthDate),
-          ethnicity: registerInfo.ethnicity,
-          gender: registerInfo.gender,
-          email: registerInfo.email,
-          address: {
-            state: registerInfo.address.state,
-            city: registerInfo.address.city,
-            street: registerInfo.address.street,
-          },
-          paymentMethod: registerInfo.paymentMethod,
-          insuranceProvider: registerInfo.insuranceProvider,
-        };
-
+const PatientForm = () => {
   return (
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      initialValues={initialvalue}
-      scrollToFirstError
-    >
+    <div>
       <Form.Item
         name="firstName"
         label="First Name"
@@ -223,8 +109,8 @@ const PatientRegisterForm: React.FC = () => {
         rules={[{ required: false, message: 'Province is required' }]}
       >
         <Select placeholder="Select Payment Method">
-          <Option value="province1">Insurance Id</Option>
-          <Option value="province2">Member Id</Option>
+          <Option value="insuranceId">Insurance Id</Option>
+          <Option value="MemberId">Member Id</Option>
         </Select>
       </Form.Item>
 
@@ -261,19 +147,13 @@ const PatientRegisterForm: React.FC = () => {
           },
         ]}
         {...tailFormItemLayout}
-      >
+        >
         <Checkbox>
           I have read the <a href="">agreement</a>
         </Checkbox>
-      </Form.Item> */}
-
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
-        </Button>
-      </Form.Item>
-    </Form>
+        </Form.Item> */}
+    </div>
   );
 };
 
-export default PatientRegisterForm;
+export default PatientForm;

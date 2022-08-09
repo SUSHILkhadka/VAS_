@@ -1,13 +1,9 @@
-import React from 'react';
 import './UserAppointmentForm.css';
-import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Divider, Col, Row, Button, message } from 'antd';
 import { resetAppointment } from '../../redux_toolkit/slices/appointmentSlice';
-import { useDispatch } from 'react-redux';
 import { RootState } from '../../redux_toolkit/stores/store';
-import { URL_TO_BACKEND } from '../../constants/common';
 import { create } from '../../services/backendCallAppointment';
 const { Title, Text } = Typography;
 
@@ -25,15 +21,15 @@ const AppointmentConfirmationSection = () => {
       firstDoseTime: appointmentInfo.firstDose.time,
     });
 
-    const appointment = await create(body);
-    console.log(appointment);
-
-    // }
-
-    //get unique documentid and display it.
-    message.success(`Registration successful. Id is ${appointment[0].id}`);
-    dispatch(resetAppointment());
-    navigate('/homepage');
+    try {
+      const appointment = await create(body);
+      console.log(appointment);
+      message.success(`Registration successful. Id is ${appointment[0].id}`);
+      dispatch(resetAppointment());
+      navigate('/appointment/list');
+    } catch {
+      message.error(`error adding confirmation`);
+    }
   };
   return (
     <div className="giveborder">

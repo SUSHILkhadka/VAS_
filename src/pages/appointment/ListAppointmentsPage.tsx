@@ -1,36 +1,30 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import ListItem from '../../component/appointment/ListItem';
-import { RootState } from '../../redux_toolkit/stores/store';
+import AppointmentTable from '../../component/appointment/AppointmentTable';
 import { read } from '../../services/backendCallAppointment';
 
 const ListAppointmentsPage = () => {
-  const registerInfo = useSelector((state: RootState) => state.register);
-
-  //read from database, for now localstorage and get id as array of string
   const [data, setData] = useState([]);
-
   useEffect(() => {
     const getalldata = async () => {
-      const appointments = await read();
-      setData(appointments);
-      console.log(appointments);
+      try {
+        const appointments = await read();
+        setData(appointments);
+        console.log('appointent is ', appointments);
+      } catch {}
     };
-    try {
-      getalldata();
-    } catch {
-      console.log('fetching failed');
-    }
+    getalldata();
   }, []);
 
-  //get length of list
   return data == [] ? (
     <div>Loading</div>
   ) : (
+    //1st commented approach is using map, without antd table
+    //AppointmentTable is using antd table
     <div className="App">
-      {data.map((value) => (
+      {/* {data.map((value) => (
         <ListItem Obj={value} />
-      ))}
+      ))} */}
+      <AppointmentTable Obj={data} />
     </div>
   );
 };

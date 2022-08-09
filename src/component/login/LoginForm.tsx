@@ -1,24 +1,38 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../../pages/home/HomePage';
-import { setLogStatus, setName } from '../../services/getLocalData';
+import { setAuthObj, setLogStatus } from '../../services/getLocalData';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeLoggedIn, changeName } from '../../redux_toolkit/slices/authSlice';
+import { makeLoggedInWithInfo } from '../../redux_toolkit/slices/authSlice';
+import { login } from '../../services/backendCallUser';
 
 const LoginForm: React.FC = () => {
   const auth = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onFinish = (values: any) => {
-    if (values.username == 'vyaguta@vyaguta.com' && values.password == 'vyaguta') {
-      //redux toolkit
-      dispatch(makeLoggedIn());
-      dispatch(changeName(values.username));
+  const onFinish = async (values: any) => {
+    const body = JSON.stringify({
+      email: values.username,
+      password: values.password,
+    });
 
-      setLogStatus(true);
-      setName(values.username);
-      navigate('/homepage', { replace: true });
+    try {
+      const response = await login(body);
+      console.log('login response', response);
+
+      if (!response.data) {
+        message.error(`${response.message}`);
+      } else {
+        message.success(`${response.message}`);
+        dispatch(makeLoggedInWithInfo(response));
+
+        setAuthObj(JSON.stringify(response));
+        setLogStatus(true);
+        navigate('/homepage', { replace: true });
+      }
+    } catch {
+      message.success(`error logging in`);
     }
   };
 
@@ -26,7 +40,7 @@ const LoginForm: React.FC = () => {
     console.log('Failed:', errorInfo);
   };
 
-  return auth?.login == false ? (
+  return !auth?.login ? (
     <Form
       name="basic"
       labelCol={{ span: 8 }}

@@ -6,7 +6,8 @@ export interface Address {
   city: string;
   street: string;
 }
-export interface RegisterInfo {
+export interface Patient {
+  id?: number;
   firstName: string;
   secondName: string;
   birthDate: string;
@@ -24,7 +25,8 @@ const defaultAddress: Address = {
   city: '',
   street: '',
 };
-const defaultRegisterInfo: RegisterInfo = {
+const defaultPatientInfo: Patient = {
+  id: 0,
   firstName: '',
   secondName: '',
   birthDate: '',
@@ -37,12 +39,12 @@ const defaultRegisterInfo: RegisterInfo = {
   insuranceProvider: '',
 };
 
-export const registerSlice = createSlice({
-  name: 'registerInfo',
-  initialState: defaultRegisterInfo,
+export const patientSlice = createSlice({
+  name: 'patientInfo',
+  initialState: defaultPatientInfo,
   reducers: {
-    register: (state, action: PayloadAction<RegisterInfo>) => {
-      // state=action.payload; //doesnot work
+    register: (state, action: PayloadAction<Patient>) => {
+      if (action.payload.id) state.id = action.payload.id;
       state.firstName = action.payload.firstName;
       state.secondName = action.payload.secondName;
       state.birthDate = action.payload.birthDate;
@@ -53,12 +55,21 @@ export const registerSlice = createSlice({
       state.paymentMethod = action.payload.paymentMethod;
       state.insuranceProvider = action.payload.insuranceProvider;
     },
-    reset: (state) => {
-      state = defaultRegisterInfo;
+    resetPatient: (state) => {
+      state.id = 0;
+      state.firstName = '';
+      state.secondName = '';
+      state.birthDate = '';
+      state.ethnicity = '';
+      state.gender = '';
+      state.email = '';
+      state.address = defaultAddress;
+      state.paymentMethod = '';
+      state.insuranceProvider = '';
     },
   },
 });
 
-export const { register, reset } = registerSlice.actions;
+export const { register, resetPatient } = patientSlice.actions;
 
-export const registerReducer = registerSlice.reducer;
+export const patientReducer = patientSlice.reducer;

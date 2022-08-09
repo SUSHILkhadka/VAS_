@@ -1,22 +1,9 @@
-import React from 'react';
-
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-
-import { changeName } from '../../redux_toolkit/slices/authSlice';
-
 import { setName } from '../../services/getLocalData';
 const SettingPage = () => {
-  // const value=useContext(AuthContext);
-
   const auth = useSelector((state: any) => state.auth);
-  const dispatch = useDispatch();
-  console.log(auth);
-
   const saveName = (event: any) => {
     event.preventDefault();
-    //redux toolkit
-    dispatch(changeName(event.target.nameArea.value));
     setName(event.target.nameArea.value);
   };
   return (

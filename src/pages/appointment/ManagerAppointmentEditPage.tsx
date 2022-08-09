@@ -1,10 +1,10 @@
-import { ManagerAppointmentEditForm } from '../../component/appointment/ManagerAppointmentEditForm';
+import { AppointmentEditForm } from '../../component/appointment/AppointmentEditForm';
 
 const ManagerEditPage = () => {
   return (
     <div>
       <div>ManagerEditPage Page</div>
-      <ManagerAppointmentEditForm />
+      <AppointmentEditForm />
     </div>
   );
 };

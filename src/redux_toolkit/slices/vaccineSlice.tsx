@@ -45,7 +45,13 @@ export const vaccineSlice = createSlice({
       state.ethinicity = action.payload.ethinicity;
     },
     resetVaccine: (state) => {
-      state = defaultValue;
+      state.serviceName = '';
+      state.siteLocation = '';
+      state.date = defaultDateRange;
+      state.doseType = '';
+      state.gender = '';
+      state.age = 0;
+      state.ethinicity = '';
     },
   },
 });

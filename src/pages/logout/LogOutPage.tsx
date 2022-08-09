@@ -1,9 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { setLogStatus } from '../../services/getLocalData';
 
 import { useDispatch } from 'react-redux';
-import { makeLoggedOut, changeName } from '../../redux_toolkit/slices/authSlice';
+import { makeLoggedOut } from '../../redux_toolkit/slices/authSlice';
 
 const LogOutPage = () => {
   const dispatch = useDispatch();
@@ -15,7 +14,6 @@ const LogOutPage = () => {
         <button
           onClick={() => {
             dispatch(makeLoggedOut());
-            dispatch(changeName('name after logout out'));
             setLogStatus(false);
             navigate('/loginpage');
           }}

@@ -34,19 +34,11 @@ export const AppointmentAddForm: React.FC = () => {
     console.log('info is=', info);
     navigate('/appointment/confirmation');
   };
-
-  const initialValue =
-    appointmentInfo.siteLocation == ''
-      ? { email: authInfo.username }
-      : {
-          email: appointmentInfo.email,
-          siteLocation: appointmentInfo.siteLocation,
-          service: appointmentInfo.service,
-          firstDose_date: stringToDate(appointmentInfo.firstDose.date),
-          firstDose_time: stringToTime(appointmentInfo.firstDose.time),
-          secondDose_date: stringToDate(appointmentInfo.secondDose.date),
-          secondDose_time: stringToTime(appointmentInfo.secondDose.time),
-        };
+  const initialValue ={
+        email: authInfo.email,
+        siteLocation: appointmentInfo.siteLocation,
+        service: appointmentInfo.service,
+      };
 
   return (
     <Form

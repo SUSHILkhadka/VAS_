@@ -1,17 +1,20 @@
 import { Button, Checkbox, Form, Input, message } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../../pages/home/HomePage';
-import { setAuthObj, setLogStatus } from '../../services/getLocalData';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeLoggedInWithInfo } from '../../redux_toolkit/slices/authSlice';
 import { login } from '../../services/backendCallUser';
+import { setLoginResponse } from '../../services/getLocalData';
 
 const LoginForm: React.FC = () => {
   const auth = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onFinish = async (values: any) => {
+
+  const [loading,setLoading]=useState<boolean>(false);
+  const handleLogin = async (values: any) => {
+    setLoading(true);
     const body = JSON.stringify({
       email: values.username,
       password: values.password,
@@ -19,21 +22,19 @@ const LoginForm: React.FC = () => {
 
     try {
       const response = await login(body);
-      console.log('login response', response);
-
       if (!response.data) {
         message.error(`${response.message}`);
       } else {
         message.success(`${response.message}`);
         dispatch(makeLoggedInWithInfo(response));
-
-        setAuthObj(JSON.stringify(response));
-        setLogStatus(true);
-        navigate('/homepage', { replace: true });
+        setLoginResponse(response);
       }
+      message.success('logged in successfully')
     } catch {
-      message.success(`error logging in`);
+      message.error(`error logging in`);
     }
+    setLoading(false);
+
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -46,7 +47,7 @@ const LoginForm: React.FC = () => {
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
-      onFinish={onFinish}
+      onFinish={handleLogin}
       onFinishFailed={onFinishFailed}
       autoComplete="on"
     >
@@ -63,10 +64,11 @@ const LoginForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
+        <Button loading={loading} type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>
+
     </Form>
   ) : (
     <HomePage />

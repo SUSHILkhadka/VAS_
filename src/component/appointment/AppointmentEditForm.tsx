@@ -53,10 +53,7 @@ export const AppointmentEditForm: React.FC = () => {
     }
   };
 
-  const initialValue =
-    appointmentInfo.siteLocation == ''
-      ? { id: authInfo.username }
-      : {
+  const initialValue ={
           id: appointmentInfo.id,
           email: appointmentInfo.email,
           siteLocation: appointmentInfo.siteLocation,

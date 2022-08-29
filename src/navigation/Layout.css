@@ -1,0 +1,30 @@
+.layout--container{
+    display: flex;  
+    flex-direction: row;
+    flex-wrap: wrap;
+  background-color: red;
+}
+.layout--tabs{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 70%;
+
+}
+.layout--tabs--elements{
+    align-self: center;
+    padding: 0.5rem;
+    border-radius: 10px;
+
+}
+.layout--tabs--elements:hover{
+    cursor: pointer;
+    background-color: rgb(224, 142, 142);
+}
+.layout--options-element{
+    margin: 1rem;
+    display: flex;
+    width: 25%;
+    flex-direction: row-reverse;
+    /* margin-left: 70%; */
+}

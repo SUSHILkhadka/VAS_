@@ -3,10 +3,9 @@ import type { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { DoseDate, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
 import { Address, Patient, register } from '../../redux_toolkit/slices/patientSlice';
 
-interface DataType {
+interface PropType {
   id: string;
   firstName: string;
   secondName: string;
@@ -21,16 +20,8 @@ interface DataType {
   insuranceProvider: string;
 }
 
-type TablePaginationPosition = 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
 
-const bottomOptions = [
-  { label: 'bottomLeft', value: 'bottomLeft' },
-  { label: 'bottomCenter', value: 'bottomCenter' },
-  { label: 'bottomRight', value: 'bottomRight' },
-  { label: 'none', value: 'none' },
-];
-
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<PropType> = [
   {
     title: 'Patient ID',
     dataIndex: 'id',
@@ -69,27 +60,18 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-type TT = {
-  Obj: DataType[];
-};
 
-const PatientTable = (props: TT) => {
-  const [bottom, setBottom] = useState<TablePaginationPosition>('bottomRight');
+
+const PatientTable = ({data}:{data:PropType[]}) => {
+  console.log("intable", data[0])
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <div>
-      <Radio.Group
-        style={{ marginBottom: 10 }}
-        options={bottomOptions}
-        value={bottom}
-        onChange={(e) => {
-          setBottom(e.target.value);
-        }}
-      />
       <Table
+      rowKey='id'
         onRow={(Obj, _rowIndex) => {
-          const handleFormSelection = (): void => {
+          const handleRowSelection = (): void => {
             const address: Address = {
               state: Obj.addressState,
               city: Obj.addressCity,
@@ -111,12 +93,11 @@ const PatientTable = (props: TT) => {
             navigate('/patient/edit');
           };
           return {
-            onClick: handleFormSelection,
+            onClick: handleRowSelection,
           };
         }}
         columns={columns}
-        pagination={{ position: [bottom] }}
-        dataSource={props.Obj}
+        dataSource={data}
       />
     </div>
   );

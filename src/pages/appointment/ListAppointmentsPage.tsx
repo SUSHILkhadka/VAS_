@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
-import AppointmentTable from '../../component/appointment/AppointmentTable';
-import { read } from '../../services/backendCallAppointment';
+import { message } from "antd";
+import { useEffect, useState } from "react";
+import AppointmentTable from "../../component/appointment/AppointmentTable";
+import { read } from "../../services/backendCallAppointment";
 
 const ListAppointmentsPage = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getalldata = async () => {
+      setLoading(true);
       try {
         const appointments = await read();
-        setData(appointments);
-        console.log('appointent is ', appointments);
-      } catch {}
+        setData(appointments.data);
+      } catch {
+        message.error("reading failed");
+      }
+      setLoading(false);
     };
     getalldata();
   }, []);
 
-  return data == [] ? (
+  return loading ? (
     <div>Loading</div>
   ) : (
-    //1st commented approach is using map, without antd table
-    //AppointmentTable is using antd table
     <div className="App">
-      {/* {data.map((value) => (
-        <ListItem Obj={value} />
-      ))} */}
       <AppointmentTable Obj={data} />
     </div>
   );

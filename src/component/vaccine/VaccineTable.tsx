@@ -1,12 +1,12 @@
-import { Radio, Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Radio, Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { addVaccine, DateRange } from '../../redux_toolkit/slices/vaccineSlice';
+import { addVaccine, DateRange } from "../../redux_toolkit/slices/vaccineSlice";
 
-interface DataType {
+interface Prop {
   id?: number;
   siteLocation: string;
   serviceName: string;
@@ -17,84 +17,62 @@ interface DataType {
   age: string;
   ethinicity: string;
 }
-
-type TablePaginationPosition = 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
-
-const bottomOptions = [
-  { label: 'bottomLeft', value: 'bottomLeft' },
-  { label: 'bottomCenter', value: 'bottomCenter' },
-  { label: 'bottomRight', value: 'bottomRight' },
-  { label: 'none', value: 'none' },
-];
-
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<Prop> = [
   {
-    title: 'service',
-    dataIndex: 'serviceName',
-    key: 'serviceName',
+    title: "service",
+    dataIndex: "serviceName",
+    key: "serviceName",
     render: (text) => <a>{text}</a>,
   },
   {
-    title: 'siteLocation',
-    dataIndex: 'siteLocation',
-    key: 'siteLocation',
+    title: "siteLocation",
+    dataIndex: "siteLocation",
+    key: "siteLocation",
   },
   {
-    title: 'doseType',
-    dataIndex: 'doseType',
-    key: 'doseType',
+    title: "doseType",
+    dataIndex: "doseType",
+    key: "doseType",
   },
   {
-    title: 'startDate',
-    dataIndex: 'startDate',
-    key: 'startDate',
+    title: "startDate",
+    dataIndex: "startDate",
+    key: "startDate",
   },
   {
-    title: 'endDate',
-    dataIndex: 'endDate',
-    key: 'endDate',
+    title: "endDate",
+    dataIndex: "endDate",
+    key: "endDate",
   },
   {
-    title: 'gender',
-    dataIndex: 'gender',
-    key: 'gender',
+    title: "gender",
+    dataIndex: "gender",
+    key: "gender",
   },
   {
-    title: 'age',
-    dataIndex: 'age',
-    key: 'age',
+    title: "age",
+    dataIndex: "age",
+    key: "age",
   },
   {
-    title: 'ethinicity',
-    dataIndex: 'ethinicity',
-    key: 'ethinicity',
+    title: "ethinicity",
+    dataIndex: "ethinicity",
+    key: "ethinicity",
   },
   {
-    title: 'id',
-    dataIndex: 'id',
-    key: 'id',
+    title: "id",
+    dataIndex: "id",
+    key: "id",
   },
 ];
 
-type TT = {
-  Obj: DataType[];
-};
-
-const VaccineTable = (props: TT) => {
-  const [bottom, setBottom] = useState<TablePaginationPosition>('bottomRight');
+const VaccineTable = ({ data }: { data: Prop[] }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <div>
-      <Radio.Group
-        style={{ marginBottom: 10 }}
-        options={bottomOptions}
-        value={bottom}
-        onChange={(e) => {
-          setBottom(e.target.value);
-        }}
-      />
       <Table
+        rowKey="id"
         onRow={(Obj, _rowIndex) => {
           const handleFormSelection = () => {
             const date: DateRange = {
@@ -112,15 +90,14 @@ const VaccineTable = (props: TT) => {
               ethinicity: Obj.ethinicity,
             };
             dispatch(addVaccine(dataForVaccineInfo));
-            navigate('/vaccine/edit');
+            navigate("/vaccine/edit");
           };
           return {
             onClick: handleFormSelection,
           };
         }}
         columns={columns}
-        pagination={{ position: [bottom] }}
-        dataSource={props.Obj}
+        dataSource={data}
       />
     </div>
   );

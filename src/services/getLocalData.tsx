@@ -1,25 +1,27 @@
-export function getLogStatus(): boolean {
-  const logStatus = localStorage.getItem('LogStatus');
-  return logStatus ? Boolean(logStatus) : false;
+
+export function setLoginResponse(response: any): void {
+  setAccessToken(response.accessToken)
+  setRefreshToken(response.refreshToken)
+  localStorage.setItem('loginResponse', JSON.stringify(response));
 }
-export function getName(): any {
-  const name = localStorage.getItem('displayName');
-  return name ? name : 'default';
+export function getLoginResponse(): string {
+  const obj = localStorage.getItem('loginResponse');
+  return obj ? obj : '';
 }
-export function setLogStatus(loggedIn: boolean): void {
-  if (loggedIn == true) {
-    localStorage.setItem('LogStatus', 'true');
-  } else {
-    localStorage.setItem('LogStatus', '');
-  }
+
+
+export function setAccessToken(body: string): void {
+  localStorage.setItem('accessToken', body);
 }
-export function setName(name: any): void {
-  localStorage.setItem('displayName', name);
+export function getAccessToken(): string {
+  const obj = localStorage.getItem('accessToken');
+  return obj ? obj : '';
 }
-export function setAuthObj(body: string): void {
-  localStorage.setItem('auth', body);
+
+export function setRefreshToken(body: string): void {
+  localStorage.setItem('refreshToken', body);
 }
-export function getAuthObj(): any {
-  const obj = localStorage.getItem('auth');
+export function getRefreshToken(): string {
+  const obj = localStorage.getItem('refreshToken');
   return obj ? obj : '';
 }

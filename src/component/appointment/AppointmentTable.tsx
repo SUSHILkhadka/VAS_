@@ -1,9 +1,12 @@
-import { Radio, Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { DoseDate, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
+import { Radio, Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  DoseDate,
+  registerAppointment,
+} from "../../redux_toolkit/slices/appointmentSlice";
 
 interface DataType {
   id?: string;
@@ -13,42 +16,32 @@ interface DataType {
   firstDoseDate: string;
   firstDoseTime: string;
 }
-
-type TablePaginationPosition = 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
-
-const bottomOptions = [
-  { label: 'bottomLeft', value: 'bottomLeft' },
-  { label: 'bottomCenter', value: 'bottomCenter' },
-  { label: 'bottomRight', value: 'bottomRight' },
-  { label: 'none', value: 'none' },
-];
-
 const columns: ColumnsType<DataType> = [
   {
-    title: 'service',
-    dataIndex: 'serviceName',
-    key: 'serviceName',
+    title: "service",
+    dataIndex: "serviceName",
+    key: "serviceName",
     render: (text) => <a>{text}</a>,
   },
   {
-    title: 'siteLocation',
-    dataIndex: 'siteLocation',
-    key: 'siteLocation',
+    title: "siteLocation",
+    dataIndex: "siteLocation",
+    key: "siteLocation",
   },
   {
-    title: 'firstDoseDate',
-    dataIndex: 'firstDoseDate',
-    key: 'firstDoseDate',
+    title: "firstDoseDate",
+    dataIndex: "firstDoseDate",
+    key: "firstDoseDate",
   },
   {
-    title: 'firstDoseTime',
-    dataIndex: 'firstDoseTime',
-    key: 'firstDoseTime',
+    title: "firstDoseTime",
+    dataIndex: "firstDoseTime",
+    key: "firstDoseTime",
   },
   {
-    title: 'id',
-    dataIndex: 'id',
-    key: 'id',
+    title: "id",
+    dataIndex: "id",
+    key: "id",
   },
 ];
 
@@ -57,20 +50,13 @@ type TT = {
 };
 
 const AppointmentTable = (props: TT) => {
-  const [bottom, setBottom] = useState<TablePaginationPosition>('bottomRight');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log("in table", props);
   return (
     <div>
-      <Radio.Group
-        style={{ marginBottom: 10 }}
-        options={bottomOptions}
-        value={bottom}
-        onChange={(e) => {
-          setBottom(e.target.value);
-        }}
-      />
       <Table
+        rowKey="id"
         onRow={(Obj, _rowIndex) => {
           const handleFormSelection = (): void => {
             const firstDose: DoseDate = {
@@ -86,14 +72,13 @@ const AppointmentTable = (props: TT) => {
               secondDose: firstDose,
             };
             dispatch(registerAppointment(dataForAppointmentInfo));
-            navigate('/appointment/edit');
+            navigate("/appointment/edit");
           };
           return {
             onClick: handleFormSelection,
           };
         }}
         columns={columns}
-        pagination={{ position: [bottom] }}
         dataSource={props.Obj}
       />
     </div>

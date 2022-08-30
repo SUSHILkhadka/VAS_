@@ -19,10 +19,10 @@ export const AppointmentEditForm: React.FC = () => {
       time: timeToString(values.firstDose_time),
     };
 
-    // const secondDose: DoseDate = {
-    //   date: dateToString(values.secondDose_date),
-    //   time: timeToString(values.secondDose_time),
-    // };
+    const secondDose: DoseDate = {
+      date: dateToString(values.secondDose_date),
+      time: timeToString(values.secondDose_time),
+    };
 
     let body = {
       email: values.email,
@@ -30,6 +30,8 @@ export const AppointmentEditForm: React.FC = () => {
       serviceName: values.service,
       firstDoseDate: firstDose.date,
       firstDoseTime: firstDose.time,
+      secondDoseDate: secondDose.date,
+      secondDoseTime: secondDose.time,
     };
 
     try {

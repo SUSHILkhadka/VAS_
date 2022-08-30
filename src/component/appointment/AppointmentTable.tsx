@@ -16,6 +16,8 @@ interface DataType {
   serviceName: string;
   firstDoseDate: string;
   firstDoseTime: string;
+  secondDoseDate: string;
+  secondDoseTime: string;
 }
 
 type PropType = {
@@ -50,6 +52,16 @@ const AppointmentTable = ({ data, refresh, setRefresh }: PropType) => {
       title: "firstDoseTime",
       dataIndex: "firstDoseTime",
       key: "firstDoseTime",
+    },
+    {
+      title: "secondDoseDate",
+      dataIndex: "secondDoseDate",
+      key: "secondDoseDate",
+    },
+    {
+      title: "secondDoseTime",
+      dataIndex: "secondDoseTime",
+      key: "secondDoseTime",
     },
     {
       title: "email",
@@ -91,13 +103,17 @@ const AppointmentTable = ({ data, refresh, setRefresh }: PropType) => {
               date: Obj.firstDoseDate,
               time: Obj.firstDoseTime,
             };
+            const secondDose: DoseDate = {
+              date: Obj.secondDoseDate,
+              time: Obj.secondDoseTime,
+            };
             const dataForAppointmentInfo = {
               id: Obj.id,
               email: Obj.email,
               siteLocation: Obj.siteLocation,
               service: Obj.serviceName,
               firstDose: firstDose,
-              secondDose: firstDose,
+              secondDose: secondDose,
             };
             dispatch(registerAppointment(dataForAppointmentInfo));
             navigate("/appointment/edit");

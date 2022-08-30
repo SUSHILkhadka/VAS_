@@ -18,6 +18,8 @@ const AppointmentConfirmationSection = () => {
       serviceName: appointmentInfo.service,
       firstDoseDate: appointmentInfo.firstDose.date,
       firstDoseTime: appointmentInfo.firstDose.time,
+      secondDoseDate: appointmentInfo.secondDose.date,
+      secondDoseTime: appointmentInfo.secondDose.time,
     };
 
     try {

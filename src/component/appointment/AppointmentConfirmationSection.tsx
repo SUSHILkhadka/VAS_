@@ -23,12 +23,13 @@ const AppointmentConfirmationSection = () => {
 
     try {
       const appointment = await create(body);
-      console.log(appointment);
-      message.success(`Registration successful. Id is ${appointment[0].id}`);
+      console.log("in try",appointment);
       dispatch(resetAppointment());
       navigate('/appointment/list');
-    } catch {
-      message.error(`error adding confirmation`);
+      message.success(`Registration successful. Id is ${appointment.data.id}`);
+
+    } catch(e:any) {
+      message.error(e.response);
     }
   };
   return (

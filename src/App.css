@@ -39,3 +39,14 @@
     transform: rotate(360deg);
   }
 }
+
+
+.floating_button{
+  position: absolute;
+  top: 35px;
+  right: 15%;
+  z-index: 2;
+  height: 40px;
+  border: 1px solid green;
+  border-radius: 500px;
+}

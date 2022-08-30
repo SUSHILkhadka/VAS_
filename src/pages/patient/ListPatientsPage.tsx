@@ -1,27 +1,42 @@
-import { useEffect, useState } from 'react';
-import PatientTable from '../../component/patient/PatientTable';
-import { read } from '../../services/backendCallPatient';
+import { Button, message } from "antd";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PatientTable from "../../component/patient/PatientTable";
+import { read } from "../../services/backendCallPatient";
 
 const ListPatientsPage = () => {
+  const navigate=useNavigate();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(true);
   useEffect(() => {
     const getalldata = async () => {
+      setLoading(true);
       try {
         const patients = await read();
-        setData(patients);
-        console.log('patients is ', patients);
-      } catch {}
+        setData(patients.data);
+      } catch {
+        message.error("reading failed");
+      }
+      setLoading(false);
     };
     getalldata();
-  }, []);
+  }, [refresh]);
 
-  return data == [] ? (
-    <div>Loading</div>
-  ) : (
-    //1st commented approach is using map, without antd table
-    //AppointmentTable is using antd table
-    <div className="App">
-      <PatientTable Obj={data} />
+  const goToAddPatientPage=()=>{
+    navigate("/patient")
+  }
+
+  return (
+    <div>
+      <Button className="floating_button" onClick={goToAddPatientPage}>Create New Patient</Button>
+      {loading ? (
+        <div>Loading</div>
+      ) : (
+        <div className="App">
+          <PatientTable data={data} refresh={refresh} setRefresh={setRefresh} />
+        </div>
+      )}
     </div>
   );
 };

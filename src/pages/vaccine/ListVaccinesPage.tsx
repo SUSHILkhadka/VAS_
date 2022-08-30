@@ -1,30 +1,43 @@
-import { useEffect, useState } from 'react';
-import VaccineTable from '../../component/vaccine/VaccineTable';
-import { read } from '../../services/backendCallVaccine';
+import { Button, message } from "antd";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import VaccineTable from "../../component/vaccine/VaccineTable";
+import { read } from "../../services/backendCallVaccine";
 
 const ListVaccinesPage = () => {
-  //read from database, for now localstorage and get id as array of string
+  const navigate=useNavigate()
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [refresh, setRefresh] = useState(true);
+
 
   useEffect(() => {
     const getalldata = async () => {
+      setLoading(true);
       try {
         const vaccines = await read();
-        setData(vaccines);
-        console.log('gotten data', vaccines);
+        setData(vaccines.data);
       } catch {
-        console.log('error reading data');
+        message.error("reading failed");
       }
+      setLoading(false);
     };
     getalldata();
-  }, []);
+  }, [refresh]);
 
-  //get length of list
-  return data == [] ? (
-    <div>Loading</div>
-  ) : (
-    <div className="App">
-      <VaccineTable Obj={data} />
+  const goToAddVaccinePage=()=>{
+    navigate('/vaccine')
+  }
+  return (
+    <div>
+      <Button className="floating_button" onClick={goToAddVaccinePage}> Add new Vaccine</Button>
+      {loading ? (
+        <div>Loading</div>
+      ) : (
+        <div className="App">
+          <VaccineTable data={data} refresh={refresh} setRefresh={setRefresh} />
+        </div>
+      )}
     </div>
   );
 };

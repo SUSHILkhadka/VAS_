@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { register } from '../../services/backendCallUser';
 const dateFormat = 'YYYY-MM-DD';
 
@@ -28,15 +28,20 @@ const tailFormItemLayout = {
 };
 
 const MainRegisterForm: React.FC = () => {
-  const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  const onFinish = async (values: any) => {
-    const body = JSON.stringify({
+  const [loading,setLoading]=useState<boolean>(false);
+  
+
+  const handleRegister = async (values: any) => {
+    setLoading(false);
+
+    const body ={
       name: values.userName,
       email: values.email,
       password: values.password,
-    });
+    }
+    try{
     const response = await register(body);
     console.log('response after register=', response);
     if (!response.data) {
@@ -45,10 +50,17 @@ const MainRegisterForm: React.FC = () => {
       message.success(`${response.message}`);
       navigate('/loginpage');
     }
+  }catch(e){
+    message.success(`error registerting in`);
+  }
+    setLoading(false);
   };
 
+  const goToLoginPage=()=>{
+    navigate('/');
+  }
   return (
-    <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} initialValues={{}} scrollToFirstError>
+    <Form {...formItemLayout} name="register" onFinish={handleRegister} initialValues={{}} scrollToFirstError>
       <Form.Item
         name="userName"
         label="Username"
@@ -78,14 +90,17 @@ const MainRegisterForm: React.FC = () => {
       >
         <Input />
       </Form.Item>
-
       <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
         <Input.Password />
       </Form.Item>
-
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
           Register
+        </Button>
+      </Form.Item>
+      <Form.Item {...tailFormItemLayout}>
+        <Button onClick={goToLoginPage}>
+          Already has Account
         </Button>
       </Form.Item>
     </Form>

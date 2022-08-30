@@ -46,8 +46,7 @@ export const VaccineAddForm: React.FC = () => {
     });
     try {
       const vaccine = await create(body);
-      console.log('response after vaccine addition:', vaccine);
-      message.success(`Addition successful with Id is ${vaccine[0].id}`);
+      message.success(`Addition successful with Id is ${vaccine.data.id}`);
       navigate('/vaccine/list');
     } catch {
       message.error('error adding vaccine to database');

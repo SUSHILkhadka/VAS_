@@ -1,12 +1,16 @@
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Button, Form, Select, Upload } from 'antd';
-import React from 'react';
-import { Address, Patient, register } from '../../redux_toolkit/slices/patientSlice';
-import { dateToString, stringToDate } from '../../utils/common';
-import { RootState } from '../../redux_toolkit/stores/store';
-import PatientForm from './PatientForm';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Select, Upload } from "antd";
+import React from "react";
+import {
+  Address,
+  Patient,
+  register,
+} from "../../redux_toolkit/slices/patientSlice";
+import { dateToString, stringToDate } from "../../utils/common";
+import { RootState } from "../../redux_toolkit/stores/store";
+import PatientForm from "./PatientForm";
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -32,6 +36,7 @@ const tailFormItemLayout = {
 
 const PatientRegisterForm: React.FC = () => {
   const registerInfo = useSelector((state: RootState) => state.patient);
+  const authInfo = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -55,27 +60,24 @@ const PatientRegisterForm: React.FC = () => {
       insuranceProvider: values.insuranceProvider,
     };
     dispatch(register(info));
-    navigate('/patient/confirmation');
+    navigate("/patient/confirmation");
   };
 
-  const initialvalue =
-    registerInfo.firstName == ''
-      ? {}
-      : {
-          firstName: registerInfo.firstName,
-          lastName: registerInfo.secondName,
-          birthDate: stringToDate(registerInfo.birthDate),
-          ethnicity: registerInfo.ethnicity,
-          gender: registerInfo.gender,
-          email: registerInfo.email,
-          address: {
-            state: registerInfo.address.state,
-            city: registerInfo.address.city,
-            street: registerInfo.address.street,
-          },
-          paymentMethod: registerInfo.paymentMethod,
-          insuranceProvider: registerInfo.insuranceProvider,
-        };
+  const initialvalue = {
+    firstName: registerInfo.firstName,
+    lastName: registerInfo.secondName,
+    birthDate: registerInfo.birthDate?stringToDate(registerInfo.birthDate): Date.now,
+    ethnicity: registerInfo.ethnicity,
+    gender: registerInfo.gender,
+    email: authInfo.isAdmin ? registerInfo.email : authInfo.email,
+    address: {
+      state: registerInfo.address.state,
+      city: registerInfo.address.city,
+      street: registerInfo.address.street,
+    },
+    paymentMethod: registerInfo.paymentMethod,
+    insuranceProvider: registerInfo.insuranceProvider,
+  };
 
   return (
     <Form

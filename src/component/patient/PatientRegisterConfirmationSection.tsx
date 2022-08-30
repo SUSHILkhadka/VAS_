@@ -12,8 +12,6 @@ const PatientRegisterConfirmationSection = () => {
   const dispatch = useDispatch();
 
   const handleConfirmation = async () => {
-    // add data to DB here
-    //get unique documentid and display it.
     let body = JSON.stringify({
       firstName: patientInfo.firstName,
       secondName: patientInfo.secondName,
@@ -30,10 +28,9 @@ const PatientRegisterConfirmationSection = () => {
 
     try {
       const patient = await create(body);
-      console.log(patient);
-      message.success(`Registration successful. Id is ${patient[0].id}`);
       dispatch(resetPatient());
       navigate('/patient/list');
+      message.success(`Registration successful. Id is ${patient.data.id}`);
     } catch {
       message.error(`error adding confirmation`);
     }

@@ -34,7 +34,6 @@ export const AppointmentEditForm: React.FC = () => {
 
     try {
       const appointment = await update(body, appointmentInfo.id);
-      console.log(appointment);
       message.success(`Edit successful. Id is ${appointmentInfo.id}`);
       navigate('/appointment/list');
     } catch {
@@ -44,19 +43,18 @@ export const AppointmentEditForm: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      const appointment = await deleteBackend(appointmentInfo.id);
-      console.log(appointment);
+      if(appointmentInfo.id)
+      {
+      const appointment = await deleteBackend(+appointmentInfo.id);
       message.success(`Delete successful. Id is ${appointmentInfo.id}`);
       navigate('/appointment/list');
+      }
     } catch {
       message.error('error');
     }
   };
 
-  const initialValue =
-    appointmentInfo.siteLocation == ''
-      ? { id: authInfo.username }
-      : {
+  const initialValue ={
           id: appointmentInfo.id,
           email: appointmentInfo.email,
           siteLocation: appointmentInfo.siteLocation,

@@ -66,7 +66,7 @@ const PatientRegisterForm: React.FC = () => {
   const initialvalue = {
     firstName: registerInfo.firstName,
     lastName: registerInfo.secondName,
-    birthDate: registerInfo.birthDate?stringToDate(registerInfo.birthDate): Date.now,
+    birthDate: registerInfo.birthDate?stringToDate(registerInfo.birthDate):'',
     ethnicity: registerInfo.ethnicity,
     gender: registerInfo.gender,
     email: authInfo.isAdmin ? registerInfo.email : authInfo.email,

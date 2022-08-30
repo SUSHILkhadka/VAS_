@@ -7,6 +7,7 @@ import { makeLoggedOut } from "../redux_toolkit/slices/authSlice";
 import { RootState } from "../redux_toolkit/stores/store";
 import { logout } from "../services/backendCallUser";
 import { setLoginResponse } from "../services/getLocalData";
+import {FacebookFilled} from '@ant-design/icons';
 import "./Layout.css";
 const Layout = () => {
   const dispatch = useDispatch();
@@ -82,9 +83,10 @@ const Layout = () => {
           )}
         </div>
         <div className="layout--options-element">
-          <Dropdown overlay={menu}>
+          <Dropdown  overlay={menu} >
             <Button onClick={(e) => e.preventDefault()}>
-              {authInfo.username}
+              <FacebookFilled />
+              {authInfo.email}
             </Button>
           </Dropdown>
         </div>

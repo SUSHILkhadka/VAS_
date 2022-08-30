@@ -43,7 +43,6 @@ export const AppointmentAddForm: React.FC = () => {
     siteLocation: appointmentInfo.siteLocation,
     service: appointmentInfo.service,
   };
-
   return (
     <Form
       labelCol={{ span: 4 }}

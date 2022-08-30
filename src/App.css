@@ -42,11 +42,24 @@
 
 
 .floating_button{
-  position: absolute;
+  /* position: absolute;
   top: 35px;
   right: 15%;
   z-index: 2;
   height: 40px;
   border: 1px solid green;
+  border-radius: 500px; */
+
+  position: fixed;
+  bottom: 35px;
+  right: 15%;
+  z-index: 2;
+  height: 40px;
+  border: 1px solid rgb(221, 152, 235);
   border-radius: 500px;
+  background-color: rgb(205, 241, 202);
+
+  box-shadow: 7px 20px 25px -16px rgba(0,0,0,0.58);
+-webkit-box-shadow: 7px 20px 25px -16px rgba(0,0,0,0.58);
+-moz-box-shadow: 7px 20px 25px -16px rgba(0,0,0,0.58);
 }

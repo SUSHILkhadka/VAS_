@@ -24,7 +24,7 @@
 .layout--options-element{
     margin: 1rem;
     display: flex;
-    width: 25%;
+    width: 20%;
     flex-direction: row-reverse;
     /* margin-left: 70%; */
 }

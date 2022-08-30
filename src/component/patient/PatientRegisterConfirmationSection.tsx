@@ -1,9 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Divider, Col, Row, Button, message } from 'antd';
-import { resetPatient } from '../../redux_toolkit/slices/patientSlice';
-import { RootState } from '../../redux_toolkit/stores/store';
-import { create } from '../../services/backendCallPatient';
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Typography, Divider, Col, Row, Button, message } from "antd";
+import { resetPatient } from "../../redux_toolkit/slices/patientSlice";
+import { RootState } from "../../redux_toolkit/stores/store";
+import { create } from "../../services/backendCallPatient";
 const { Title, Text } = Typography;
 
 const PatientRegisterConfirmationSection = () => {
@@ -12,7 +12,7 @@ const PatientRegisterConfirmationSection = () => {
   const dispatch = useDispatch();
 
   const handleConfirmation = async () => {
-    let body = JSON.stringify({
+    let body = {
       firstName: patientInfo.firstName,
       secondName: patientInfo.secondName,
       birthDate: patientInfo.birthDate,
@@ -24,12 +24,13 @@ const PatientRegisterConfirmationSection = () => {
       addressStreet: patientInfo.address.street,
       paymentMethod: patientInfo.paymentMethod,
       insuranceProvider: patientInfo.insuranceProvider,
-    });
+      photoUrl: patientInfo.photoUrl,
+    };
 
     try {
       const patient = await create(body);
       dispatch(resetPatient());
-      navigate('/patient/list');
+      navigate("/patient/list");
       message.success(`Registration successful. Id is ${patient.data.id}`);
     } catch {
       message.error(`error adding confirmation`);
@@ -39,56 +40,62 @@ const PatientRegisterConfirmationSection = () => {
   return (
     <section className="formContainer userRegisterConfirmForm">
       <Title className="formContainerHeading" level={5}>
-        Please Confirm the details below and confirm to register.{' '}
+        Please Confirm the details below and confirm to register.{" "}
       </Title>
       <Divider />
       <Row>
         <Col>
           <Title level={5}>
-            First name:{' '}
+            First name:{" "}
             <Text type="secondary" italic>
-              {patientInfo.firstName + ' ' + patientInfo.secondName}
+              {patientInfo.firstName + " " + patientInfo.secondName}
             </Text>
           </Title>
           <Title level={5}>
-            Email:{' '}
+            Email:{" "}
             <Text type="secondary" italic>
               {patientInfo.email}
             </Text>
           </Title>
           <Title level={5}>
-            DOB:{' '}
+            DOB:{" "}
             <Text type="secondary" italic>
               {patientInfo.birthDate}
             </Text>
           </Title>
           <Title level={5}>
-            Ethnicity:{' '}
+            Ethnicity:{" "}
             <Text type="secondary" italic>
               {patientInfo.ethnicity}
             </Text>
           </Title>
           <Title level={5}>
-            Gender:{' '}
+            Gender:{" "}
             <Text type="secondary" italic>
               {patientInfo.gender}
             </Text>
           </Title>
           <Title level={5}>
-            Address:{' '}
+            Address:{" "}
             <Text type="secondary" italic>
-              {patientInfo.address.state}, {patientInfo.address.city}, {patientInfo.address.street}
+              {patientInfo.address.state}, {patientInfo.address.city},{" "}
+              {patientInfo.address.street}
             </Text>
           </Title>
           <Title level={5}>
-            Payment:{' '}
+            Payment:{" "}
             <Text type="secondary" italic>
               {patientInfo.paymentMethod}, {patientInfo.insuranceProvider}
             </Text>
           </Title>
         </Col>
         <Col>
-          <Button onClick={handleConfirmation} className="primaryBtn confirmBtn" type="primary" htmlType="submit">
+          <Button
+            onClick={handleConfirmation}
+            className="primaryBtn confirmBtn"
+            type="primary"
+            htmlType="submit"
+          >
             Confirm and Submit
           </Button>
         </Col>

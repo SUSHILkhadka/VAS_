@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Select, Upload } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import {
   Address,
   Patient,
@@ -11,6 +11,7 @@ import {
 import { dateToString, stringToDate } from "../../utils/common";
 import { RootState } from "../../redux_toolkit/stores/store";
 import PatientForm from "./PatientForm";
+import CustomImageUploader from "../utils/CustomImageUploader";
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -35,12 +36,13 @@ const tailFormItemLayout = {
 };
 
 const PatientRegisterForm: React.FC = () => {
-  const registerInfo = useSelector((state: RootState) => state.patient);
+  const patientInfo = useSelector((state: RootState) => state.patient);
   const authInfo = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [photoUrl,setPhotoUrl]=useState(patientInfo.photoUrl);
 
   const onFinish = (values: any) => {
     const address: Address = {
@@ -58,25 +60,27 @@ const PatientRegisterForm: React.FC = () => {
       address: address,
       paymentMethod: values.paymentMethod,
       insuranceProvider: values.insuranceProvider,
+      photoUrl: photoUrl
     };
     dispatch(register(info));
     navigate("/patient/confirmation");
   };
 
   const initialvalue = {
-    firstName: registerInfo.firstName,
-    lastName: registerInfo.secondName,
-    birthDate: registerInfo.birthDate?stringToDate(registerInfo.birthDate):'',
-    ethnicity: registerInfo.ethnicity,
-    gender: registerInfo.gender,
-    email: authInfo.isAdmin ? registerInfo.email : authInfo.email,
+    firstName: patientInfo.firstName,
+    lastName: patientInfo.secondName,
+    birthDate: patientInfo.birthDate?stringToDate(patientInfo.birthDate):'',
+    ethnicity: patientInfo.ethnicity,
+    gender: patientInfo.gender,
+    email: authInfo.isAdmin ? patientInfo.email : authInfo.email,
     address: {
-      state: registerInfo.address.state,
-      city: registerInfo.address.city,
-      street: registerInfo.address.street,
+      state: patientInfo.address.state,
+      city: patientInfo.address.city,
+      street: patientInfo.address.street,
     },
-    paymentMethod: registerInfo.paymentMethod,
-    insuranceProvider: registerInfo.insuranceProvider,
+    paymentMethod: patientInfo.paymentMethod,
+    insuranceProvider: patientInfo.insuranceProvider,
+    photoUrl: photoUrl,
   };
 
   return (
@@ -88,6 +92,7 @@ const PatientRegisterForm: React.FC = () => {
       initialValues={initialvalue}
       scrollToFirstError
     >
+      <CustomImageUploader photoUrl={photoUrl} setPhotoUrl={setPhotoUrl}/>
       <PatientForm />
 
       <Form.Item {...tailFormItemLayout}>

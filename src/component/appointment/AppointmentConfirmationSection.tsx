@@ -12,18 +12,16 @@ const AppointmentConfirmationSection = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleConfirmation = async () => {
-    // add data to DB here
-    let body = JSON.stringify({
+    let body = {
       email: appointmentInfo.email,
       siteLocation: appointmentInfo.siteLocation,
       serviceName: appointmentInfo.service,
       firstDoseDate: appointmentInfo.firstDose.date,
       firstDoseTime: appointmentInfo.firstDose.time,
-    });
+    };
 
     try {
       const appointment = await create(body);
-      console.log("in try",appointment);
       dispatch(resetAppointment());
       navigate('/appointment/list');
       message.success(`Registration successful. Id is ${appointment.data.id}`);

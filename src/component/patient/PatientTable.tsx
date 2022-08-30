@@ -19,10 +19,8 @@ interface IPatientFromDatabase {
   addressStreet: string;
   paymentMethod: string;
   insuranceProvider: string;
+  photoUrl: string;
 }
-
-
-
 
 type PropType={
   data:IPatientFromDatabase[]; 
@@ -119,6 +117,7 @@ const PatientTable = ({data,refresh,setRefresh}:PropType) => {
               address: address,
               paymentMethod: Obj.paymentMethod,
               insuranceProvider: Obj.insuranceProvider,
+              photoUrl: Obj.photoUrl,
             };
             dispatch(register(dataForPatientInfo));
             navigate('/patient/edit');

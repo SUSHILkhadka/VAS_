@@ -24,13 +24,13 @@ export const AppointmentEditForm: React.FC = () => {
     //   time: timeToString(values.secondDose_time),
     // };
 
-    let body = JSON.stringify({
+    let body = {
       email: values.email,
       siteLocation: values.siteLocation,
       serviceName: values.service,
       firstDoseDate: firstDose.date,
       firstDoseTime: firstDose.time,
-    });
+    };
 
     try {
       const appointment = await update(body, appointmentInfo.id);

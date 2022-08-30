@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Button, Form, message, Select, Upload } from 'antd';
-import React from 'react';
-import { dateToString, stringToDate } from '../../utils/common';
-import { RootState } from '../../redux_toolkit/stores/store';
-import PatientForm from './PatientForm';
-import update, { deleteBackend } from '../../services/backendCallPatient';
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, message, Select, Upload } from "antd";
+import React, { useState } from "react";
+import { dateToString, stringToDate } from "../../utils/common";
+import { RootState } from "../../redux_toolkit/stores/store";
+import PatientForm from "./PatientForm";
+import update, { deleteBackend } from "../../services/backendCallPatient";
+import CustomImageUploader from "../utils/CustomImageUploader";
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -33,8 +34,9 @@ const ManagerPatientEditForm: React.FC = () => {
   const patientInfo = useSelector((state: RootState) => state.patient);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [photoUrl, setPhotoUrl] = useState(patientInfo.photoUrl);
   const onFinish = async (values: any) => {
-    let body = JSON.stringify({
+    let body = {
       firstName: values.firstName,
       secondName: values.lastName,
       birthDate: dateToString(values.birthDate),
@@ -46,15 +48,16 @@ const ManagerPatientEditForm: React.FC = () => {
       addressStreet: values.address.street,
       paymentMethod: values.paymentMethod,
       insuranceProvider: values.insuranceProvider,
-    });
+      photoUrl: photoUrl,
+    };
 
     try {
       const patient = await update(body, patientInfo.id);
       console.log(patient);
       message.success(`Edit successful. Id is ${patientInfo.id}`);
-      navigate('/patient/list');
+      navigate("/patient/list");
     } catch {
-      message.error('error editing');
+      message.error("error editing");
     }
   };
 
@@ -63,14 +66,14 @@ const ManagerPatientEditForm: React.FC = () => {
       const patient = await deleteBackend(patientInfo.id);
       console.log(patient);
       message.success(`Delete successful. Id is ${patientInfo.id}`);
-      navigate('/patient/list');
+      navigate("/patient/list");
     } catch {
-      message.error('error');
+      message.error("error");
     }
   };
 
   const initialvalue =
-    patientInfo.firstName == ''
+    patientInfo.firstName == ""
       ? {}
       : {
           firstName: patientInfo.firstName,
@@ -86,6 +89,7 @@ const ManagerPatientEditForm: React.FC = () => {
           },
           paymentMethod: patientInfo.paymentMethod,
           insuranceProvider: patientInfo.insuranceProvider,
+          photoUrl: photoUrl,
         };
 
   return (
@@ -97,6 +101,8 @@ const ManagerPatientEditForm: React.FC = () => {
       initialValues={initialvalue}
       scrollToFirstError
     >
+      <CustomImageUploader photoUrl={photoUrl} setPhotoUrl={setPhotoUrl} />
+
       <PatientForm />
 
       <Form.Item {...tailFormItemLayout}>

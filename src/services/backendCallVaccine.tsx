@@ -1,4 +1,3 @@
-import { URL_TO_BACKEND } from '../constants/common';
 import { Vaccine } from '../redux_toolkit/slices/vaccineSlice';
 import api from "./api";
 
@@ -13,13 +12,13 @@ export async function read(): Promise<any> {
 
 }
 
-async function update(body: any, id: number | undefined): Promise<Vaccine> {
+async function update(body: any, id: number | undefined): Promise<any> {
   const response=await api.put('/vaccine/'+id,body);
   return response.data;
 }
 export default update;
 
-export async function deleteBackend(id: number | undefined): Promise<Vaccine> {
+export async function deleteBackend(id: number | undefined): Promise<any> {
   const response=await api.delete('/vaccine/'+id);
   return response.data;
 }

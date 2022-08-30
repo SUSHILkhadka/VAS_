@@ -1,14 +1,17 @@
 import { Button, Dropdown, Menu, message } from "antd";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { makeLoggedOut } from "../redux_toolkit/slices/authSlice";
+import { RootState } from "../redux_toolkit/stores/store";
 import { logout } from "../services/backendCallUser";
 import { setLoginResponse } from "../services/getLocalData";
 import "./Layout.css";
 const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authInfo = useSelector((state: RootState) => state.auth);
   const [loadingLogout, setLoadingLogout] = useState(false);
   const handleLogout = async () => {
     setLoadingLogout(true);
@@ -67,13 +70,22 @@ const Layout = () => {
           >
             List Appointments
           </div>
-          <div className="layout--tabs--elements" onClick={goToListVaccinePage}>
-            List Vaccines
-          </div>
+          {authInfo.isAdmin ? (
+            <div
+              className="layout--tabs--elements"
+              onClick={goToListVaccinePage}
+            >
+              List Vaccines
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="layout--options-element">
           <Dropdown overlay={menu}>
-            <Button onClick={(e) => e.preventDefault()}>User</Button>
+            <Button onClick={(e) => e.preventDefault()}>
+              {authInfo.username}
+            </Button>
           </Dropdown>
         </div>
       </div>

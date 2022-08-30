@@ -1,12 +1,13 @@
-import { Radio, Table } from "antd";
+import { Button, message, Radio, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   DoseDate,
   registerAppointment,
 } from "../../redux_toolkit/slices/appointmentSlice";
+import { deleteBackend } from "../../services/backendCallAppointment";
 
 interface DataType {
   id?: string;
@@ -16,43 +17,70 @@ interface DataType {
   firstDoseDate: string;
   firstDoseTime: string;
 }
-const columns: ColumnsType<DataType> = [
-  {
-    title: "service",
-    dataIndex: "serviceName",
-    key: "serviceName",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "siteLocation",
-    dataIndex: "siteLocation",
-    key: "siteLocation",
-  },
-  {
-    title: "firstDoseDate",
-    dataIndex: "firstDoseDate",
-    key: "firstDoseDate",
-  },
-  {
-    title: "firstDoseTime",
-    dataIndex: "firstDoseTime",
-    key: "firstDoseTime",
-  },
-  {
-    title: "id",
-    dataIndex: "id",
-    key: "id",
-  },
-];
 
-type TT = {
-  Obj: DataType[];
+type PropType = {
+  data: DataType[];
+  refresh: boolean;
+  setRefresh: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const AppointmentTable = (props: TT) => {
+const AppointmentTable = ({ data, refresh, setRefresh }: PropType) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("in table", props);
+  const [loading, setLoading] = useState(false);
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "service",
+      dataIndex: "serviceName",
+      key: "serviceName",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "siteLocation",
+      dataIndex: "siteLocation",
+      key: "siteLocation",
+    },
+    {
+      title: "firstDoseDate",
+      dataIndex: "firstDoseDate",
+      key: "firstDoseDate",
+    },
+    {
+      title: "firstDoseTime",
+      dataIndex: "firstDoseTime",
+      key: "firstDoseTime",
+    },
+    {
+      title: "email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "actions",
+      dataIndex: "id",
+      key: "id",
+      render: (id: number) => {
+        const handleDelete = async () => {
+          setLoading(true);
+          try {
+            const res = await deleteBackend(id);
+            message.success(res.message);
+            setRefresh(!refresh);
+          } catch {
+            message.error("deleting failed");
+          }
+          setLoading(false);
+        };
+
+        return (
+          <Button loading={loading} onClick={handleDelete}>
+            Delete
+          </Button>
+        );
+      },
+    },
+  ];
   return (
     <div>
       <Table
@@ -75,11 +103,11 @@ const AppointmentTable = (props: TT) => {
             navigate("/appointment/edit");
           };
           return {
-            onClick: handleFormSelection,
+            onDoubleClick: handleFormSelection,
           };
         }}
         columns={columns}
-        dataSource={props.Obj}
+        dataSource={data}
       />
     </div>
   );

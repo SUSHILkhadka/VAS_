@@ -1,13 +1,17 @@
-import { useNavigate } from 'react-router-dom';
-import './UserAppointmentForm.css';
-import { Button, Form } from 'antd';
-import React from 'react';
-import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
+import { useNavigate } from "react-router-dom";
+import "./UserAppointmentForm.css";
+import { Button, Form } from "antd";
+import React from "react";
+import { dateToString, timeToString } from "../../utils/common";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { DoseDate, Appointment, registerAppointment } from '../../redux_toolkit/slices/appointmentSlice';
-import { RootState } from '../../redux_toolkit/stores/store';
-import { AppointmentForm } from './AppointmentForm';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  DoseDate,
+  Appointment,
+  registerAppointment,
+} from "../../redux_toolkit/slices/appointmentSlice";
+import { RootState } from "../../redux_toolkit/stores/store";
+import { AppointmentForm } from "./AppointmentForm";
 
 export const AppointmentAddForm: React.FC = () => {
   const authInfo = useSelector((state: RootState) => state.auth);
@@ -31,14 +35,14 @@ export const AppointmentAddForm: React.FC = () => {
       secondDose: secondDose,
     };
     dispatch(registerAppointment(info));
-    console.log('info is=', info);
-    navigate('/appointment/confirmation');
+    console.log("info is=", info);
+    navigate("/appointment/confirmation");
   };
-  const initialValue ={
-        email: authInfo.email,
-        siteLocation: appointmentInfo.siteLocation,
-        service: appointmentInfo.service,
-      };
+  const initialValue = {
+    email: authInfo.isAdmin ? appointmentInfo.email : authInfo.email,
+    siteLocation: appointmentInfo.siteLocation,
+    service: appointmentInfo.service,
+  };
 
   return (
     <Form

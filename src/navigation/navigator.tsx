@@ -61,9 +61,9 @@ const Navigator = () => {
           </>
         ) : (
           <>
-            <Route path="/" element={<AdminRoute />}>
+            <Route path="" element={<AdminRoute />}>
               <Route path="/" element={<Layout />}>
-                <Route index element={<HomePage />}></Route>
+                <Route path="*" element={<HomePage />}></Route>
                 <Route path="/logout" element={<LogOutPage />}></Route>
                 <Route
                   path="/patient"
@@ -97,18 +97,23 @@ const Navigator = () => {
                   path="/appointment/edit"
                   element={<ManagerEditPage />}
                 ></Route>
-                <Route path="/vaccine" element={<AddVaccinePage />}></Route>
-                <Route
-                  path="/vaccine/list"
-                  element={<ListVaccinesPage />}
-                ></Route>
-                <Route
-                  path="/vaccine/edit"
-                  element={<ManagerVaccineEditPage />}
-                ></Route>
+                {authInfo.isAdmin ? (
+                  <>
+                    <Route path="/vaccine" element={<AddVaccinePage />}></Route>
+                    <Route
+                      path="/vaccine/list"
+                      element={<ListVaccinesPage />}
+                    ></Route>
+                    <Route
+                      path="/vaccine/edit"
+                      element={<ManagerVaccineEditPage />}
+                    ></Route>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Route>
             </Route>
-            <Route path="*" element={<h1>Page not found</h1>}></Route>
           </>
         )}
       </Routes>

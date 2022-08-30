@@ -1,6 +1,10 @@
 import { Form, Input, Select, DatePicker, Upload } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux_toolkit/stores/store';
 const { Option } = Select;
 const PatientForm = () => {
+  const authInfo = useSelector((state: RootState) => state.auth);
+
   return (
     <div>
       <Form.Item
@@ -72,12 +76,12 @@ const PatientForm = () => {
             message: 'The input is not valid E-mail!',
           },
           {
-            required: false,
+            required: true,
             message: 'Please input your E-mail!',
           },
         ]}
       >
-        <Input />
+        <Input disabled={!authInfo.isAdmin} />
       </Form.Item>
 
       <Form.Item label="Address">

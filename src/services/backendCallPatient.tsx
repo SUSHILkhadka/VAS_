@@ -10,12 +10,12 @@ export async function read(): Promise<any> {
   const response = await api.get("/patient/");
   return response.data;
 }
-async function update(body: any, id: number | undefined): Promise<Patient> {
+async function update(body: any, id: number | undefined): Promise<any> {
   const response = await api.put(`/patient/${id}`, body);
   return response.data;
 }
 export default update;
-export async function deleteBackend(id: number | undefined): Promise<Patient> {
+export async function deleteBackend(id: number | undefined): Promise<any> {
   const response = await api.delete(`/patient/${id}`);
   return response.data;
 }

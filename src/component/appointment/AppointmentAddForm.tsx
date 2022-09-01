@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ export const AppointmentAddForm: React.FC = () => {
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading,setLoading]=useState(false)
   const onFinish = (values: any) => {
     const firstDose: DoseDate = {
       date: dateToString(values.firstDose_date),
@@ -30,7 +31,6 @@ export const AppointmentAddForm: React.FC = () => {
       secondDose: secondDose,
     };
     dispatch(registerAppointment(info));
-    console.log('info is=', info);
     navigate('/appointment/confirmation');
   };
   const initialValue = {
@@ -46,7 +46,7 @@ export const AppointmentAddForm: React.FC = () => {
     <Form onFinish={onFinish} layout="vertical" initialValues={initialValue}>
       <AppointmentForm />
 
-      <Button type="primary" htmlType="submit">
+      <Button loading={loading} type="primary" htmlType="submit">
         Submit
       </Button>
     </Form>

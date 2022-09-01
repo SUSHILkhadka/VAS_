@@ -33,7 +33,11 @@ const Layout = () => {
         {
           key: "2",
           onClick: () => handleLogout(),
-          label: <Button loading={loadingLogout}>LogOut</Button>,
+          label: (
+            <Button style={{ marginLeft: 20 }} loading={loadingLogout}>
+              LogOut
+            </Button>
+          ),
         },
       ]}
     />
@@ -47,7 +51,6 @@ const Layout = () => {
     };
   };
   const [navbarTitle, setNavbarTitle] = useState("Patients");
-
   const giveLoginAndRegisterTabsOnlyForUser = () => {
     return !authInfo.isAdmin ? (
       <>
@@ -124,18 +127,10 @@ const Layout = () => {
           <div className="layout--options-element">
             <Dropdown overlay={menu}>
               <button
-                className=".btn-fromLink"
+                className="btn-button"
                 onClick={(e) => e.preventDefault()}
               >
-                <div>
-                  <FacebookFilled />
-                  {authInfo.email}
-                </div>
-                <div
-                  className={authInfo.isAdmin ? "admin-true" : "admin-false"}
-                >
-                  Admin={authInfo.isAdmin.toString()}
-                </div>
+                <div>{authInfo.email}</div>
               </button>
             </Dropdown>
             <div className="navbar-title">{navbarTitle}</div>
@@ -149,7 +144,7 @@ const Layout = () => {
       </div>
 
       <div className="content-container">
-        <Outlet  />
+        <Outlet />
       </div>
     </div>
   );

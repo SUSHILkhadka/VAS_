@@ -1,4 +1,4 @@
-import { Button, Input, message } from 'antd';
+import { Button, Input, message, Skeleton } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +47,7 @@ const ListAppointmentsPage = () => {
         Create new Appointment
       </Button>
       {loading ? (
-        <div>Loading</div>
+        <Skeleton style={{margin:30}} active/>
       ) : (
         <div className="App">
           <AppointmentTable data={data} refresh={refresh} setRefresh={setRefresh} />

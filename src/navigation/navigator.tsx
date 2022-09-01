@@ -31,6 +31,7 @@ import Layout from "./Layout";
 import { PageNotFound } from "../pages/PageNotFound";
 import PatientDetailsPage from "../pages/patient/PatientDetailsPage";
 import AppointmentEditPage from "../pages/appointment/AppointmentEditPage";
+import SplashScreen from "../pages/SplashScreen";
 
 const Navigator = () => {
   const [loading, setLoading] = useState(true);
@@ -53,7 +54,7 @@ const Navigator = () => {
   }, []);
 
   if (loading) {
-    return <div>SplashScreen</div>;
+    return <SplashScreen/>;
   }
 
   return (

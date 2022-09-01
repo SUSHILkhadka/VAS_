@@ -8,6 +8,7 @@ import { store as store2 } from './redux_toolkit/stores/store';
 import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+document.title = 'VAS';
 root.render(
   <React.StrictMode>
     <Provider store={store2}>

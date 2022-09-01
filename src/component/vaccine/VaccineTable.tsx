@@ -89,7 +89,7 @@ const VaccineTable = ({ data, refresh, setRefresh }: PropType) => {
         };
         return (
           <>
-            <Button className="btn-edit" loading={loading} onClick={() => handleRowSelection(Obj)}>
+            <Button className="btn-edit" onClick={() => handleRowSelection(Obj)}>
               Edit
             </Button>
             <Button className="btn-delete" loading={loading} onClick={handleDelete}>

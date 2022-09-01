@@ -1,4 +1,3 @@
-import { Vaccine } from '../redux_toolkit/slices/vaccineSlice';
 import api from './api';
 
 export async function create(body: any): Promise<any> {

@@ -12,7 +12,10 @@ export const AppointmentEditForm: React.FC = () => {
   const authInfo = useSelector((state: RootState) => state.auth);
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const navigate = useNavigate();
+  const [loading,setLoading]=useState(false)
+  const [loadingForDelete,setLoadingForDelete]=useState(false)
   const onFinish = async (values: any) => {
+    setLoading(true)
     const firstDose: DoseDate = {
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
@@ -40,9 +43,12 @@ export const AppointmentEditForm: React.FC = () => {
     } catch {
       message.error('error editing');
     }
+    setLoading(false)
+
   };
 
   const handleDelete = async () => {
+    setLoadingForDelete(true)
     try {
       if (appointmentInfo.id) {
         const appointment = await deleteBackend(+appointmentInfo.id);
@@ -52,6 +58,7 @@ export const AppointmentEditForm: React.FC = () => {
     } catch {
       message.error('error');
     }
+    setLoadingForDelete(false)
   };
 
   const initialValue = {
@@ -67,10 +74,10 @@ export const AppointmentEditForm: React.FC = () => {
   return (
     <Form onFinish={onFinish} layout="vertical" initialValues={initialValue}>
       <AppointmentForm />
-      <Button className="btn-gap" type="primary" htmlType="submit">
+      <Button loading={loading} className="btn-gap" type="primary" htmlType="submit">
         Save
       </Button>
-      <Button className="btn-gap" onClick={handleDelete}>
+      <Button loading={loadingForDelete} className="btn-gap" onClick={handleDelete}>
         Delete
       </Button>
     </Form>

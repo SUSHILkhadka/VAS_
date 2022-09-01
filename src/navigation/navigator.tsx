@@ -6,7 +6,6 @@ import PatientRegisterConfirmationPage from '../pages/patient/PatientConfirmatio
 import AppointmentSchedulePage from '../pages/appointment/AppointmentSchedulePage';
 import AddVaccinePage from '../pages/vaccine/AddVaccinePage';
 import ListAppointmentsPage from '../pages/appointment/ListAppointmentsPage';
-import ManagerEditPage from '../pages/appointment/ManagerAppointmentEditPage';
 import ListVaccinesPage from '../pages/vaccine/ListVaccinesPage';
 import ManagerVaccineEditPage from '../pages/vaccine/ManagerVaccineEditPage';
 import MainRegisterPage from '../pages/login/MainRegisterPage';
@@ -64,6 +63,7 @@ const Navigator = () => {
               <Route path="" element={<AdminRoute />}>
                 <Route path="/patient/list" element={<ListPatientsPage />}></Route>
                 <Route path="/patient/details" element={<PatientDetailsPage />}></Route>
+                <Route path="/patient/edit" element={<ManagerPatientEditPage />}></Route>
 
                 <Route path="/vaccine" element={<AddVaccinePage />}></Route>
                 <Route path="/vaccine/list" element={<ListVaccinesPage />}></Route>

@@ -2,6 +2,7 @@
   "name": "template_app",
   "version": "0.1.0",
   "private": true,
+  "build": "CI=false react-scripts build",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@redux-devtools/extension": "^3.2.2",
@@ -9,12 +10,6 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/axios": "^0.14.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.11.45",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "@types/react-redux": "^7.1.24",
     "antd": "^4.21.7",
     "antd-img-crop": "^4.2.4",
     "axios": "^0.27.2",
@@ -54,6 +49,12 @@
     ]
   },
   "devDependencies": {
-    "vitest": "^0.21.0"
+    "vitest": "^0.21.0",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.45",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-redux": "^7.1.24",
   }
 }

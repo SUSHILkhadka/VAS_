@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, message } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { dateToString, stringToDate } from '../../utils/common';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import moment from 'moment';
@@ -14,9 +14,9 @@ export const VaccineAddForm: React.FC = () => {
   const vaccineInfo = useSelector((state: RootState) => state.vaccine);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
-    console.log('dateRange=', values.date);
     const dateRange: DateRange = {
       startDate: dateToString(values.date[0]),
       endDate: dateToString(values.date[1]),
@@ -30,7 +30,6 @@ export const VaccineAddForm: React.FC = () => {
       age: values.age,
       ethinicity: values.ethinicity,
     };
-    console.log('data=', data);
     dispatch(addVaccine(data));
 
     //write to database
@@ -44,6 +43,7 @@ export const VaccineAddForm: React.FC = () => {
       age: values.age,
       ethinicity: values.ethinicity,
     });
+    setLoading(true);
     try {
       const vaccine = await create(body);
       message.success(`Addition successful with Id is ${vaccine.data.id}`);
@@ -51,12 +51,11 @@ export const VaccineAddForm: React.FC = () => {
     } catch {
       message.error('error adding vaccine to database');
     }
+    setLoading(false);
   };
   const onFinishFailed = (_values: any) => {
     console.log('fill all values');
   };
-
-  console.log('vaccine from redux', vaccineInfo);
   const initialValue =
     vaccineInfo.serviceName == ''
       ? {}
@@ -73,6 +72,7 @@ export const VaccineAddForm: React.FC = () => {
   const [form] = Form.useForm();
   return (
     <Form
+      layout="vertical"
       name="basic"
       form={form}
       initialValues={initialValue}
@@ -82,11 +82,9 @@ export const VaccineAddForm: React.FC = () => {
     >
       <VaccineForm />
 
-      <Form.Item label="Button">
-        <Button type="primary" htmlType="submit">
-          Add to database
-        </Button>
-      </Form.Item>
+      <Button loading={loading} type="primary" htmlType="submit">
+        Add to database
+      </Button>
     </Form>
   );
 };

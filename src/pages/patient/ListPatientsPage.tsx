@@ -1,11 +1,11 @@
-import { Button, message } from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PatientTable from "../../component/patient/PatientTable";
-import { read } from "../../services/backendCallPatient";
+import { Button, message } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PatientTable from '../../component/patient/PatientTable';
+import { read } from '../../services/backendCallPatient';
 
 const ListPatientsPage = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(true);
@@ -16,20 +16,22 @@ const ListPatientsPage = () => {
         const patients = await read();
         setData(patients.data);
       } catch {
-        message.error("reading failed");
+        message.error('reading failed');
       }
       setLoading(false);
     };
     getalldata();
   }, [refresh]);
 
-  const goToAddPatientPage=()=>{
-    navigate("/patient")
-  }
+  const goToAddPatientPage = () => {
+    navigate('/patient');
+  };
 
   return (
-    <div>
-      <Button className="floating_button" onClick={goToAddPatientPage}>Create New Patient</Button>
+    <div className="content-container">
+      <Button className="floating_button" onClick={goToAddPatientPage}>
+        Create New Patient
+      </Button>
       {loading ? (
         <div>Loading</div>
       ) : (

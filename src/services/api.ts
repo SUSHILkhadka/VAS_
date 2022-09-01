@@ -17,7 +17,7 @@ const instance = axios.create({
  */
 instance.interceptors.request.use(
   async (config) => {
-    if (config.headers) config.headers['Authorization'] = 'Bearer ' + await getAccessToken();
+    if (config.headers) config.headers['Authorization'] = 'Bearer ' + (await getAccessToken());
     return config;
   },
   (error) => {
@@ -49,7 +49,7 @@ instance.interceptors.response.use(
             refreshToken: getRefreshToken(),
           });
           const { accessToken } = rs.data;
-           setAccessToken(accessToken);
+          setAccessToken(accessToken);
           return instance(originalConfig);
         } catch (_error) {
           return Promise.reject(_error);

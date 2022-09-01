@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Address, Patient, register } from '../../redux_toolkit/slices/patientSlice';
 import { deleteBackend } from '../../services/backendCallPatient';
+import '../styles/Table.css';
+import image from '../../assets/github.png';
 
 interface IPatientFromDatabase {
   id: string;
@@ -22,13 +24,13 @@ interface IPatientFromDatabase {
   photoUrl: string;
 }
 
-type PropType={
-  data:IPatientFromDatabase[]; 
-   refresh: boolean;
+type PropType = {
+  data: IPatientFromDatabase[];
+  refresh: boolean;
   setRefresh: React.Dispatch<SetStateAction<boolean>>;
-}
+};
 
-const PatientTable = ({data,refresh,setRefresh}:PropType) => {
+const PatientTable = ({ data, refresh, setRefresh }: PropType) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -39,6 +41,23 @@ const PatientTable = ({data,refresh,setRefresh}:PropType) => {
       dataIndex: 'id',
       key: 'id',
       render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'avatar',
+      dataIndex: 'id',
+      key: 'id',
+      width: '10%',
+      render: (id: number, Obj: IPatientFromDatabase) => {
+        return (
+          <div className="image-col">
+            {Boolean(Obj.photoUrl) ? (
+              <img className="img-avatar-table" src={Obj.photoUrl} alt="Loading" />
+            ) : (
+              <img className="img-avatar-table" src={image} alt="loading" />
+            )}
+          </div>
+        );
+      },
     },
     {
       title: 'firstName',
@@ -70,11 +89,12 @@ const PatientTable = ({data,refresh,setRefresh}:PropType) => {
       dataIndex: 'ethnicity',
       key: 'ethnicity',
     },
+
     {
-      title: "actions",
-      dataIndex: "id",
-      key: "id",
-      render: (id: number) => {
+      title: 'actions',
+      dataIndex: 'id',
+      key: 'id',
+      render: (id: number, Obj: IPatientFromDatabase) => {
         const handleDelete = async () => {
           setLoading(true);
           try {
@@ -82,53 +102,50 @@ const PatientTable = ({data,refresh,setRefresh}:PropType) => {
             message.success(res.message);
             setRefresh(!refresh);
           } catch {
-            message.error("deleting failed");
+            message.error('deleting failed');
           }
           setLoading(false);
         };
-  
+
         return (
-          <Button loading={loading} onClick={handleDelete}>
-            Delete
-          </Button>
+          <div>
+            <Button className="btn-edit" loading={loading} onClick={() => handleRowSelection(Obj)}>
+              Details
+            </Button>
+            <Button className="btn-delete" loading={loading} onClick={handleDelete}>
+              Delete
+            </Button>
+          </div>
         );
       },
     },
   ];
+
+  const handleRowSelection = (Obj: IPatientFromDatabase): void => {
+    const address: Address = {
+      state: Obj.addressState,
+      city: Obj.addressCity,
+      street: Obj.addressStreet,
+    };
+    const dataForPatientInfo: Patient = {
+      id: +Obj.id,
+      firstName: Obj.firstName,
+      secondName: Obj.secondName,
+      birthDate: Obj.birthDate,
+      ethnicity: Obj.ethnicity,
+      gender: Obj.gender,
+      email: Obj.email,
+      address: address,
+      paymentMethod: Obj.paymentMethod,
+      insuranceProvider: Obj.insuranceProvider,
+      photoUrl: Obj.photoUrl,
+    };
+    dispatch(register(dataForPatientInfo));
+    navigate('/patient/details');
+  };
   return (
-    <div>
-      <Table
-      rowKey='id'
-        onRow={(Obj, _rowIndex) => {
-          const handleRowSelection = (): void => {
-            const address: Address = {
-              state: Obj.addressState,
-              city: Obj.addressCity,
-              street: Obj.addressStreet,
-            };
-            const dataForPatientInfo: Patient = {
-              id: +Obj.id,
-              firstName: Obj.firstName,
-              secondName: Obj.secondName,
-              birthDate: Obj.birthDate,
-              ethnicity: Obj.ethnicity,
-              gender: Obj.gender,
-              email: Obj.email,
-              address: address,
-              paymentMethod: Obj.paymentMethod,
-              insuranceProvider: Obj.insuranceProvider,
-              photoUrl: Obj.photoUrl,
-            };
-            dispatch(register(dataForPatientInfo));
-            navigate('/patient/edit');
-          };
-          return {
-            onDoubleClick: handleRowSelection,
-          };
-        }}
-        columns={columns}
-        dataSource={data}
-      />
+    <div className="table">
+      <Table rowKey="id" columns={columns} dataSource={data} />
     </div>
   );
 };

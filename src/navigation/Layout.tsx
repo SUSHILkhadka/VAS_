@@ -1,14 +1,14 @@
-import { Button, Dropdown, Menu, message } from "antd";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
-import { makeLoggedOut } from "../redux_toolkit/slices/authSlice";
-import { RootState } from "../redux_toolkit/stores/store";
-import { logout } from "../services/backendCallUser";
-import { setLoginResponse } from "../services/getLocalData";
-import {FacebookFilled} from '@ant-design/icons';
-import "./Layout.css";
+import { Button, Dropdown, Menu, message } from 'antd';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { makeLoggedOut } from '../redux_toolkit/slices/authSlice';
+import { RootState } from '../redux_toolkit/stores/store';
+import { logout } from '../services/backendCallUser';
+import { setLoginResponse } from '../services/getLocalData';
+import { FacebookFilled } from '@ant-design/icons';
+import './Layout.css';
 const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,29 +19,19 @@ const Layout = () => {
     try {
       const response = await logout();
       dispatch(makeLoggedOut());
-      setLoginResponse("");
-      message.success("logout successfully");
+      setLoginResponse('');
+      message.success('logout successfully');
+      navigate('/login');
     } catch (e) {
-      message.error("couldnot logout!!");
+      message.error('couldnot logout!!');
     }
+    setLoadingLogout(false);
   };
   const menu = (
     <Menu
       items={[
         {
-          key: "1",
-          label: (
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              Settings
-            </a>
-          ),
-        },
-        {
-          key: "2",
+          key: '2',
           onClick: () => handleLogout(),
           label: <Button loading={loadingLogout}>LogOut</Button>,
         },
@@ -49,50 +39,136 @@ const Layout = () => {
     />
   );
 
-  const goToListPatientPage = () => {
-    navigate("/patient/list");
+  const Styling = (prop: { isActive: boolean }) => {
+    const { isActive } = prop;
+    return {
+      backgroundColor: !isActive ? 'white' : '#0090ff',
+      color: !isActive ? 'black' : 'white',
+    };
   };
-  const goToListAppointmentPage = () => {
-    navigate("/appointment/list");
+  const [navbarTitle, setNavbarTitle] = useState('Patients');
+
+  const giveLoginAndRegisterTabsOnlyForUser = () => {
+    return !authInfo.isAdmin ? (
+      <>
+        <NavLink
+          style={Styling}
+          className="layout--tabs--elements"
+          to={'/login'}
+          onClick={() => setNavbarTitle('Login')}
+        >
+          Login
+        </NavLink>
+        <NavLink
+          style={Styling}
+          className="layout--tabs--elements"
+          to={'/register'}
+          onClick={() => setNavbarTitle('Register')}
+        >
+          <div>Admin Register</div>
+        </NavLink>
+      </>
+    ) : (
+      <></>
+    );
   };
-  const goToListVaccinePage = () => {
-    navigate("/vaccine/list");
+  const givePatientCreateOrPatientList = () => {
+    return authInfo.isAdmin ? (
+      <NavLink
+        style={Styling}
+        className="layout--tabs--elements"
+        to={'/patient/list'}
+        onClick={() => setNavbarTitle('Patients')}
+      >
+        Patient
+      </NavLink>
+    ) : (
+      <NavLink
+        style={Styling}
+        className="layout--tabs--elements"
+        to={'/patient'}
+        onClick={() => setNavbarTitle('Patients')}
+      >
+        Patient
+      </NavLink>
+    );
   };
+
+  const giveAppointmentListWithSearchBarForUser = () => {
+    return authInfo.isAdmin ? (
+      <NavLink
+        style={Styling}
+        onClick={() => setNavbarTitle('Appointments')}
+        className="layout--tabs--elements"
+        to={'/appointment/list'}
+      >
+        Appointment
+      </NavLink>
+    ) : (
+      <NavLink
+        style={Styling}
+        onClick={() => setNavbarTitle('Appointments')}
+        className="layout--tabs--elements"
+        to={'/appointment/list'}
+      >
+        Appointment
+      </NavLink>
+    );
+  };
+
   return (
-    <div>
+    <div className="app-container">
       <div className="layout--container">
         <div className="layout--tabs">
-          <div className="layout--tabs--elements" onClick={goToListPatientPage}>
-            List Patients
-          </div>
-          <div
+          {giveLoginAndRegisterTabsOnlyForUser()}
+          {givePatientCreateOrPatientList()}
+          <NavLink
+            style={Styling}
+            onClick={() => setNavbarTitle('Appointments')}
             className="layout--tabs--elements"
-            onClick={goToListAppointmentPage}
+            to={'/appointment/list'}
           >
-            List Appointments
-          </div>
+            Appointment
+          </NavLink>
           {authInfo.isAdmin ? (
-            <div
+            <NavLink
+              style={Styling}
               className="layout--tabs--elements"
-              onClick={goToListVaccinePage}
+              onClick={() => setNavbarTitle('Vaccine')}
+              to={'/vaccine/list'}
             >
               List Vaccines
-            </div>
+            </NavLink>
           ) : (
             <></>
           )}
         </div>
-        <div className="layout--options-element">
-          <Dropdown  overlay={menu} >
-            <Button onClick={(e) => e.preventDefault()}>
-              <FacebookFilled />
-              {authInfo.email}
-            </Button>
-          </Dropdown>
-        </div>
+        {authInfo.isAdmin ? (
+          <div className="layout--options-element">
+            <Dropdown overlay={menu}>
+              <button className=".btn-fromLink" onClick={(e) => e.preventDefault()}>
+                <div>
+                  <FacebookFilled />
+                  {authInfo.email}
+                </div>
+                <div className={authInfo.isAdmin ? 'admin-true' : 'admin-false'}>
+                  Admin={authInfo.isAdmin.toString()}
+                </div>
+              </button>
+            </Dropdown>
+            <div className="navbar-title">{navbarTitle}</div>
+          </div>
+        ) : (
+          <div className="layout--options-element">
+            <div className="dummy-dropdown"></div>
+            <div className="navbar-title">{navbarTitle}</div>
+          </div>
+        )}
       </div>
 
-      <Outlet />
+      <div className="content-container">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -8,12 +8,12 @@ import '../styles/Image.css';
 import { uploadToCloud } from '../../services/uploadImage';
 import image from '../../assets/github.png';
 
-type PropType={
-    photoUrl:string,
-    setPhotoUrl: React.Dispatch<SetStateAction<string>>;
-}
+type PropType = {
+  photoUrl: string;
+  setPhotoUrl: React.Dispatch<SetStateAction<string>>;
+};
 
-const CustomImageUploader = ({photoUrl,setPhotoUrl}:PropType) => {
+const CustomImageUploader = ({ photoUrl, setPhotoUrl }: PropType) => {
   const [loading, setloading] = useState(false);
   const props: UploadProps = {
     beforeUpload: async (file) => {
@@ -23,7 +23,7 @@ const CustomImageUploader = ({photoUrl,setPhotoUrl}:PropType) => {
       try {
         const response = await uploadToCloud(formData);
         // dispatch(changePhotoUrl(response.url));
-        setPhotoUrl(response.url)
+        setPhotoUrl(response.url);
         message.success('upload successfully.');
       } catch (e) {
         message.error('uploading error');
@@ -36,24 +36,24 @@ const CustomImageUploader = ({photoUrl,setPhotoUrl}:PropType) => {
   };
   return (
     <>
-    <div className="center">
+      <div className="center">
         {Boolean(photoUrl) ? (
           <img className="img-avatar" src={photoUrl} alt="Loading" />
         ) : (
           <img className="img-avatar" src={image} alt="loading" />
         )}
       </div>
-        <Upload {...props}>
-          {loading ? (
-            <Button className="btn btn-photo" type="primary" loading={loading}>
-              Uploading...
-            </Button>
-          ) : (
-            <Button type="primary" className="btn btn-photo">
-              Change Photo
-            </Button>
-          )}
-        </Upload>
+      <Upload {...props}>
+        {loading ? (
+          <Button className="btn btn-photo" type="primary" loading={loading}>
+            Uploading...
+          </Button>
+        ) : (
+          <Button type="primary" className="btn btn-photo">
+            Change Photo
+          </Button>
+        )}
+      </Upload>
     </>
   );
 };

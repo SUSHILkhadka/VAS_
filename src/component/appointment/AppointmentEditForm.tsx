@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import './UserAppointmentForm.css';
 import { Button, Form, message } from 'antd';
 import React, { useState } from 'react';
 import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
@@ -25,7 +24,7 @@ export const AppointmentEditForm: React.FC = () => {
     };
 
     let body = {
-      email: values.email,
+      patientId: values.patientId,
       siteLocation: values.siteLocation,
       serviceName: values.service,
       firstDoseDate: firstDose.date,
@@ -45,44 +44,35 @@ export const AppointmentEditForm: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      if(appointmentInfo.id)
-      {
-      const appointment = await deleteBackend(+appointmentInfo.id);
-      message.success(`Delete successful. Id is ${appointmentInfo.id}`);
-      navigate('/appointment/list');
+      if (appointmentInfo.id) {
+        const appointment = await deleteBackend(+appointmentInfo.id);
+        message.success(`Delete successful. Id is ${appointmentInfo.id}`);
+        navigate('/appointment/list');
       }
     } catch {
       message.error('error');
     }
   };
 
-  const initialValue ={
-          id: appointmentInfo.id,
-          email: appointmentInfo.email,
-          siteLocation: appointmentInfo.siteLocation,
-          service: appointmentInfo.service,
-          firstDose_date: stringToDate(appointmentInfo.firstDose.date),
-          firstDose_time: stringToTime(appointmentInfo.firstDose.time),
-          secondDose_date: stringToDate(appointmentInfo.secondDose.date),
-          secondDose_time: stringToTime(appointmentInfo.secondDose.time),
-        };
+  const initialValue = {
+    id: appointmentInfo.id,
+    patientId: appointmentInfo.patientId,
+    siteLocation: appointmentInfo.siteLocation,
+    service: appointmentInfo.service,
+    firstDose_date: stringToDate(appointmentInfo.firstDose.date),
+    firstDose_time: stringToTime(appointmentInfo.firstDose.time),
+    secondDose_date: stringToDate(appointmentInfo.secondDose.date),
+    secondDose_time: stringToTime(appointmentInfo.secondDose.time),
+  };
   return (
-    <Form
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 14 }}
-      onFinish={onFinish}
-      layout="horizontal"
-      initialValues={initialValue}
-    >
+    <Form onFinish={onFinish} layout="vertical" initialValues={initialValue}>
       <AppointmentForm />
-      <Form.Item label="Button">
-        <Button type="primary" htmlType="submit">
-          Save
-        </Button>
-      </Form.Item>
-      <Form.Item label="Button">
-        <Button onClick={handleDelete}>Delete</Button>
-      </Form.Item>
+      <Button className="btn-gap" type="primary" htmlType="submit">
+        Save
+      </Button>
+      <Button className="btn-gap" onClick={handleDelete}>
+        Delete
+      </Button>
     </Form>
   );
 };

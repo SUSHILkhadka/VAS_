@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Button, Form, message, Select, Upload } from "antd";
-import React, { useState } from "react";
-import { dateToString, stringToDate } from "../../utils/common";
-import { RootState } from "../../redux_toolkit/stores/store";
-import PatientForm from "./PatientForm";
-import update, { deleteBackend } from "../../services/backendCallPatient";
-import CustomImageUploader from "../utils/CustomImageUploader";
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button, Form, message, Select, Upload } from 'antd';
+import React, { useState } from 'react';
+import { dateToString, stringToDate } from '../../utils/common';
+import { RootState } from '../../redux_toolkit/stores/store';
+import PatientForm from './PatientForm';
+import update, { deleteBackend } from '../../services/backendCallPatient';
+import CustomImageUploader from '../utils/CustomImageUploader';
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -55,9 +55,9 @@ const ManagerPatientEditForm: React.FC = () => {
       const patient = await update(body, patientInfo.id);
       console.log(patient);
       message.success(`Edit successful. Id is ${patientInfo.id}`);
-      navigate("/patient/list");
+      navigate('/patient/list');
     } catch {
-      message.error("error editing");
+      message.error('error editing');
     }
   };
 
@@ -66,14 +66,14 @@ const ManagerPatientEditForm: React.FC = () => {
       const patient = await deleteBackend(patientInfo.id);
       console.log(patient);
       message.success(`Delete successful. Id is ${patientInfo.id}`);
-      navigate("/patient/list");
+      navigate('/patient/list');
     } catch {
-      message.error("error");
+      message.error('error');
     }
   };
 
   const initialvalue =
-    patientInfo.firstName == ""
+    patientInfo.firstName == ''
       ? {}
       : {
           firstName: patientInfo.firstName,
@@ -94,7 +94,7 @@ const ManagerPatientEditForm: React.FC = () => {
 
   return (
     <Form
-      {...formItemLayout}
+      layout="vertical"
       form={form}
       name="register"
       onFinish={onFinish}
@@ -105,12 +105,12 @@ const ManagerPatientEditForm: React.FC = () => {
 
       <PatientForm />
 
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Save to Database
-        </Button>
-      </Form.Item>
-      <Button onClick={handleDelete}>Delete</Button>
+      <Button className="btn-ending btn-gap" type="primary" htmlType="submit">
+        Save to Database
+      </Button>
+      <Button className="btn-ending btn-gap" onClick={handleDelete}>
+        Delete
+      </Button>
     </Form>
   );
 };

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface Auth {
   login: boolean;
   username?: string;
-  isAdmin: boolean,
+  isAdmin: boolean;
   email: string;
 }
 

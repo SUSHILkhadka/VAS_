@@ -1,0 +1,20 @@
+.loginpage-container {
+  /* background-color: aqua; */
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.loginform-container {
+  padding: 5rem 2rem 0rem 0rem;
+  align-self: center;
+  width: 40%;
+}
+
+.loginpage-row2 {
+  margin: 3rem 0rem;
+}
+.img-logo {
+  width: 30%;
+  margin: auto;
+}

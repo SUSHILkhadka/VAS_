@@ -18,7 +18,7 @@ export interface Patient {
 
   paymentMethod: string;
   insuranceProvider: string;
-  photoUrl: string
+  photoUrl: string;
 }
 
 const defaultAddress: Address = {
@@ -38,7 +38,7 @@ const defaultPatientInfo: Patient = {
 
   paymentMethod: '',
   insuranceProvider: '',
-  photoUrl:''
+  photoUrl: '',
 };
 
 export const patientSlice = createSlice({

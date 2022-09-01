@@ -1,0 +1,14 @@
+.table {
+  margin: 1rem;
+}
+.searchfield {
+  margin: 0rem 3rem;
+  width: 30%;
+}
+.input-and-button {
+  display: flex;
+}
+.input-and-button input {
+  border-radius: 10px;
+  margin: 0rem 0.5rem;
+}

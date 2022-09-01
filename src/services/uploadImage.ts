@@ -1,4 +1,4 @@
-import api from "./api";
+import api from './api';
 
 /**
  *
@@ -6,7 +6,6 @@ import api from "./api";
  * @returns response i.e url of image after successfully uploading
  */
 export async function uploadToCloud(formData: FormData): Promise<any> {
-  const response = await api.post("/upload", formData,{
-  });
+  const response = await api.post('/upload', formData, {});
   return response.data;
 }

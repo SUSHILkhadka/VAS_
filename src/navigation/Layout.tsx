@@ -149,7 +149,7 @@ const Layout = () => {
       </div>
 
       <div className="content-container">
-        <Outlet />
+        <Outlet  />
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import { AppointmentEditForm } from '../../component/appointment/AppointmentEditForm';
 
-const ManagerEditPage = () => {
+const AppointmentEditPage = () => {
   return (
     <div>
-      <div>ManagerEditPage Page</div>
+      <div>AppointmentEditPage Page</div>
       <AppointmentEditForm />
     </div>
   );
 };
-export default ManagerEditPage;
+export default AppointmentEditPage;

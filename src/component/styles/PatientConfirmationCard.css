@@ -1,0 +1,26 @@
+.detail-container {
+  margin: 1rem;
+}
+.detail-header {
+  font-size: 30px;
+}
+.detail-container-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+}
+.detail-container-element {
+  width: 50%;
+  display: flex;
+}
+.detail-title {
+  width: 50%;
+  background-color: #f9f9f6;
+  padding: 1rem;
+}
+.detail-value {
+  width: 50%;
+  display: flex;
+  align-self: center;
+  padding: 1rem;
+}

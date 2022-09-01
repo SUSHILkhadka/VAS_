@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, message, Select, Upload } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { dateToString, stringToDate } from '../../utils/common';
 import { RootState } from '../../redux_toolkit/stores/store';
 import PatientForm from './PatientForm';
 import update, { deleteBackend } from '../../services/backendCallPatient';
+import CustomImageUploader from '../utils/CustomImageUploader';
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -33,8 +34,9 @@ const ManagerPatientEditForm: React.FC = () => {
   const patientInfo = useSelector((state: RootState) => state.patient);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [photoUrl, setPhotoUrl] = useState(patientInfo.photoUrl);
   const onFinish = async (values: any) => {
-    let body = JSON.stringify({
+    let body = {
       firstName: values.firstName,
       secondName: values.lastName,
       birthDate: dateToString(values.birthDate),
@@ -46,7 +48,8 @@ const ManagerPatientEditForm: React.FC = () => {
       addressStreet: values.address.street,
       paymentMethod: values.paymentMethod,
       insuranceProvider: values.insuranceProvider,
-    });
+      photoUrl: photoUrl,
+    };
 
     try {
       const patient = await update(body, patientInfo.id);
@@ -86,25 +89,28 @@ const ManagerPatientEditForm: React.FC = () => {
           },
           paymentMethod: patientInfo.paymentMethod,
           insuranceProvider: patientInfo.insuranceProvider,
+          photoUrl: photoUrl,
         };
 
   return (
     <Form
-      {...formItemLayout}
+      layout="vertical"
       form={form}
       name="register"
       onFinish={onFinish}
       initialValues={initialvalue}
       scrollToFirstError
     >
+      <CustomImageUploader photoUrl={photoUrl} setPhotoUrl={setPhotoUrl} />
+
       <PatientForm />
 
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Save to Database
-        </Button>
-      </Form.Item>
-      <Button onClick={handleDelete}>Delete</Button>
+      <Button className="btn-ending btn-gap" type="primary" htmlType="submit">
+        Save to Database
+      </Button>
+      <Button className="btn-ending btn-gap" onClick={handleDelete}>
+        Delete
+      </Button>
     </Form>
   );
 };

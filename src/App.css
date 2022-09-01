@@ -1,6 +1,7 @@
 @import 'antd/dist/antd.css';
 .App {
   text-align: center;
+  margin: 2rem;
 }
 
 .App-logo {
@@ -40,13 +41,22 @@
   }
 }
 
-
-.floating_button{
-  position: absolute;
-  top: 35px;
+.floating_button {
+  position: fixed;
+  bottom: 35px;
   right: 15%;
   z-index: 2;
   height: 40px;
-  border: 1px solid green;
+  border: 1px solid rgb(221, 152, 235);
   border-radius: 500px;
+  background-color: rgb(205, 241, 202);
+
+  box-shadow: 7px 20px 25px -16px rgba(0, 0, 0, 0.58);
+  -webkit-box-shadow: 7px 20px 25px -16px rgba(0, 0, 0, 0.58);
+  -moz-box-shadow: 7px 20px 25px -16px rgba(0, 0, 0, 0.58);
+}
+
+.content-container {
+  margin: 2rem 0rem;
+  width: 100%;
 }

@@ -18,6 +18,7 @@ export interface Patient {
 
   paymentMethod: string;
   insuranceProvider: string;
+  photoUrl: string;
 }
 
 const defaultAddress: Address = {
@@ -37,6 +38,7 @@ const defaultPatientInfo: Patient = {
 
   paymentMethod: '',
   insuranceProvider: '',
+  photoUrl: '',
 };
 
 export const patientSlice = createSlice({
@@ -54,6 +56,7 @@ export const patientSlice = createSlice({
       state.address = action.payload.address;
       state.paymentMethod = action.payload.paymentMethod;
       state.insuranceProvider = action.payload.insuranceProvider;
+      state.photoUrl = action.payload.photoUrl;
     },
     resetPatient: (state) => {
       state.id = 0;
@@ -66,6 +69,7 @@ export const patientSlice = createSlice({
       state.address = defaultAddress;
       state.paymentMethod = '';
       state.insuranceProvider = '';
+      state.photoUrl = '';
     },
   },
 });

@@ -1,0 +1,29 @@
+.form-row {
+  display: flex;
+  margin: 1rem 9rem;
+  justify-content: space-between;
+}
+.form-wholefield {
+  width: 40%;
+  display: flex;
+}
+.form-addressfield {
+  width: 26%;
+  display: flex;
+}
+.form-input {
+  /* display: block; */
+}
+
+.form-datepicker {
+  width: 100%;
+}
+.form-datepickerForDoses {
+  width: 200%;
+}
+.form-inputforaddress {
+  width: 100%;
+}
+.form-uploadpic {
+  margin: 3rem;
+}

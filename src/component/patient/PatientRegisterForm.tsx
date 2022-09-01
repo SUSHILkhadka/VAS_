@@ -1,46 +1,22 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Button, Form, Select, Upload } from "antd";
-import React from "react";
-import {
-  Address,
-  Patient,
-  register,
-} from "../../redux_toolkit/slices/patientSlice";
-import { dateToString, stringToDate } from "../../utils/common";
-import { RootState } from "../../redux_toolkit/stores/store";
-import PatientForm from "./PatientForm";
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button, Form, Select, Upload } from 'antd';
+import React, { useState } from 'react';
+import { Address, Patient, register } from '../../redux_toolkit/slices/patientSlice';
+import { dateToString, stringToDate } from '../../utils/common';
+import { RootState } from '../../redux_toolkit/stores/store';
+import PatientForm from './PatientForm';
+import CustomImageUploader from '../utils/CustomImageUploader';
 
 const PatientRegisterForm: React.FC = () => {
-  const registerInfo = useSelector((state: RootState) => state.patient);
+  const patientInfo = useSelector((state: RootState) => state.patient);
   const authInfo = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [photoUrl, setPhotoUrl] = useState(patientInfo.photoUrl);
 
   const onFinish = (values: any) => {
     const address: Address = {
@@ -58,44 +34,48 @@ const PatientRegisterForm: React.FC = () => {
       address: address,
       paymentMethod: values.paymentMethod,
       insuranceProvider: values.insuranceProvider,
+      photoUrl: photoUrl,
     };
     dispatch(register(info));
-    navigate("/patient/confirmation");
+    navigate('/patient/confirmation');
   };
 
   const initialvalue = {
-    firstName: registerInfo.firstName,
-    lastName: registerInfo.secondName,
-    birthDate: registerInfo.birthDate?stringToDate(registerInfo.birthDate): Date.now,
-    ethnicity: registerInfo.ethnicity,
-    gender: registerInfo.gender,
-    email: authInfo.isAdmin ? registerInfo.email : authInfo.email,
+    firstName: patientInfo.firstName,
+    lastName: patientInfo.secondName,
+    birthDate: patientInfo.birthDate ? stringToDate(patientInfo.birthDate) : '',
+    ethnicity: patientInfo.ethnicity,
+    gender: patientInfo.gender,
+    email: patientInfo.email,
     address: {
-      state: registerInfo.address.state,
-      city: registerInfo.address.city,
-      street: registerInfo.address.street,
+      state: patientInfo.address.state,
+      city: patientInfo.address.city,
+      street: patientInfo.address.street,
     },
-    paymentMethod: registerInfo.paymentMethod,
-    insuranceProvider: registerInfo.insuranceProvider,
+    paymentMethod: patientInfo.paymentMethod,
+    insuranceProvider: patientInfo.insuranceProvider,
+    photoUrl: photoUrl,
   };
 
   return (
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      initialValues={initialvalue}
-      scrollToFirstError
-    >
-      <PatientForm />
-
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
+    <div className="content-container">
+      <Form
+        form={form}
+        layout="vertical"
+        name="register"
+        onFinish={onFinish}
+        initialValues={initialvalue}
+        scrollToFirstError
+      >
+        <PatientForm />
+        <div className="form-uploadpic">
+          <CustomImageUploader photoUrl={photoUrl} setPhotoUrl={setPhotoUrl} />
+        </div>
+        <Button className="btn-ending" type="primary" htmlType="submit">
           Register
         </Button>
-      </Form.Item>
-    </Form>
+      </Form>
+    </div>
   );
 };
 

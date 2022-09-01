@@ -1,14 +1,14 @@
 import LoginForm from '../../component/login/LoginForm';
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
+import logo from '../../assets/VasLogo.svg';
 const LogInPage = () => {
   return (
-    <div>
+    <div className="loginpage-container">
+      <img className="img-logo" src={logo} />
       <LoginForm />
-      <p>
-        New user??<Link to="/mainregister">Register</Link>
-      </p>
+      <Link to="/register" className="loginpage-row2 ">
+        New user??Register
+      </Link>
     </div>
   );
 };

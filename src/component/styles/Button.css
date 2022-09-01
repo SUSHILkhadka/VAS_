@@ -1,0 +1,28 @@
+.btn-fromLink {
+  border: 1px solid #0090ff;
+  padding: 0.5rem;
+  color: #0090ff;
+}
+.btn-ending {
+  margin-bottom: 3rem;
+}
+.btn-gap {
+  margin: 1rem;
+}
+.btn-edit {
+  margin: 0rem 1rem;
+  color: #0090ff;
+}
+.btn-delete {
+  margin: 0rem 1rem;
+  color: red;
+}
+.btn-login {
+  z-index: 2;
+  font-size: 20px;
+  width: 30%;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  padding: 1rem;
+  box-sizing: content-box;
+}

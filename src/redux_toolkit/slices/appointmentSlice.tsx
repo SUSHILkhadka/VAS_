@@ -6,7 +6,7 @@ export interface DoseDate {
 }
 export interface Appointment {
   id?: number;
-  email: string;
+  patientId: number;
   siteLocation: string;
   service: string;
   firstDose: DoseDate;
@@ -20,7 +20,7 @@ const defaultDoseDate: DoseDate = {
 
 const defaultValue: Appointment = {
   id: 0,
-  email: '',
+  patientId: 0,
   siteLocation: '',
   service: '',
   firstDose: defaultDoseDate,
@@ -35,7 +35,7 @@ export const appointmentSlice = createSlice({
       if (action.payload.id) {
         state.id = action.payload.id;
       }
-      state.email = action.payload.email;
+      state.patientId = action.payload.patientId;
       state.siteLocation = action.payload.siteLocation;
       state.service = action.payload.service;
       state.firstDose = action.payload.firstDose;
@@ -43,7 +43,7 @@ export const appointmentSlice = createSlice({
     },
     resetAppointment: (state: Appointment) => {
       state.id = 0;
-      state.email = '';
+      state.patientId = 0;
       state.siteLocation = '';
       state.service = '';
       state.firstDose = defaultDoseDate;

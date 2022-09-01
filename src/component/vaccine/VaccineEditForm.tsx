@@ -86,6 +86,7 @@ export const VaccineEditForm: React.FC = () => {
   return (
     <Form
       name="basic"
+      layout="vertical"
       form={form}
       initialValues={initialValue}
       autoComplete="off"
@@ -94,14 +95,14 @@ export const VaccineEditForm: React.FC = () => {
     >
       <VaccineForm />
 
-      <Form.Item label="Button">
-        <Button type="primary" htmlType="submit">
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button className="btn-gap" type="primary" htmlType="submit">
           Save Changes to database
         </Button>
-      </Form.Item>
-      <Button type="primary" onClick={handleDelete}>
-        Delete from Database
-      </Button>
+        <Button className="btn-gap" type="primary" onClick={handleDelete}>
+          Delete from Database
+        </Button>
+      </div>
     </Form>
   );
 };

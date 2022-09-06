@@ -9,9 +9,6 @@ import "../styles/Forms.css";
 
 export const AppointmentForm: React.FC = () => {
   const authInfo = useSelector((state: RootState) => state.auth);
-  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-    return current && current > moment().endOf("day");
-  };
   const [vacineArray, setVaccineArray] = useState<any>([]);
   useEffect(() => {
     async function getAllVaccine() {

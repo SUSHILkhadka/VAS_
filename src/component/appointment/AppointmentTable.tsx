@@ -1,6 +1,6 @@
 import { Button, message, Radio, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState,useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { RootState } from '../../redux_toolkit/stores/store';
 import { deleteBackend } from '../../services/backendCallAppointment';
 import '../styles/Table.css';
 
-interface DataType {
+export interface IAppointmentFromDb {
   id?: string;
   patientId: number;
   siteLocation: string;
@@ -21,18 +21,17 @@ interface DataType {
 }
 
 type PropType = {
-  data: DataType[];
-  refresh: boolean;
+  data: IAppointmentFromDb[];
   setRefresh: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const AppointmentTable = ({ data, refresh, setRefresh }: PropType) => {
+const AppointmentTable = ({ data, setRefresh }: PropType) => {
   const navigate = useNavigate();
   const authInfo = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<IAppointmentFromDb> = [
     {
       title: 'patientId',
       dataIndex: 'patientId',
@@ -80,13 +79,13 @@ const AppointmentTable = ({ data, refresh, setRefresh }: PropType) => {
           title: 'actions',
           dataIndex: 'id',
           key: 'id',
-          render: (id: number, Obj: DataType) => {
+          render: (id: number, Obj: IAppointmentFromDb) => {
             const handleDelete = async () => {
               setLoading(true);
               try {
                 const res = await deleteBackend(id);
                 message.success(res.message);
-                setRefresh(!refresh);
+                setRefresh((prevState)=>!prevState);
               } catch {
                 message.error('deleting failed');
               }
@@ -108,7 +107,7 @@ const AppointmentTable = ({ data, refresh, setRefresh }: PropType) => {
       : {},
   ];
 
-  const handleRowSelection = (Obj: DataType): void => {
+  const handleRowSelection = (Obj: IAppointmentFromDb): void => {
     const firstDose: DoseDate = {
       date: Obj.firstDoseDate,
       time: Obj.firstDoseTime,

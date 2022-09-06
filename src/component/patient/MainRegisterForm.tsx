@@ -99,7 +99,7 @@ const MainRegisterForm: React.FC = () => {
         >
           Register
         </Button>
-        <Button className="btn-gap" onClick={goToLoginPage}>
+        <Button loading={loading} className="btn-gap" onClick={goToLoginPage}>
           Already has Account
         </Button>
       </Form>

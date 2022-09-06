@@ -45,7 +45,7 @@
   position: fixed;
   bottom: 35px;
   right: 15%;
-  z-index: 2;
+  z-index: 10;
   height: 40px;
   border: 1px solid rgb(221, 152, 235);
   border-radius: 500px;
@@ -59,4 +59,7 @@
 .content-container {
   margin: 2rem 0rem;
   width: 100%;
+}
+.splashscreen-container{
+  margin-top: 15rem
 }

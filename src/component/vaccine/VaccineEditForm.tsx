@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Select, message } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { dateToString, stringToDate } from '../../utils/common';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import moment from 'moment';
@@ -15,8 +15,10 @@ export const VaccineEditForm: React.FC = () => {
   const vaccineInfo = useSelector((state: RootState) => state.vaccine);
   const navigate = useNavigate();
 
+  const [loading,setLoading]=useState(false)
+  const [loadingForDelete,setLoadingForDelete]=useState(false)
   const onFinish = async (values: any) => {
-    console.log('vaccineinfo', vaccineInfo);
+    setLoading(true);
     const dateRange: DateRange = {
       startDate: dateToString(values.date[0]),
       endDate: dateToString(values.date[1]),
@@ -30,10 +32,7 @@ export const VaccineEditForm: React.FC = () => {
       age: values.age,
       ethinicity: values.ethinicity,
     };
-    console.log('data=', data);
-
-    //write to database
-    const body = JSON.stringify({
+    const body = {
       serviceName: values.serviceName,
       siteLocation: values.siteLocation,
       startDate: dateRange.startDate,
@@ -42,33 +41,34 @@ export const VaccineEditForm: React.FC = () => {
       gender: values.gender,
       age: values.age,
       ethinicity: values.ethinicity,
-    });
+    };
 
     try {
       const vaccine = await update(body, vaccineInfo.id);
-      console.log(vaccine);
       message.success(`Edit successful. Id is ${vaccineInfo.id}`);
       navigate('/vaccine/list');
     } catch {
       message.error(`error editing`);
     }
+    setLoading(true);
+
   };
   const onFinishFailed = (_values: any) => {
     console.log('fill all values');
   };
 
   const handleDelete = async () => {
+    setLoadingForDelete(true)
     try {
       const vaccine = await deleteBackend(vaccineInfo.id);
-      console.log(vaccine);
-
       message.success(`Delete successful. Id is ${vaccineInfo.id}`);
       navigate('/vaccine/list');
     } catch {
       message.error(`error deleting`);
     }
+    setLoadingForDelete(false)
+
   };
-  console.log('vaccine from redux', vaccineInfo);
   const initialValue =
     vaccineInfo.serviceName == ''
       ? {}
@@ -96,10 +96,10 @@ export const VaccineEditForm: React.FC = () => {
       <VaccineForm />
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button className="btn-gap" type="primary" htmlType="submit">
+        <Button loading={loading} className="btn-gap" type="primary" htmlType="submit">
           Save Changes to database
         </Button>
-        <Button className="btn-gap" type="primary" onClick={handleDelete}>
+        <Button loading={loadingForDelete} className="btn-gap" type="primary" onClick={handleDelete}>
           Delete from Database
         </Button>
       </div>

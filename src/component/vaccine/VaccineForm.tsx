@@ -21,7 +21,7 @@ const VaccineForm: React.FC = () => {
           className="form-wholefield"
           label="Site Location"
           name="siteLocation"
-          rules={[{ required: false, message: 'Please input site location!' }]}
+          rules={[{ required: true, message: 'Please input site location!' }]}
         >
           <Input placeholder="siteLocation" />
         </Form.Item>
@@ -38,7 +38,7 @@ const VaccineForm: React.FC = () => {
           className="form-wholefield"
           label="DoseType"
           name="doseType"
-          rules={[{ required: false, message: 'Please select dose type!' }]}
+          rules={[{ required: true, message: 'Please select dose type!' }]}
         >
           <Select
             className="form-datepicker"
@@ -58,7 +58,7 @@ const VaccineForm: React.FC = () => {
           className="form-wholefield"
           label="Gender"
           name="gender"
-          rules={[{ required: false, message: 'Please select your gender!' }]}
+          rules={[{ required: true, message: 'Please select your gender!' }]}
         >
           <Radio.Group className="form-datepicker">
             <Radio value="male">Male</Radio>
@@ -73,7 +73,7 @@ const VaccineForm: React.FC = () => {
           className="form-wholefield"
           label="Age greater for"
           name="age"
-          rules={[{ required: false, message: 'Please input your age!' }]}
+          rules={[{ required: true, message: 'Please input your age!' }]}
         >
           <InputNumber className="form-datepicker" max={120} min={0} placeholder="Age" />
         </Form.Item>
@@ -81,7 +81,7 @@ const VaccineForm: React.FC = () => {
           className="form-wholefield"
           label="Ethinicity"
           name="ethinicity"
-          rules={[{ required: false, message: 'Please input your ethinicity!' }]}
+          rules={[{ required: true, message: 'Please input your ethinicity!' }]}
         >
           <Input placeholder="Ethinicity" />
         </Form.Item>

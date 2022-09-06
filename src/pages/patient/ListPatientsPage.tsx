@@ -1,4 +1,4 @@
-import { Button, message } from 'antd';
+import { Button, message, Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PatientTable from '../../component/patient/PatientTable';
@@ -33,8 +33,8 @@ const ListPatientsPage = () => {
         Create New Patient
       </Button>
       {loading ? (
-        <div>Loading</div>
-      ) : (
+        <Skeleton style={{margin:50}} active/>
+        ) : (
         <div className="App">
           <PatientTable data={data} refresh={refresh} setRefresh={setRefresh} />
         </div>

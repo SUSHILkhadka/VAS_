@@ -1,5 +1,3 @@
-import { URL_TO_BACKEND } from '../constants/common';
-import { Patient } from '../redux_toolkit/slices/patientSlice';
 import api from './api';
 
 export async function create(body: any): Promise<any> {

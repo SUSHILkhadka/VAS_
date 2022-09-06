@@ -15,7 +15,7 @@ const PatientForm = () => {
           label="First Name"
           rules={[
             {
-              required: false,
+              required: true,
               message: 'Please input your First Name',
             },
           ]}
@@ -29,7 +29,7 @@ const PatientForm = () => {
           label="Last Name"
           rules={[
             {
-              required: false,
+              required: true,
               message: 'Please input your Last Name',
             },
           ]}
@@ -45,7 +45,7 @@ const PatientForm = () => {
           label="Birth Date"
           rules={[
             {
-              required: false,
+              required: true,
               message: 'Please input your Last Name',
             },
           ]}
@@ -59,7 +59,7 @@ const PatientForm = () => {
           label="Ethnicity"
           rules={[
             {
-              required: false,
+              required: true,
               message: 'Please input your Ethnicity',
             },
           ]}
@@ -73,7 +73,7 @@ const PatientForm = () => {
           className="form-wholefield"
           name="gender"
           label="Gender"
-          rules={[{ required: false, message: 'Please select gender!' }]}
+          rules={[{ required: true, message: 'Please select gender!' }]}
         >
           <Select placeholder="select your gender">
             <Option value="male">Male</Option>
@@ -106,7 +106,7 @@ const PatientForm = () => {
           className="form-addressfield"
           label="State"
           name={['address', 'state']}
-          rules={[{ required: false, message: 'Province is required' }]}
+          rules={[{ required: true, message: 'Province is required' }]}
         >
           <Select className="form-inputforaddress" placeholder="Select State">
             <Option value="province1">province 1</Option>
@@ -123,7 +123,7 @@ const PatientForm = () => {
           label="City"
           className="form-addressfield"
           name={['address', 'city']}
-          rules={[{ required: false, message: 'Province is required' }]}
+          rules={[{ required: true, message: 'Province is required' }]}
         >
           <Input className="form-inputforaddress" placeholder="Input City" />
         </Form.Item>
@@ -131,7 +131,7 @@ const PatientForm = () => {
           label="Street"
           className="form-addressfield"
           name={['address', 'street']}
-          rules={[{ required: false, message: 'Street is required' }]}
+          rules={[{ required: true, message: 'Street is required' }]}
         >
           <Input className="form-inputforaddress" placeholder="Input street" />
         </Form.Item>
@@ -142,7 +142,7 @@ const PatientForm = () => {
           className="form-wholefield"
           name="paymentMethod"
           label="Payment Method"
-          rules={[{ required: false, message: 'Province is required' }]}
+          rules={[{ required: true, message: 'Province is required' }]}
         >
           <Select placeholder="Select Payment Method">
             <Option value="insuranceId">Insurance Id</Option>
@@ -154,12 +154,6 @@ const PatientForm = () => {
           className="form-wholefield"
           name="insuranceProvider"
           label="Insurance Provider"
-          rules={[
-            {
-              required: false,
-              message: 'Please input your Insurance Provider',
-            },
-          ]}
         >
           <Input />
         </Form.Item>

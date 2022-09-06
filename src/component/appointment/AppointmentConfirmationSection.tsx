@@ -75,7 +75,7 @@ const AppointmentConfirmationSection = () => {
           <h4 className="detail-value">{appointmentInfo.secondDose.time}</h4>
         </div>
       </div>
-      <Link className="btn-fromLink btn-ending btn-gap" to={authInfo.isAdmin ? '/appointment/edit' : '/appointment/'}>
+      <Link className="btn-fromLink btn-ending btn-gap" to= '/appointment/'>
         {' '}
         Edit
       </Link>

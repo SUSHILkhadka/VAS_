@@ -109,7 +109,7 @@ const PatientTable = ({ data, refresh, setRefresh }: PropType) => {
 
         return (
           <div>
-            <Button className="btn-edit" loading={loading} onClick={() => handleRowSelection(Obj)}>
+            <Button className="btn-edit" onClick={() => handleRowSelection(Obj)}>
               Details
             </Button>
             <Button className="btn-delete" loading={loading} onClick={handleDelete}>

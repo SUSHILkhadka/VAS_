@@ -18,8 +18,10 @@
   width: 20%;
   margin-right: auto;
 
+
   padding: 1rem;
   /* margin-left: 70%; */
+  
 }
 .layout--tabs {
   display: flex;

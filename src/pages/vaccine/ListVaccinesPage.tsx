@@ -1,6 +1,6 @@
-import { Button, message } from 'antd';
+import { Button, message, Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import VaccineTable from '../../component/vaccine/VaccineTable';
 import { read } from '../../services/backendCallVaccine';
 
@@ -34,7 +34,7 @@ const ListVaccinesPage = () => {
         Add new Vaccine
       </Button>
       {loading ? (
-        <div>Loading</div>
+        <Skeleton style={{margin:50}} active/>
       ) : (
         <div className="App">
           <VaccineTable data={data} refresh={refresh} setRefresh={setRefresh} />

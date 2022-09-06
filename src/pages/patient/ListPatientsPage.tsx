@@ -33,8 +33,8 @@ const ListPatientsPage = () => {
         Create New Patient
       </Button>
       {loading ? (
-        <Skeleton style={{margin:50}} active/>
-        ) : (
+        <Skeleton style={{ margin: 50 }} active />
+      ) : (
         <div className="App">
           <PatientTable data={data} setRefresh={setRefresh} />
         </div>

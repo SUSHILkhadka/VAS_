@@ -1,10 +1,10 @@
-import { Spin } from "antd"
+import { Spin } from 'antd';
 
-const SplashScreen=()=>{
-    return(
-        <div className="splashscreen-container">
-            <Spin size="large" />
-        </div>
-    )
-}
+const SplashScreen = () => {
+  return (
+    <div className="splashscreen-container">
+      <Spin size="large" />
+    </div>
+  );
+};
 export default SplashScreen;

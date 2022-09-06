@@ -15,8 +15,8 @@ export const VaccineEditForm: React.FC = () => {
   const vaccineInfo = useSelector((state: RootState) => state.vaccine);
   const navigate = useNavigate();
 
-  const [loading,setLoading]=useState(false)
-  const [loadingForDelete,setLoadingForDelete]=useState(false)
+  const [loading, setLoading] = useState(false);
+  const [loadingForDelete, setLoadingForDelete] = useState(false);
   const onFinish = async (values: any) => {
     setLoading(true);
     const dateRange: DateRange = {
@@ -51,14 +51,13 @@ export const VaccineEditForm: React.FC = () => {
       message.error(`error editing`);
     }
     setLoading(true);
-
   };
   const onFinishFailed = (_values: any) => {
     console.log('fill all values');
   };
 
   const handleDelete = async () => {
-    setLoadingForDelete(true)
+    setLoadingForDelete(true);
     try {
       const vaccine = await deleteBackend(vaccineInfo.id);
       message.success(`Delete successful. Id is ${vaccineInfo.id}`);
@@ -66,8 +65,7 @@ export const VaccineEditForm: React.FC = () => {
     } catch {
       message.error(`error deleting`);
     }
-    setLoadingForDelete(false)
-
+    setLoadingForDelete(false);
   };
   const initialValue =
     vaccineInfo.serviceName == ''

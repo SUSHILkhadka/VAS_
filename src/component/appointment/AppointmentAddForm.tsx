@@ -14,27 +14,26 @@ export const AppointmentAddForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
-    if(values.firstDose_date<values.secondDose_date)
-    {
-    const firstDose: DoseDate = {
-      date: dateToString(values.firstDose_date),
-      time: timeToString(values.firstDose_time),
-    };
-    const secondDose: DoseDate = {
-      date: dateToString(values.secondDose_date),
-      time: timeToString(values.secondDose_time),
-    };
-    const info: Appointment = {
-      patientId: values.patientId,
-      siteLocation: values.siteLocation,
-      service: values.service,
-      firstDose: firstDose,
-      secondDose: secondDose,
-    };
-    dispatch(registerAppointment(info));
-    navigate('/appointment/confirmation');
-  }else{
-      message.error('second dose date cannot be smaller than first dose date')
+    if (values.firstDose_date < values.secondDose_date) {
+      const firstDose: DoseDate = {
+        date: dateToString(values.firstDose_date),
+        time: timeToString(values.firstDose_time),
+      };
+      const secondDose: DoseDate = {
+        date: dateToString(values.secondDose_date),
+        time: timeToString(values.secondDose_time),
+      };
+      const info: Appointment = {
+        patientId: values.patientId,
+        siteLocation: values.siteLocation,
+        service: values.service,
+        firstDose: firstDose,
+        secondDose: secondDose,
+      };
+      dispatch(registerAppointment(info));
+      navigate('/appointment/confirmation');
+    } else {
+      message.error('second dose date cannot be smaller than first dose date');
     }
   };
   const initialValue = {

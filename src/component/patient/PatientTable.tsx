@@ -99,7 +99,7 @@ const PatientTable = ({ data, setRefresh }: PropType) => {
           try {
             const res = await deleteBackend(id);
             message.success(res.message);
-            setRefresh((prevState)=>!prevState);
+            setRefresh((prevState) => !prevState);
           } catch {
             message.error('deleting failed');
           }

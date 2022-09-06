@@ -8,6 +8,7 @@ import '../../component/styles/Table.css';
 import Search from 'antd/lib/transfer/search';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux_toolkit/stores/store';
+import AppointmentCalender from '../../component/appointment/AppointmentCalender';
 const ListAppointmentsPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -46,12 +47,13 @@ const ListAppointmentsPage = () => {
       <Button className="floating_button" onClick={goToAddPage}>
         Create new Appointment
       </Button>
-      {loading ? (
+      {(loading )  ? (
         <Skeleton style={{margin:30}} active/>
       ) : (
-        <div className="App">
-          <AppointmentTable data={data} refresh={refresh} setRefresh={setRefresh} />
-        </div>
+        <div>
+          <AppointmentTable data={data} setRefresh={setRefresh} />
+          <AppointmentCalender data={data}/>
+        </div>  
       )}
     </div>
   );

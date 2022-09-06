@@ -3,17 +3,6 @@
   text-align: center;
   margin: 2rem;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 .navbar {
   margin: 1rem;
 }
@@ -31,21 +20,11 @@
 .App-link {
   color: #61dafb;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .floating_button {
   position: fixed;
   bottom: 35px;
   right: 15%;
-  z-index: 2;
+  z-index: 10;
   height: 40px;
   border: 1px solid rgb(221, 152, 235);
   border-radius: 500px;

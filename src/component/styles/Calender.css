@@ -1,0 +1,15 @@
+.events {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 20;
+  }
+  .calender-container{
+    margin: 1rem;
+    padding:1rem;
+    border-radius: 10px;
+
+    box-shadow: 1px 10px 20px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 1px 10px 20px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 1px 10px 20px 0px rgba(0,0,0,0.75);
+  }

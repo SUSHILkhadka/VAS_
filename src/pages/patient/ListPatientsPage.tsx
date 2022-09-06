@@ -36,7 +36,7 @@ const ListPatientsPage = () => {
         <Skeleton style={{margin:50}} active/>
         ) : (
         <div className="App">
-          <PatientTable data={data} refresh={refresh} setRefresh={setRefresh} />
+          <PatientTable data={data} setRefresh={setRefresh} />
         </div>
       )}
     </div>

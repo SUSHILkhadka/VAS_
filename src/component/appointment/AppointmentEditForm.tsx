@@ -16,6 +16,8 @@ export const AppointmentEditForm: React.FC = () => {
   const [loadingForDelete,setLoadingForDelete]=useState(false)
   const onFinish = async (values: any) => {
     setLoading(true)
+    if(values.firstDose_date<values.secondDose_date)
+    {
     const firstDose: DoseDate = {
       date: dateToString(values.firstDose_date),
       time: timeToString(values.firstDose_time),
@@ -43,6 +45,10 @@ export const AppointmentEditForm: React.FC = () => {
     } catch {
       message.error('error editing');
     }
+  }
+  else{
+    message.error('Second dose date has to be greater than first dose date')
+  }
     setLoading(false)
 
   };
@@ -58,6 +64,7 @@ export const AppointmentEditForm: React.FC = () => {
     } catch {
       message.error('error');
     }
+    
     setLoadingForDelete(false)
   };
 

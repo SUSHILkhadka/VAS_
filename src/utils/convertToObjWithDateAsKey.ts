@@ -9,6 +9,13 @@ export const convertToObjWithDateAsKey = (data: IAppointmentFromDb[]) => {
       : [];
     previousData.push(dataToBeAppended);
     requiredObj = { ...requiredObj, [element.firstDoseDate]: previousData };
+
+    const dataToBeAppendedForSecondAppointment = { type: "error", content: element.id };
+    let previousDataForSecondAppointment = requiredObj[element.secondDoseDate]
+      ? requiredObj[element.secondDoseDate]
+      : [];
+      previousDataForSecondAppointment.push(dataToBeAppendedForSecondAppointment);
+    requiredObj = { ...requiredObj, [element.secondDoseDate]: previousDataForSecondAppointment };
   });
   return requiredObj;
 };

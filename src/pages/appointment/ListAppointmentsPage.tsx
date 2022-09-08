@@ -47,13 +47,13 @@ const ListAppointmentsPage = () => {
       <Button className="floating_button" onClick={goToAddPage}>
         Create new Appointment
       </Button>
-      {(loading )  ? (
-        <Skeleton style={{margin:30}} active/>
+      {loading ? (
+        <Skeleton style={{ margin: 30 }} active />
       ) : (
         <div>
           <AppointmentTable data={data} setRefresh={setRefresh} />
-          <AppointmentCalender data={data}/>
-        </div>  
+          <AppointmentCalender data={data} />
+        </div>
       )}
     </div>
   );

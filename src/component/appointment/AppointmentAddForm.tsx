@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Form } from 'antd';
+import { Button, Form, message } from 'antd';
 import React, { useState } from 'react';
 import { dateToString, stringToDate, stringToTime, timeToString } from '../../utils/common';
 
@@ -13,25 +13,28 @@ export const AppointmentAddForm: React.FC = () => {
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading,setLoading]=useState(false)
   const onFinish = (values: any) => {
-    const firstDose: DoseDate = {
-      date: dateToString(values.firstDose_date),
-      time: timeToString(values.firstDose_time),
-    };
-    const secondDose: DoseDate = {
-      date: dateToString(values.secondDose_date),
-      time: timeToString(values.secondDose_time),
-    };
-    const info: Appointment = {
-      patientId: values.patientId,
-      siteLocation: values.siteLocation,
-      service: values.service,
-      firstDose: firstDose,
-      secondDose: secondDose,
-    };
-    dispatch(registerAppointment(info));
-    navigate('/appointment/confirmation');
+    if (values.firstDose_date < values.secondDose_date) {
+      const firstDose: DoseDate = {
+        date: dateToString(values.firstDose_date),
+        time: timeToString(values.firstDose_time),
+      };
+      const secondDose: DoseDate = {
+        date: dateToString(values.secondDose_date),
+        time: timeToString(values.secondDose_time),
+      };
+      const info: Appointment = {
+        patientId: values.patientId,
+        siteLocation: values.siteLocation,
+        service: values.service,
+        firstDose: firstDose,
+        secondDose: secondDose,
+      };
+      dispatch(registerAppointment(info));
+      navigate('/appointment/confirmation');
+    } else {
+      message.error('second dose date cannot be smaller than first dose date');
+    }
   };
   const initialValue = {
     patientId: appointmentInfo.patientId,
@@ -46,7 +49,7 @@ export const AppointmentAddForm: React.FC = () => {
     <Form onFinish={onFinish} layout="vertical" initialValues={initialValue}>
       <AppointmentForm />
 
-      <Button loading={loading} type="primary" htmlType="submit">
+      <Button type="primary" htmlType="submit">
         Submit
       </Button>
     </Form>

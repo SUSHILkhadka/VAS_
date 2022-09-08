@@ -4,15 +4,15 @@
   color: #0090ff;
 }
 .btn-button {
-    border: 1px solid #0090ff;
-    padding: 0.5rem;
-    color: #0090ff;
-    border-radius: 18px;
+  border: 1px solid #0090ff;
+  padding: 0.5rem;
+  color: #0090ff;
+  border-radius: 18px;
 
-    box-shadow: -1px 10px 30px -16px rgba(31,27,184,0.75);
--webkit-box-shadow: -1px 10px 30px -16px rgba(31,27,184,0.75);
--moz-box-shadow: -1px 10px 30px -16px rgba(31,27,184,0.75);
-  }
+  box-shadow: -1px 10px 30px -16px rgba(31, 27, 184, 0.75);
+  -webkit-box-shadow: -1px 10px 30px -16px rgba(31, 27, 184, 0.75);
+  -moz-box-shadow: -1px 10px 30px -16px rgba(31, 27, 184, 0.75);
+}
 .btn-ending {
   margin-bottom: 3rem;
 }

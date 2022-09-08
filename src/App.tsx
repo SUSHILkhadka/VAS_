@@ -1,4 +1,4 @@
-import './App.css';
+import '../src/component/styles/App.css';
 import Navigator from './navigation/navigator';
 
 const App = () => {

@@ -150,11 +150,7 @@ const PatientForm = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          className="form-wholefield"
-          name="insuranceProvider"
-          label="Insurance Provider"
-        >
+        <Form.Item className="form-wholefield" name="insuranceProvider" label="Insurance Provider">
           <Input />
         </Form.Item>
       </div>

@@ -26,11 +26,10 @@ interface IPatientFromDatabase {
 
 type PropType = {
   data: IPatientFromDatabase[];
-  refresh: boolean;
   setRefresh: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const PatientTable = ({ data, refresh, setRefresh }: PropType) => {
+const PatientTable = ({ data, setRefresh }: PropType) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -100,7 +99,7 @@ const PatientTable = ({ data, refresh, setRefresh }: PropType) => {
           try {
             const res = await deleteBackend(id);
             message.success(res.message);
-            setRefresh(!refresh);
+            setRefresh((prevState) => !prevState);
           } catch {
             message.error('deleting failed');
           }

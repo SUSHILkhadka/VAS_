@@ -12,43 +12,46 @@ export const AppointmentEditForm: React.FC = () => {
   const authInfo = useSelector((state: RootState) => state.auth);
   const appointmentInfo = useSelector((state: RootState) => state.appointment);
   const navigate = useNavigate();
-  const [loading,setLoading]=useState(false)
-  const [loadingForDelete,setLoadingForDelete]=useState(false)
+  const [loading, setLoading] = useState(false);
+  const [loadingForDelete, setLoadingForDelete] = useState(false);
   const onFinish = async (values: any) => {
-    setLoading(true)
-    const firstDose: DoseDate = {
-      date: dateToString(values.firstDose_date),
-      time: timeToString(values.firstDose_time),
-    };
+    setLoading(true);
+    if (values.firstDose_date < values.secondDose_date) {
+      const firstDose: DoseDate = {
+        date: dateToString(values.firstDose_date),
+        time: timeToString(values.firstDose_time),
+      };
 
-    const secondDose: DoseDate = {
-      date: dateToString(values.secondDose_date),
-      time: timeToString(values.secondDose_time),
-    };
+      const secondDose: DoseDate = {
+        date: dateToString(values.secondDose_date),
+        time: timeToString(values.secondDose_time),
+      };
 
-    let body = {
-      patientId: values.patientId,
-      siteLocation: values.siteLocation,
-      serviceName: values.service,
-      firstDoseDate: firstDose.date,
-      firstDoseTime: firstDose.time,
-      secondDoseDate: secondDose.date,
-      secondDoseTime: secondDose.time,
-    };
+      let body = {
+        patientId: values.patientId,
+        siteLocation: values.siteLocation,
+        serviceName: values.service,
+        firstDoseDate: firstDose.date,
+        firstDoseTime: firstDose.time,
+        secondDoseDate: secondDose.date,
+        secondDoseTime: secondDose.time,
+      };
 
-    try {
-      const appointment = await update(body, appointmentInfo.id);
-      message.success(`Edit successful. Id is ${appointmentInfo.id}`);
-      navigate('/appointment/list');
-    } catch {
-      message.error('error editing');
+      try {
+        const appointment = await update(body, appointmentInfo.id);
+        message.success(`Edit successful. Id is ${appointmentInfo.id}`);
+        navigate('/appointment/list');
+      } catch {
+        message.error('error editing');
+      }
+    } else {
+      message.error('Second dose date has to be greater than first dose date');
     }
-    setLoading(false)
-
+    setLoading(false);
   };
 
   const handleDelete = async () => {
-    setLoadingForDelete(true)
+    setLoadingForDelete(true);
     try {
       if (appointmentInfo.id) {
         const appointment = await deleteBackend(+appointmentInfo.id);
@@ -58,7 +61,8 @@ export const AppointmentEditForm: React.FC = () => {
     } catch {
       message.error('error');
     }
-    setLoadingForDelete(false)
+
+    setLoadingForDelete(false);
   };
 
   const initialValue = {

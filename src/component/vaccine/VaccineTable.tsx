@@ -1,4 +1,4 @@
-import { Button, message, Radio, Table } from 'antd';
+import { Button, message, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -21,11 +21,10 @@ interface IVaccineFromDB {
 
 type PropType = {
   data: IVaccineFromDB[];
-  refresh: boolean;
   setRefresh: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const VaccineTable = ({ data, refresh, setRefresh }: PropType) => {
+const VaccineTable = ({ data, setRefresh }: PropType) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -81,7 +80,7 @@ const VaccineTable = ({ data, refresh, setRefresh }: PropType) => {
           try {
             const res = await deleteBackend(id);
             message.success(res.message);
-            setRefresh(!refresh);
+            setRefresh((prevState) => !prevState);
           } catch {
             message.error('deleting failed');
           }

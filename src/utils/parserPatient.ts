@@ -2,7 +2,7 @@ import { IPatientFromDatabase } from "../component/patient/PatientTable";
 import { Address, Patient } from "../redux_toolkit/slices/patientSlice";
 import { dateToString } from "./common";
  
-export const getPatientObjFromBody = (Obj: IPatientFromDatabase) => {
+export const getPatientObjFromDatabaseObject = (Obj: IPatientFromDatabase) => {
   const address: Address = {
     state: Obj.addressState,
     city: Obj.addressCity,

@@ -2,11 +2,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, message } from "antd";
 import React, { useState } from "react";
-import { dateToString, stringToDate } from "../../utils/common";
+import { stringToDate } from "../../utils/common";
 import { RootState } from "../../redux_toolkit/stores/store";
 import PatientForm from "./PatientForm";
 import update, { deleteBackend } from "../../services/backendCallPatient";
 import CustomImageUploader from "../utils/CustomImageUploader";
+import { getBodyFromPatientForm } from "../../utils/parserPatient";
 
 const ManagerPatientEditForm: React.FC = () => {
   const patientInfo = useSelector((state: RootState) => state.patient);
@@ -17,21 +18,7 @@ const ManagerPatientEditForm: React.FC = () => {
   const [loadingForDelete, setLoadingForDelete] = useState(false);
   const onFinish = async (values: any) => {
     setLoading(true);
-    let body = {
-      firstName: values.firstName,
-      secondName: values.lastName,
-      birthDate: dateToString(values.birthDate),
-      ethnicity: values.ethnicity,
-      gender: values.gender,
-      email: values.email,
-      addressState: values.address.state,
-      addressCity: values.address.city,
-      addressStreet: values.address.street,
-      paymentMethod: values.paymentMethod,
-      insuranceProvider: values.insuranceProvider,
-      photoUrl: photoUrl,
-    };
-
+    const body = { ...getBodyFromPatientForm(values), photoUrl };
     try {
       const patient = await update(body, patientInfo.id);
       message.success(`Edit successful. Id is ${patientInfo.id}`);
@@ -46,7 +33,6 @@ const ManagerPatientEditForm: React.FC = () => {
     setLoadingForDelete(true);
     try {
       const patient = await deleteBackend(patientInfo.id);
-      console.log(patient);
       message.success(`Delete successful. Id is ${patientInfo.id}`);
       navigate("/patient/list");
     } catch {

@@ -5,9 +5,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addVaccine, DateRange } from '../../redux_toolkit/slices/vaccineSlice';
 import { deleteBackend } from '../../services/backendCallVaccine';
+import { getPatientObjFromDatabaseObject } from '../../utils/parserVaccine';
 import '../styles/Table.css';
 
-interface IVaccineFromDB {
+export interface IVaccineFromDB {
   id?: number;
   siteLocation: string;
   serviceName: string;
@@ -91,24 +92,28 @@ const VaccineTable = ({ data, setRefresh }: PropType) => {
   ];
 
   const handleRowSelection = (Obj: IVaccineFromDB) => {
-    const date: DateRange = {
-      startDate: Obj.startDate,
-      endDate: Obj.endDate,
-    };
-    const dataForVaccineInfo = {
-      id: Obj.id,
-      siteLocation: Obj.siteLocation,
-      serviceName: Obj.serviceName,
-      date: date,
-      doseType: Obj.doseType,
-      gender: Obj.gender,
-      age: Obj.age,
-      ethinicity: Obj.ethinicity,
-    };
-    dispatch(addVaccine(dataForVaccineInfo));
+    // const date: DateRange = {
+    //   startDate: Obj.startDate,
+    //   endDate: Obj.endDate,
+    // };
+    // const dataForVaccineInfo = {
+    //   id: Obj.id,
+    //   siteLocation: Obj.siteLocation,
+    //   serviceName: Obj.serviceName,
+    //   date: date,
+    //   doseType: Obj.doseType,
+    //   gender: Obj.gender,
+    //   age: Obj.age,
+    //   ethinicity: Obj.ethinicity,
+    // };
+
+    const dataForVaccineInfoForRedux=getPatientObjFromDatabaseObject(Obj)
+
+
+    dispatch(addVaccine(dataForVaccineInfoForRedux));
     navigate('/vaccine/edit');
   };
-  
+
   const handleDelete = async (id:number) => {
     setLoading(true);
     try {

@@ -10,6 +10,7 @@ import {
 } from "../../redux_toolkit/slices/appointmentSlice";
 import { RootState } from "../../redux_toolkit/stores/store";
 import { deleteBackend } from "../../services/backendCallAppointment";
+import { getAppointmentObjFromDatabaseObject } from "../../utils/parserAppointment";
 import "../styles/Table.css";
 
 export interface IAppointmentFromDb {
@@ -106,23 +107,8 @@ const AppointmentTable = ({ data, setRefresh }: PropType) => {
   ];
 
   const handleRowSelection = (Obj: IAppointmentFromDb): void => {
-    const firstDose: DoseDate = {
-      date: Obj.firstDoseDate,
-      time: Obj.firstDoseTime,
-    };
-    const secondDose: DoseDate = {
-      date: Obj.secondDoseDate,
-      time: Obj.secondDoseTime,
-    };
-    const dataForAppointmentInfo = {
-      id: Obj.id,
-      patientId: Obj.patientId,
-      siteLocation: Obj.siteLocation,
-      service: Obj.serviceName,
-      firstDose: firstDose,
-      secondDose: secondDose,
-    };
-    dispatch(registerAppointment(dataForAppointmentInfo));
+    const dataForAppointmentInfoForRedux=getAppointmentObjFromDatabaseObject(Obj)
+    dispatch(registerAppointment(dataForAppointmentInfoForRedux));
     navigate("/appointment/edit");
   };
 

@@ -7,6 +7,7 @@ import { Address, Patient, register } from '../../redux_toolkit/slices/patientSl
 import { deleteBackend } from '../../services/backendCallPatient';
 import '../styles/Table.css';
 import image from '../../assets/github.png';
+import { getPatientObjFromDatabaseObject } from '../../utils/parserPatient';
 
 export interface IPatientFromDatabase {
   id: string;
@@ -111,25 +112,8 @@ const PatientTable = ({ data, setRefresh }: PropType) => {
   ];
 
   const handleRowSelection = (Obj: IPatientFromDatabase): void => {
-    const address: Address = {
-      state: Obj.addressState,
-      city: Obj.addressCity,
-      street: Obj.addressStreet,
-    };
-    const dataForPatientInfo: Patient = {
-      id: +Obj.id,
-      firstName: Obj.firstName,
-      secondName: Obj.secondName,
-      birthDate: Obj.birthDate,
-      ethnicity: Obj.ethnicity,
-      gender: Obj.gender,
-      email: Obj.email,
-      address: address,
-      paymentMethod: Obj.paymentMethod,
-      insuranceProvider: Obj.insuranceProvider,
-      photoUrl: Obj.photoUrl,
-    };
-    dispatch(register(dataForPatientInfo));
+const dataForPatientInfoForRedux=getPatientObjFromDatabaseObject(Obj)
+    dispatch(register(dataForPatientInfoForRedux));
     navigate('/patient/details');
   };
 

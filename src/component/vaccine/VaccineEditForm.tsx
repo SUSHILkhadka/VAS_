@@ -9,6 +9,7 @@ import { RootState } from '../../redux_toolkit/stores/store';
 import { DateRange, Vaccine } from '../../redux_toolkit/slices/vaccineSlice';
 import update, { deleteBackend } from '../../services/backendCallVaccine';
 import VaccineForm from './VaccineForm';
+import { getBodyFromVaccineForm } from '../../utils/parserVaccine';
 const { Option } = Select;
 
 export const VaccineEditForm: React.FC = () => {
@@ -17,32 +18,9 @@ export const VaccineEditForm: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [loadingForDelete, setLoadingForDelete] = useState(false);
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FormData) => {
     setLoading(true);
-    const dateRange: DateRange = {
-      startDate: dateToString(values.date[0]),
-      endDate: dateToString(values.date[1]),
-    };
-    const data: Vaccine = {
-      serviceName: values.service,
-      siteLocation: values.siteLocation,
-      date: dateRange,
-      doseType: values.doseType,
-      gender: values.gender,
-      age: values.age,
-      ethinicity: values.ethinicity,
-    };
-    const body = {
-      serviceName: values.serviceName,
-      siteLocation: values.siteLocation,
-      startDate: dateRange.startDate,
-      endDate: dateRange.endDate,
-      doseType: values.doseType,
-      gender: values.gender,
-      age: values.age,
-      ethinicity: values.ethinicity,
-    };
-
+    const body=getBodyFromVaccineForm(values)
     try {
       const vaccine = await update(body, vaccineInfo.id);
       message.success(`Edit successful. Id is ${vaccineInfo.id}`);

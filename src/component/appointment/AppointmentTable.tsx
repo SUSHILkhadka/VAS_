@@ -83,18 +83,6 @@ const AppointmentTable = ({ data, setRefresh }: PropType) => {
           dataIndex: "id",
           key: "id",
           render: (id: number, Obj: IAppointmentFromDb) => {
-            const handleDelete = async () => {
-              setLoading(true);
-              try {
-                const res = await deleteBackend(id);
-                message.success(res.message);
-                setRefresh((prevState) => !prevState);
-              } catch {
-                message.error("deleting failed");
-              }
-              setLoading(false);
-            };
-
             return (
               <>
                 <Button
@@ -106,7 +94,7 @@ const AppointmentTable = ({ data, setRefresh }: PropType) => {
                 <Button
                   className="btn-delete"
                   loading={loading}
-                  onClick={handleDelete}
+                  onClick={()=>handleDelete(id)}
                 >
                   Delete
                 </Button>
@@ -136,6 +124,18 @@ const AppointmentTable = ({ data, setRefresh }: PropType) => {
     };
     dispatch(registerAppointment(dataForAppointmentInfo));
     navigate("/appointment/edit");
+  };
+
+  const handleDelete = async (id:number) => {
+    setLoading(true);
+    try {
+      const res = await deleteBackend(id);
+      message.success(res.message);
+      setRefresh((prevState) => !prevState);
+    } catch {
+      message.error("deleting failed");
+    }
+    setLoading(false);
   };
   return (
     <div className="table">

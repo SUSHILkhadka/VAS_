@@ -8,7 +8,7 @@ import { deleteBackend } from '../../services/backendCallPatient';
 import '../styles/Table.css';
 import image from '../../assets/github.png';
 
-interface IPatientFromDatabase {
+export interface IPatientFromDatabase {
   id: string;
   firstName: string;
   secondName: string;
@@ -94,24 +94,14 @@ const PatientTable = ({ data, setRefresh }: PropType) => {
       dataIndex: 'id',
       key: 'id',
       render: (id: number, Obj: IPatientFromDatabase) => {
-        const handleDelete = async () => {
-          setLoading(true);
-          try {
-            const res = await deleteBackend(id);
-            message.success(res.message);
-            setRefresh((prevState) => !prevState);
-          } catch {
-            message.error('deleting failed');
-          }
-          setLoading(false);
-        };
+
 
         return (
           <div>
             <Button className="btn-edit" onClick={() => handleRowSelection(Obj)}>
               Details
             </Button>
-            <Button className="btn-delete" loading={loading} onClick={handleDelete}>
+            <Button className="btn-delete" loading={loading} onClick={()=>handleDelete(id)}>
               Delete
             </Button>
           </div>
@@ -141,6 +131,18 @@ const PatientTable = ({ data, setRefresh }: PropType) => {
     };
     dispatch(register(dataForPatientInfo));
     navigate('/patient/details');
+  };
+
+  const handleDelete = async (id:number) => {
+    setLoading(true);
+    try {
+      const res = await deleteBackend(id);
+      message.success(res.message);
+      setRefresh((prevState) => !prevState);
+    } catch {
+      message.error('deleting failed');
+    }
+    setLoading(false);
   };
   return (
     <div className="table">

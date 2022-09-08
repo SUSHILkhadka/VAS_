@@ -1,8 +1,12 @@
-.img-avatar {
-  width: 20%;
-  border-radius: 40%;
-}
+
 .img-avatar-table {
   width: 100%;
   border-radius: 40%;
+}
+.img-avatar {
+  width: 200px;
+  max-width: 100%;
+  height: 200px;
+  border-radius: 40%;
+ 
 }

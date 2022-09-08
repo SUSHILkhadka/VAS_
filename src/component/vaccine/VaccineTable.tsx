@@ -75,23 +75,13 @@ const VaccineTable = ({ data, setRefresh }: PropType) => {
       dataIndex: 'id',
       key: 'id',
       render: (id: number, Obj: IVaccineFromDB) => {
-        const handleDelete = async () => {
-          setLoading(true);
-          try {
-            const res = await deleteBackend(id);
-            message.success(res.message);
-            setRefresh((prevState) => !prevState);
-          } catch {
-            message.error('deleting failed');
-          }
-          setLoading(false);
-        };
+
         return (
           <>
             <Button className="btn-edit" onClick={() => handleRowSelection(Obj)}>
               Edit
             </Button>
-            <Button className="btn-delete" loading={loading} onClick={handleDelete}>
+            <Button className="btn-delete" loading={loading} onClick={()=>handleDelete(id)}>
               Delete
             </Button>
           </>
@@ -117,6 +107,18 @@ const VaccineTable = ({ data, setRefresh }: PropType) => {
     };
     dispatch(addVaccine(dataForVaccineInfo));
     navigate('/vaccine/edit');
+  };
+  
+  const handleDelete = async (id:number) => {
+    setLoading(true);
+    try {
+      const res = await deleteBackend(id);
+      message.success(res.message);
+      setRefresh((prevState) => !prevState);
+    } catch {
+      message.error('deleting failed');
+    }
+    setLoading(false);
   };
   return (
     <div className="table">

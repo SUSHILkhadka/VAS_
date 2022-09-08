@@ -1,13 +1,17 @@
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Button, Form, Select, Upload } from 'antd';
-import React, { useState } from 'react';
-import { Address, Patient, register } from '../../redux_toolkit/slices/patientSlice';
-import { dateToString, stringToDate } from '../../utils/common';
-import { RootState } from '../../redux_toolkit/stores/store';
-import PatientForm from './PatientForm';
-import CustomImageUploader from '../utils/CustomImageUploader';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Select, Upload } from "antd";
+import React, { useState } from "react";
+import {
+  Address,
+  Patient,
+  register,
+} from "../../redux_toolkit/slices/patientSlice";
+import { dateToString, stringToDate } from "../../utils/common";
+import { RootState } from "../../redux_toolkit/stores/store";
+import PatientForm from "./PatientForm";
+import CustomImageUploader from "../utils/CustomImageUploader";
 
 const PatientRegisterForm: React.FC = () => {
   const patientInfo = useSelector((state: RootState) => state.patient);
@@ -37,13 +41,13 @@ const PatientRegisterForm: React.FC = () => {
       photoUrl: photoUrl,
     };
     dispatch(register(info));
-    navigate('/patient/confirmation');
+    navigate("/patient/confirmation");
   };
 
   const initialvalue = {
     firstName: patientInfo.firstName,
     lastName: patientInfo.secondName,
-    birthDate: patientInfo.birthDate ? stringToDate(patientInfo.birthDate) : '',
+    birthDate: patientInfo.birthDate ? stringToDate(patientInfo.birthDate) : "",
     ethnicity: patientInfo.ethnicity,
     gender: patientInfo.gender,
     email: patientInfo.email,
@@ -68,9 +72,7 @@ const PatientRegisterForm: React.FC = () => {
         scrollToFirstError
       >
         <PatientForm />
-        <div className="form-uploadpic">
-          <CustomImageUploader photoUrl={photoUrl} setPhotoUrl={setPhotoUrl} />
-        </div>
+        <CustomImageUploader photoUrl={photoUrl} setPhotoUrl={setPhotoUrl} />
         <Button className="btn-ending" type="primary" htmlType="submit">
           Register
         </Button>
